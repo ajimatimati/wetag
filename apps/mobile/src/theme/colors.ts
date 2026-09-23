@@ -1,0 +1,105 @@
+/**
+ * weTag Design System — Colors (Canonical Mobile Tokens)
+ * Two products, one identity. MOVE = teal energy. STAY = warm sage comfort.
+ */
+
+export const colors = {
+  // Brand Core
+  primary: '#18B88A',
+  primaryDeep: '#123C3A',
+  primaryLight: '#E5F7F0',
+
+  // Product Accents
+  move: {
+    accent: '#18B88A',
+    accentLight: '#D4F5E9',
+    accentDeep: '#0F8A66',
+    transitBlue: '#2563EB',
+    transitLight: '#EFF6FF',
+    surface: '#E8F7F2',
+    subtle: '#F0FAF6',
+  },
+  moveAccent: '#18B88A',
+  moveAccentHover: '#149E76',
+  moveSurface: '#E8F7F2',
+  moveSubtle: '#F0FAF6',
+  transitBlue: '#2563EB',
+
+  stay: {
+    accent: '#8FA888',
+    accentLight: '#EDF2EB',
+    accentDeep: '#6B8563',
+    warmClay: '#C87943',
+    clay: '#C4A882',
+    clayLight: '#F5EDE3',
+    surface: '#F0F4EF',
+    subtle: '#F7FAF5',
+  },
+  stayAccent: '#8FA888',
+  stayAccentHover: '#7A9473',
+  staySurface: '#F0F4EF',
+  staySubtle: '#F7FAF5',
+  warmClay: '#C87943',
+
+  // Semantic
+  success: '#18B88A',
+  warning: '#E8A62B',
+  danger: '#EF4444',
+  info: '#2563EB',
+
+  // Surfaces
+  porcelain: '#F7FAF8',
+  background: '#F7FAF8',
+  surface: '#FFFFFF',
+  surfaceElevated: '#FFFFFF',
+  surfaceCard: '#FFFFFF',
+  surfaceSubtle: '#F0F4F1',
+  surfaceMuted: '#EFF3F0',
+  surfaceContainerLow: '#EEF5F2',
+  border: '#E2E8E4',
+  borderLight: '#F0F4F1',
+  borderSubtle: '#E2EBE6',
+  borderMuted: '#D1D5DB',
+
+  // Text
+  textPrimary: '#161D1B',
+  textSecondary: '#5A6B68',
+  textTertiary: '#8A9B97',
+  textMuted: '#717978',
+  textInverse: '#FFFFFF',
+  textDisabled: '#B8C5C2',
+
+  // Safety
+  safety: {
+    sos: '#EF4444',
+    coral: '#EF4444',
+    shield: '#123C3A',
+    emergency: '#EF4444',
+    sosBackground: '#FDF0EF',
+    verified: '#18B88A',
+    unverified: '#E8A62B',
+    warning: '#E57A00',
+    success: '#18B88A',
+    pin: '#123C3A',
+    pinBackground: '#E5F7F0',
+    pinText: '#FFFFFF',
+  },
+  safetyEmergency: '#D9381E',
+  safetyWarning: '#E57A00',
+  safetySuccess: '#18B88A',
+  pinBackground: '#111827',
+  pinText: '#FFFFFF',
+
+  // Interactive
+  disabled: '#D1D9D6',
+  disabledText: '#A0ADA9',
+  overlay: 'rgba(23, 35, 34, 0.5)',
+};
+
+export const colorsDark = {
+  ...colors,
+  surface: '#161D1B',
+  surfaceCard: '#1E2724',
+  textPrimary: '#F7FAF8',
+  textSecondary: '#A0ADA9',
+};

@@ -1,0 +1,30 @@
+services:
+  # Identity & Commute Auth API
+  - type: web
+    name: wetag-api-identity
+    env: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install && npx tsc
+    startCommand: node dist/index.js
+    rootDir: services/identity
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CORS_ORIGIN
+        value: https://ajimatimati.github.io
+      - key: DATABASE_URL
+        fromDatabase:
+          name: wetag-db
+          property: connectionString
+
+databases:
+  # Free PostgreSQL Database (with PostGIS support)
+  - name: wetag-db
+    plan: free
+    region: frankfurt
+    databaseName: wetag_production
+    user: wetag_admin

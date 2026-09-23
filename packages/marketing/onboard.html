@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join weTag — Verified Commuter Drivers & Direct Property Caretakers | Ibadan</title>
+  
+  <meta name="description" content="Offset 50% of your daily fuel costs on Ibadan corridors or lease verified homes with zero agent fees. Official onboarding portal for weTag Ibadan." />
+  <meta name="theme-color" content="#123C3A" />
+
+  <!-- Preconnect and fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-deep: #123C3A;
+      --primary-emerald: #18B88A;
+      --primary-light: #E5F7F0;
+      --transit-blue: #2563EB;
+      --transit-light: #EFF6FF;
+      --warm-clay: #C87943;
+      --clay-light: #FDF4ED;
+      --porcelain: #F7FAF8;
+      --card-bg: #FFFFFF;
+      --text-main: #111827;
+      --text-muted: #5A6B68;
+      --border-subtle: #E2EBE6;
+      --border-focus: #18B88A;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--porcelain);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--primary-deep);
+      color: #FFFFFF;
+      padding: 24px 20px;
+      text-align: center;
+      border-bottom: 3px solid var(--primary-emerald);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(24, 184, 138, 0.15);
+      border: 1px solid var(--primary-emerald);
+      color: #A7F3D0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 14px;
+      color: #A0B4B0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Container */
+    .container {
+      max-width: 580px;
+      margin: -20px auto 0;
+      padding: 0 16px;
+    }
+
+    /* Role Tabs */
+    .role-switcher {
+      display: flex;
+      background: #FFFFFF;
+      padding: 6px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(18, 60, 58, 0.08);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+      gap: 6px;
+    }
+
+    .role-btn {
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .role-btn .role-tag {
+      font-size: 10px;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+
+    .role-btn.active-driver {
+      background: var(--transit-blue);
+      color: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    .role-btn.active-caretaker {
+      background: var(--warm-clay);
+      color: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(200, 121, 67, 0.3);
+    }
+
+    /* Form Card */
+    .form-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 25px rgba(18, 60, 58, 0.06);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .form-header {
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .form-header h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary-deep);
+    }
+
+    .form-header p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-subtle);
+      background: #FAFDFB;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary-emerald);
+      background: #FFFFFF;
+    }
+
+    /* Grid Row */
+    .form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    /* Benefit Callout Box */
+    .benefit-box {
+      background: var(--primary-light);
+      border: 1px solid #A7F3D0;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 18px;
+    }
+
+    .benefit-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary-deep);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .benefit-text {
+      font-size: 12px;
+      color: var(--primary-deep);
+      line-height: 16px;
+    }
+
+    /* Checkbox Group */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #FAFDFB;
+      border: 1px solid var(--border-subtle);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary-emerald);
+      margin: 0;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      font-size: 15px;
+      font-weight: 800;
+      color: #FFFFFF;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      transition: transform 0.1s, opacity 0.2s;
+    }
+
+    .btn-driver {
+      background: #2563EB;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-caretaker {
+      background: #C87943;
+      box-shadow: 0 4px 14px rgba(200, 121, 67, 0.35);
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    .whatsapp-subtext {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .whatsapp-subtext span {
+      color: #059669;
+      font-weight: 700;
+    }
+
+    /* Trust Guarantee Footer */
+    .trust-footer {
+      max-width: 580px;
+      margin: 24px auto 0;
+      padding: 0 16px;
+      text-align: center;
+    }
+
+    .trust-badges-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .trust-copy {
+      font-size: 11px;
+      color: #8A9B97;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="badge-pill">Ibadan Local Operations • Fast Onboarding</div>
+    <h1>weTag Partner Registration</h1>
+    <p>Join Ibadan’s verified community network. Zero agent markups for housing, 50% fuel cost offsets for commuters.</p>
+  </header>
+
+  <div class="container">
+    <!-- Role Switcher -->
+    <div class="role-switcher">
+      <button type="button" id="tab-driver" class="role-btn active-driver" onclick="switchRole('driver')">
+        🚗 Commuter Driver
+        <span class="role-tag">Offset ₦45,000/mo Petrol</span>
+      </button>
+      <button type="button" id="tab-caretaker" class="role-btn" onclick="switchRole('caretaker')">
+        🏠 Caretaker / Landlord
+        <span class="role-tag">Zero Agent Fee Listings</span>
+      </button>
+    </div>
+
+    <!-- DRIVER ONBOARDING FORM -->
+    <div id="driver-form" class="form-card">
+      <div class="form-header">
+        <h2>Driver Verification & Corridor Registration</h2>
+        <p>For personal car owners driving to work daily along Ibadan corridors.</p>
+      </div>
+
+      <div class="benefit-box">
+        <div class="benefit-title">⛽ Fuel Offset Guarantee</div>
+        <div class="benefit-text">
+          Carrying 2 verified colleagues along Akobo ➔ Secretariat offsets ~₦1,600 daily (₦35,000+ monthly). Plus get an instant <strong>₦10,000 Bovas Fuel Voucher</strong> after your first 5 trips!
+        </div>
+      </div>
+
+      <form onsubmit="handleDriverSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="driver-name">Full Legal Name</label>
+            <input type="text" id="driver-name" placeholder="e.g. Dr. Kunle Alabi" required />
+          </div>
+          <div class="form-group">
+            <label for="driver-phone">WhatsApp Number</label>
+            <input type="tel" id="driver-phone" placeholder="0803 123 4567" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="driver-corridor">Your Daily Morning Corridor</label>
+          <select id="driver-corridor" required>
+            <option value="Akobo (General Gas) ➔ Agodi Secretariat">Akobo (General Gas) ➔ Agodi Secretariat</option>
+            <option value="Akobo (General Gas) ➔ Dugbe (Cocoa House)">Akobo (General Gas) ➔ Dugbe (Cocoa House)</option>
+            <option value="Bodija / Kongi ➔ UCH / University of Ibadan">Bodija / Kongi ➔ UCH / University of Ibadan</option>
+            <option value="Oluyole / Challenge ➔ Dugbe / Ring Road">Oluyole / Challenge ➔ Dugbe / Ring Road</option>
+            <option value="UI Agbowo ➔ Agodi Secretariat">UI Agbowo ➔ Agodi Secretariat</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="driver-time">Departure Time</label>
+            <select id="driver-time">
+              <option value="6:45 AM">6:45 AM</option>
+              <option value="7:00 AM">7:00 AM</option>
+              <option value="7:15 AM" selected>7:15 AM (Peak)</option>
+              <option value="7:30 AM">7:30 AM</option>
+              <option value="7:45 AM">7:45 AM</option>
+              <option value="8:00 AM">8:00 AM</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="driver-seats">Available Seats</label>
+            <select id="driver-seats">
+              <option value="1">1 Passenger</option>
+              <option value="2" selected>2 Passengers (Recommended)</option>
+              <option value="3">3 Passengers</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="driver-vehicle">Vehicle Model & Year</label>
+            <input type="text" id="driver-vehicle" placeholder="e.g. Toyota Corolla 2010" required />
+          </div>
+          <div class="form-group">
+            <label for="driver-plate">Plate Number</label>
+            <input type="text" id="driver-plate" placeholder="e.g. OYO-412-BDJ" required />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit btn-driver">
+          <span>Register on WhatsApp ➔</span>
+        </button>
+
+        <p class="whatsapp-subtext">
+          <span>⚡ Instant Response:</span> Routes directly to weTag Ibadan Corridor Dispatch via WhatsApp.
+        </p>
+      </form>
+    </div>
+
+    <!-- CARETAKER ONBOARDING FORM -->
+    <div id="caretaker-form" class="form-card" style="display: none;">
+      <div class="form-header">
+        <h2>Direct Property Verification & Listing</h2>
+        <p>List directly for verified civil servants and students. Zero middleman fees.</p>
+      </div>
+
+      <div class="benefit-box" style="background: var(--clay-light); border-color: #FDBA74;">
+        <div class="benefit-title" style="color: var(--warm-clay);">🛡️ Direct Landlord / Caretaker Badge</div>
+        <div class="benefit-text" style="color: #7C2D12;">
+          All tenants are pre-screened with NIN. Tenants pay rent directly to escrow, and shared utility bills (IBEDC & borehole) are settled seamlessly in-app.
+        </div>
+      </div>
+
+      <form onsubmit="handleCaretakerSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="caretaker-name">Your Full Name</label>
+            <input type="text" id="caretaker-name" placeholder="e.g. Engr. Femi Adeleke" required />
+          </div>
+          <div class="form-group">
+            <label for="caretaker-phone">WhatsApp Number</label>
+            <input type="tel" id="caretaker-phone" placeholder="0802 987 6543" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="property-type">Property Category</label>
+            <select id="property-type">
+              <option value="Self Contain / Studio">Self Contain / Studio</option>
+              <option value="1-Bedroom Mini Flat">1-Bedroom Mini Flat</option>
+              <option value="2-Bedroom Flat" selected>2-Bedroom Flat</option>
+              <option value="3-Bedroom Flat">3-Bedroom Flat</option>
+              <option value="Student Hostel Lodge">Student Hostel Lodge</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="property-neighborhood">Neighborhood</label>
+            <select id="property-neighborhood">
+              <option value="Old Bodija">Old Bodija</option>
+              <option value="New Bodija / Kongi">New Bodija / Kongi</option>
+              <option value="UI Agbowo / Barika">UI Agbowo / Barika</option>
+              <option value="Akobo / General Gas">Akobo / General Gas</option>
+              <option value="Samonda / Sango">Samonda / Sango</option>
+              <option value="Jericho / Eleyele">Jericho / Eleyele</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="property-rent">Annual Rent (₦)</label>
+          <input type="number" id="property-rent" placeholder="e.g. 700000" required />
+        </div>
+
+        <div class="form-group">
+          <label>Verified Utilities Available in Compound</label>
+          <div class="checkbox-grid">
+            <label class="checkbox-label">
+              <input type="checkbox" id="util-borehole" checked /> 🚰 24/7 Borehole
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="util-prepaid" checked /> ⚡ Dedicated Meter
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="util-generator" /> 🔌 Gen Backup
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="util-security" checked /> 🛡️ Gated Security
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit btn-caretaker">
+          <span>Schedule Free Physical Inspection ➔</span>
+        </button>
+
+        <p class="whatsapp-subtext">
+          <span>📍 Ground Verification:</span> A weTag Field Officer will visit within 24 hours to take 360° verified photos.
+        </p>
+      </form>
+    </div>
+
+    <!-- Trust Footer -->
+    <div class="trust-footer">
+      <div class="trust-badges-row">
+        <span>✓ NIN-Verified Community</span>
+        <span>✓ Oyo State 615 Safety</span>
+        <span>✓ Escrow Protected</span>
+      </div>
+      <p class="trust-copy">weTag Technologies Nigeria • Local Life Operating Network • Ibadan, Oyo State</p>
+    </div>
+  </div>
+
+  <script>
+    const DISPATCH_WHATSAPP = '2348030000000'; // weTag Ibadan Operations WhatsApp
+
+    function switchRole(role) {
+      const tabDriver = document.getElementById('tab-driver');
+      const tabCaretaker = document.getElementById('tab-caretaker');
+      const driverForm = document.getElementById('driver-form');
+      const caretakerForm = document.getElementById('caretaker-form');
+
+      if (role === 'driver') {
+        tabDriver.className = 'role-btn active-driver';
+        tabCaretaker.className = 'role-btn';
+        driverForm.style.display = 'block';
+        caretakerForm.style.display = 'none';
+      } else {
+        tabDriver.className = 'role-btn';
+        tabCaretaker.className = 'role-btn active-caretaker';
+        driverForm.style.display = 'none';
+        caretakerForm.style.display = 'block';
+      }
+    }
+
+    function handleDriverSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('driver-name').value.trim();
+      const phone = document.getElementById('driver-phone').value.trim();
+      const corridor = document.getElementById('driver-corridor').value;
+      const time = document.getElementById('driver-time').value;
+      const seats = document.getElementById('driver-seats').value;
+      const vehicle = document.getElementById('driver-vehicle').value.trim();
+      const plate = document.getElementById('driver-plate').value.trim();
+
+      const msg = 
+`*NEW DRIVER REGISTRATION (weTag MOVE)*%0A` +
+`------------------------------------%0A` +
+`*Name:* ${encodeURIComponent(name)}%0A` +
+`*WhatsApp:* ${encodeURIComponent(phone)}%0A` +
+`*Corridor:* ${encodeURIComponent(corridor)}%0A` +
+`*Morning Departure:* ${encodeURIComponent(time)}%0A` +
+`*Seats Available:* ${encodeURIComponent(seats)}%0A` +
+`*Vehicle:* ${encodeURIComponent(vehicle)}%0A` +
+`*Plate Number:* ${encodeURIComponent(plate)}%0A` +
+`------------------------------------%0A` +
+`_Ready for NIN & Vehicle verification to claim ₦10,000 Bovas Fuel Voucher._`;
+
+      window.open(`https://wa.me/${DISPATCH_WHATSAPP}?text=${msg}`, '_blank');
+    }
+
+    function handleCaretakerSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('caretaker-name').value.trim();
+      const phone = document.getElementById('caretaker-phone').value.trim();
+      const ptype = document.getElementById('property-type').value;
+      const neighborhood = document.getElementById('property-neighborhood').value;
+      const rent = document.getElementById('property-rent').value;
+      
+      const borehole = document.getElementById('util-borehole').checked ? 'Yes' : 'No';
+      const prepaid = document.getElementById('util-prepaid').checked ? 'Yes' : 'No';
+      const gen = document.getElementById('util-generator').checked ? 'Yes' : 'No';
+      const security = document.getElementById('util-security').checked ? 'Yes' : 'No';
+
+      const msg = 
+`*NEW PROPERTY LISTING (weTag STAY)*%0A` +
+`------------------------------------%0A` +
+`*Caretaker/Landlord:* ${encodeURIComponent(name)}%0A` +
+`*WhatsApp:* ${encodeURIComponent(phone)}%0A` +
+`*Neighborhood:* ${encodeURIComponent(neighborhood)}%0A` +
+`*Category:* ${encodeURIComponent(ptype)}%0A` +
+`*Annual Rent:* ₦${encodeURIComponent(Number(rent).toLocaleString())}%0A` +
+`*Utilities:* Borehole: ${borehole} | Prepaid: ${prepaid} | Gen: ${gen} | Gated: ${security}%0A` +
+`------------------------------------%0A` +
+`_Please schedule a Field Officer to take verified photos and issue the Direct Landlord Badge._`;
+
+      window.open(`https://wa.me/${DISPATCH_WHATSAPP}?text=${msg}`, '_blank');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  # ─────────────────────────────────────────────
+  # DATABASE & CACHE
+  # ─────────────────────────────────────────────
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: wetag_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wetag_admin
+      POSTGRES_PASSWORD: wetag_secure_password_2026
+      POSTGRES_DB: wetag_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wetag_admin -d wetag_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: wetag_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────────
+  # MICROSERVICES
+  # ─────────────────────────────────────────────
+  identity-service:
+    build:
+      context: ./services/identity
+      dockerfile: Dockerfile
+    container_name: wetag_identity
+    restart: unless-stopped
+    environment:
+      PORT: 3001
+      DATABASE_URL: postgresql://wetag_admin:wetag_secure_password_2026@postgres:5432/wetag_dev?schema=identity
+      JWT_SECRET: wetag_dev_jwt_secret_key_ibadan_2026
+      CORS_ORIGIN: "*"
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  move-service:
+    build:
+      context: ./services/move
+      dockerfile: Dockerfile
+    container_name: wetag_move
+    restart: unless-stopped
+    environment:
+      PORT: 3002
+      DATABASE_URL: postgresql://wetag_admin:wetag_secure_password_2026@postgres:5432/wetag_dev?schema=move
+      JWT_SECRET: wetag_dev_jwt_secret_key_ibadan_2026
+      CORS_ORIGIN: "*"
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  stay-service:
+    build:
+      context: ./services/stay
+      dockerfile: Dockerfile
+    container_name: wetag_stay
+    restart: unless-stopped
+    environment:
+      PORT: 3003
+      DATABASE_URL: postgresql://wetag_admin:wetag_secure_password_2026@postgres:5432/wetag_dev?schema=stay
+      JWT_SECRET: wetag_dev_jwt_secret_key_ibadan_2026
+      CORS_ORIGIN: "*"
+    ports:
+      - "3003:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  wallet-service:
+    build:
+      context: ./services/wallet
+      dockerfile: Dockerfile
+    container_name: wetag_wallet
+    restart: unless-stopped
+    environment:
+      PORT: 3004
+      DATABASE_URL: postgresql://wetag_admin:wetag_secure_password_2026@postgres:5432/wetag_dev?schema=wallet
+      JWT_SECRET: wetag_dev_jwt_secret_key_ibadan_2026
+      CORS_ORIGIN: "*"
+    ports:
+      - "3004:3004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
