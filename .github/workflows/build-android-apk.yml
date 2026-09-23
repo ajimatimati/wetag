@@ -49,8 +49,22 @@ jobs:
         working-directory: apps/mobile/android
         run: |
           chmod +x gradlew
+          sed -i 's/1.9.24/1.9.25/g' build.gradle || true
           echo "android.kotlinVersion=1.9.25" >> gradle.properties
           echo "kotlinVersion=1.9.25" >> gradle.properties
+          cat << 'EOF' >> build.gradle
+
+allprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += [
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+            ]
+        }
+    }
+}
+EOF
           ./gradlew assembleDebug --no-daemon -x lint -x test -Pandroid.kotlinVersion=1.9.25 -PkotlinVersion=1.9.25
 
       - name: Locate & Rename APK
