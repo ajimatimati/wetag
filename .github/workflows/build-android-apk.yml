@@ -49,7 +49,7 @@ jobs:
         working-directory: apps/mobile/android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon -x lint -x test
+          ./gradlew assembleDebug --no-daemon -x lint -x test -PkotlinVersion=1.9.25 -Pcompose.kotlin.suppressKotlinVersionCompatibilityCheck=true
 
       - name: Locate & Rename APK
         run: |
