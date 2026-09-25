@@ -32,6 +32,7 @@ declare module 'react-native' {
   export const Alert: any;
   export const Linking: any;
   export const Platform: any;
+  export const Share: any;
 }
 
 declare module 'expo-router' {
@@ -85,6 +86,10 @@ declare module 'lucide-react-native' {
   export const AlertTriangle: any;
   export const Navigation: any;
   export const Copy: any;
+  export const Send: any;
+  export const X: any;
+  export const Snowflake: any;
+  export const Luggage: any;
 }
 
 declare module 'expo-status-bar' {
