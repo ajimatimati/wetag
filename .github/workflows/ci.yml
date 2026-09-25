@@ -49,10 +49,6 @@ jobs:
           cd ../wallet && npx tsc --noEmit
           cd ../../apps/admin && npx tsc --noEmit
 
-      - name: Generate SEO/GEO Distribution Assets
-        run: |
-          cd services/move && npx ts-node ../../scripts/inject-seo-geo.ts
-
       - name: Run Master 7-Tier Quality & Security Audit Suite
         run: |
           cd services/move && npx ts-node src/master_test_runner.ts

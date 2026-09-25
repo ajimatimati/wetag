@@ -6,6 +6,8 @@ node_modules/
 # Expo & React Native
 .expo/
 dist/
+!apps/mobile/dist/
+!apps/mobile/dist/**
 dist_build/
 web-build/
 *.jks
