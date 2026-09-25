@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 
 export function startLocalStaticPreview(port: number = 5000) {
-  const distDir = path.resolve('c:/Users/USER/.gemini/antigravity/scratch/ride_share_platform/apps/mobile/dist');
+  const distDir = path.resolve(__dirname, '../apps/mobile/dist');
   
   if (!fs.existsSync(distDir)) {
     console.error(`❌ Mobile dist directory not found at ${distDir}. Run 'npx expo export --platform web' first.`);

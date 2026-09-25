@@ -98,8 +98,44 @@ export const colors = {
 
 export const colorsDark = {
   ...colors,
-  surface: '#161D1B',
-  surfaceCard: '#1E2724',
-  textPrimary: '#F7FAF8',
-  textSecondary: '#A0ADA9',
+  primary: '#2ED9A4',
+  primaryDeep: '#E5F7F0',
+  primaryLight: '#1A3D38',
+
+  move: {
+    accent: '#2ED9A4',
+    accentLight: '#1A3D38',
+    accentDeep: '#18B88A',
+    surface: '#122E2C',
+    subtle: '#153634',
+  },
+  stay: {
+    accent: '#A8C29F',
+    accentLight: '#1E2D1B',
+    accentDeep: '#8FA888',
+    clay: '#D4BC9E',
+    clayLight: '#2A2318',
+    surface: '#122E2C',
+    subtle: '#153634',
+  },
+
+  success: '#2ED9A4',
+  warning: '#F0B840',
+  danger: '#F07570',
+  info: '#5BA0D9',
+
+  background: '#0B1E1D',
+  surface: '#122E2C',
+  surfaceElevated: '#1A2422',
+  surfaceCard: '#153634',
+  surfaceSubtle: '#162120',
+  border: '#2A3936',
+  borderLight: '#1E4744',
+
+  textPrimary: '#F9FAFB',
+  textSecondary: '#D1D5DB',
+  textInverse: '#172322',
 };
+
+export type Colors = typeof colors;
+export type ColorsDark = typeof colorsDark;

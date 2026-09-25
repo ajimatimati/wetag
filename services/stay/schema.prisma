@@ -1,0 +1,438 @@
+// services/stay/schema.prisma
+// Canonical Housing schema for the weTag STAY product
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ─────────────────────────────────────────────
+// PROPERTY (The Physical Place)
+// ─────────────────────────────────────────────
+
+model Property {
+  id                  String               @id @default(uuid())
+  ownerId             String?
+
+  address             String
+  city                String               @default("Ibadan")
+  neighborhood        String
+  district            String?
+  latitude            Float?
+  longitude           Float?
+
+  propertyType        PropertyType
+  bedrooms            Int
+  bathrooms           Int
+  hasKitchen          Boolean              @default(true)
+  kitchenType         KitchenType?
+
+  waterSource         WaterSource?
+  powerSetup          PowerSetup?
+  meterType           MeterType?
+  hasGenerator        Boolean              @default(false)
+  generatorHours      String?
+  hasInverter         Boolean              @default(false)
+  hasSolar            Boolean              @default(false)
+  securityType        SecurityType?
+  parkingSpaces       Int                  @default(0)
+  floodRisk           FloodRisk            @default(UNKNOWN)
+  isFenced            Boolean              @default(false)
+  isGated             Boolean              @default(false)
+
+  imageHashes         String[]
+  duplicateFlags      Int                  @default(0)
+
+  isVerified          Boolean              @default(false)
+  verifiedAt          DateTime?
+  verifiedBy          String?
+
+  listings            Listing[]
+  households          Household[]
+  inspections         PropertyInspection[]
+
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  @@index([neighborhood, city])
+  @@index([propertyType, bedrooms])
+}
+
+enum PropertyType {
+  SELF_CONTAIN
+  ROOM_AND_PARLOUR
+  MINI_FLAT
+  APARTMENT_1BED
+  APARTMENT_2BED
+  APARTMENT_3BED
+  STUDIO
+  SHARED_ROOM
+  BUNGALOW
+  DUPLEX
+}
+
+enum KitchenType {
+  ENCLOSED
+  OPEN
+  SHARED
+  NONE
+}
+
+enum WaterSource {
+  BOREHOLE
+  WELL
+  PUBLIC_SUPPLY
+  WATER_BOARD
+  NONE
+}
+
+enum PowerSetup {
+  PREPAID_METER
+  POSTPAID_METER
+  SHARED_METER
+  ESTATE_POWER
+  NONE
+}
+
+enum MeterType {
+  IBEDC_PREPAID
+  IBEDC_POSTPAID
+  ESTATE
+  SHARED
+  NONE
+}
+
+enum SecurityType {
+  GATEMAN
+  ESTATE_SECURITY
+  CCTV
+  NONE
+}
+
+enum FloodRisk {
+  LOW
+  MODERATE
+  HIGH
+  UNKNOWN
+}
+
+// ─────────────────────────────────────────────
+// LISTING (The Active Offer)
+// ─────────────────────────────────────────────
+
+model Listing {
+  id                   String               @id @default(uuid())
+  propertyId           String
+  property             Property             @relation(fields: [propertyId], references: [id])
+  listerId             String
+
+  title                String
+  description          String?
+  photos               String[]
+  videoTourUrl         String?
+  videoTourDate        DateTime?
+  furnishingStatus     FurnishingStatus     @default(UNFURNISHED)
+
+  rentAmount           Int
+  rentFrequency        RentFrequency        @default(ANNUALLY)
+  agencyFee            Int                  @default(0)
+  legalFee             Int                  @default(0)
+  cautionDeposit       Int                  @default(0)
+  serviceCharge        Int                  @default(0)
+  otherFees            Int                  @default(0)
+  otherFeesDescription String?
+
+  status               ListingStatus        @default(DRAFT)
+  availableFrom        DateTime?
+  lastConfirmedAt      DateTime             @default(now())
+
+  minLeaseDuration     Int?
+  maxLeaseDuration     Int?
+
+  viewingInstructions  String?
+
+  viewings             ViewingBooking[]
+  applications         TenancyApplication[]
+
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  @@index([status])
+  @@index([rentAmount])
+}
+
+enum FurnishingStatus {
+  FURNISHED
+  SEMI_FURNISHED
+  UNFURNISHED
+}
+
+enum RentFrequency {
+  MONTHLY
+  QUARTERLY
+  BI_ANNUALLY
+  ANNUALLY
+}
+
+enum ListingStatus {
+  DRAFT
+  PENDING_REVIEW
+  ACTIVE
+  NEEDS_CONFIRMATION
+  EXPIRED
+  RENTED
+  SUSPENDED
+}
+
+// ─────────────────────────────────────────────
+// VIEWINGS
+// ─────────────────────────────────────────────
+
+model ViewingBooking {
+  id                     String        @id @default(uuid())
+  listingId              String
+  listing                Listing       @relation(fields: [listingId], references: [id])
+  seekerAccountId        String
+
+  scheduledAt            DateTime
+  confirmedByAgent       Boolean       @default(false)
+
+  checkedInAt            DateTime?
+  checkedOutAt           DateTime?
+  trustedContactNotified Boolean       @default(false)
+
+  status                 ViewingStatus @default(SCHEDULED)
+
+  createdAt              DateTime      @default(now())
+}
+
+enum ViewingStatus {
+  SCHEDULED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+// ─────────────────────────────────────────────
+// APPLICATIONS
+// ─────────────────────────────────────────────
+
+model TenancyApplication {
+  id                 String            @id @default(uuid())
+  listingId          String
+  listing            Listing           @relation(fields: [listingId], references: [id])
+  applicantAccountId String
+
+  moveInDate         DateTime?
+  proposedDuration   Int?
+  numberOfOccupants  Int               @default(1)
+  employmentStatus   EmploymentStatus?
+  guarantorName      String?
+  guarantorPhone     String?
+
+  status             ApplicationStatus @default(SUBMITTED)
+
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+}
+
+enum EmploymentStatus {
+  EMPLOYED
+  SELF_EMPLOYED
+  STUDENT
+  NYSC
+  UNEMPLOYED
+  OTHER
+}
+
+enum ApplicationStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+// ─────────────────────────────────────────────
+// HOUSEHOLD
+// ─────────────────────────────────────────────
+
+model Household {
+  id          String            @id @default(uuid())
+  propertyId  String
+  property    Property          @relation(fields: [propertyId], references: [id])
+
+  name        String?
+  totalRent   Int
+  rentDueDay  Int
+
+  members     HouseholdMember[]
+  rules       HouseRule[]
+  expenses    SharedExpense[]
+
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model HouseholdMember {
+  id               String         @id @default(uuid())
+  householdId      String
+  household        Household      @relation(fields: [householdId], references: [id])
+  accountId        String
+
+  rentSharePercent Float          @default(0)
+  role             HouseholdRole  @default(TENANT)
+
+  joinedAt         DateTime       @default(now())
+  leftAt           DateTime?
+
+  expenseShares    ExpenseShare[]
+
+  @@unique([householdId, accountId])
+}
+
+enum HouseholdRole {
+  TENANT
+  ORGANIZER
+  LANDLORD
+}
+
+model HouseRule {
+  id          String       @id @default(uuid())
+  householdId String
+  household   Household    @relation(fields: [householdId], references: [id])
+
+  category    RuleCategory
+  ruleText    String
+  agreedByAll Boolean      @default(false)
+
+  createdAt   DateTime     @default(now())
+}
+
+enum RuleCategory {
+  NOISE
+  GUESTS
+  CLEANING
+  SMOKING
+  PETS
+  UTILITIES
+  COMMON_AREAS
+  GENERAL
+}
+
+// ─────────────────────────────────────────────
+// SHARED EXPENSES
+// ─────────────────────────────────────────────
+
+model SharedExpense {
+  id              String          @id @default(uuid())
+  householdId     String
+  household       Household       @relation(fields: [householdId], references: [id])
+  paidByAccountId String
+
+  description     String
+  amount          Int
+  category        ExpenseCategory
+  splitType       SplitType       @default(EQUAL)
+  receiptUrl      String?
+
+  shares          ExpenseShare[]
+
+  createdAt       DateTime        @default(now())
+}
+
+model ExpenseShare {
+  id         String             @id @default(uuid())
+  expenseId  String
+  expense    SharedExpense      @relation(fields: [expenseId], references: [id])
+  memberId   String
+  member     HouseholdMember    @relation(fields: [memberId], references: [id])
+
+  amountOwed Int
+  amountPaid Int                @default(0)
+  status     ExpenseShareStatus @default(PENDING)
+
+  paidAt     DateTime?
+
+  @@unique([expenseId, memberId])
+}
+
+enum ExpenseCategory {
+  RENT
+  ELECTRICITY
+  WATER
+  INTERNET
+  SECURITY
+  WASTE
+  GENERATOR_FUEL
+  MAINTENANCE
+  GROCERIES
+  OTHER
+}
+
+enum SplitType {
+  EQUAL
+  BY_RENT_SHARE
+  CUSTOM
+}
+
+enum ExpenseShareStatus {
+  PENDING
+  PAID
+  OVERDUE
+  WAIVED
+}
+
+// ─────────────────────────────────────────────
+// PROPERTY INSPECTIONS
+// ─────────────────────────────────────────────
+
+model PropertyInspection {
+  id                 String           @id @default(uuid())
+  propertyId         String
+  property           Property         @relation(fields: [propertyId], references: [id])
+  conductedBy        String
+  type               InspectionType
+
+  items              InspectionItem[]
+
+  approvedByTenant   Boolean          @default(false)
+  approvedByLandlord Boolean          @default(false)
+
+  conductedAt        DateTime         @default(now())
+}
+
+enum InspectionType {
+  MOVE_IN
+  MOVE_OUT
+  PERIODIC
+  PLATFORM_VERIFICATION
+}
+
+model InspectionItem {
+  id           String             @id @default(uuid())
+  inspectionId String
+  inspection   PropertyInspection @relation(fields: [inspectionId], references: [id])
+
+  area         String
+  condition    ItemCondition
+  notes        String?
+  photos       String[]
+
+  createdAt    DateTime           @default(now())
+}
+
+enum ItemCondition {
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+  DAMAGED
+  MISSING
+}

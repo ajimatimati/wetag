@@ -1,50 +1,65 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { authApi, walletApi, Account, WalletInfo } from '../api';
 
-export interface User {
-  id: string;
-  name: string;
-  phone: string;
-  isVerified: boolean;
-  tier: number;
+interface AppContextType {
+  account: Account | null;
+  wallet: WalletInfo | null;
+  isLoading: boolean;
+  activeRole: 'RIDER' | 'DRIVER' | 'TENANT' | 'LANDLORD';
+  setActiveRole: (role: 'RIDER' | 'DRIVER' | 'TENANT' | 'LANDLORD') => void;
+  refreshAccount: () => Promise<void>;
+  refreshWallet: () => Promise<void>;
+  logout: () => void;
 }
 
-export interface AppContextType {
-  user: User;
-  walletBalance: number;
-  setWalletBalance: React.Dispatch<React.SetStateAction<number>>;
-  activeTripId: string | null;
-  setActiveTripId: (id: string | null) => void;
-}
-
-const defaultUser: User = {
-  id: 'usr_tolu_01',
-  name: 'Tolu Olaniyi',
-  phone: '+234 803 ••• ••45',
-  isVerified: true,
-  tier: 2,
-};
-
-const AppContext = createContext<AppContextType>({
-  user: defaultUser,
-  walletBalance: 14500,
-  setWalletBalance: () => {},
-  activeTripId: null,
-  setActiveTripId: () => {},
-});
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user] = useState<User>(defaultUser);
-  const [walletBalance, setWalletBalance] = useState<number>(14500);
-  const [activeTripId, setActiveTripId] = useState<string | null>(null);
+  const [account, setAccount] = useState<Account | null>(null);
+  const [wallet, setWallet] = useState<WalletInfo | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeRole, setActiveRole] = useState<'RIDER' | 'DRIVER' | 'TENANT' | 'LANDLORD'>('RIDER');
+
+  const refreshAccount = async () => {
+    try {
+      const res = await authApi.getMe();
+      setAccount(res.account);
+    } catch (err) {
+      console.log('[AppContext] No active session');
+    }
+  };
+
+  const refreshWallet = async () => {
+    try {
+      const res = await walletApi.getWallet();
+      setWallet(res.wallet);
+    } catch (err) {
+      console.log('[AppContext] Wallet lookup deferred');
+    }
+  };
+
+  const logout = () => {
+    setAccount(null);
+    setWallet(null);
+  };
+
+  useEffect(() => {
+    // Initial fetch on mount
+    refreshAccount();
+    refreshWallet();
+  }, []);
 
   return (
     <AppContext.Provider
       value={{
-        user,
-        walletBalance,
-        setWalletBalance,
-        activeTripId,
-        setActiveTripId,
+        account,
+        wallet,
+        isLoading,
+        activeRole,
+        setActiveRole,
+        refreshAccount,
+        refreshWallet,
+        logout,
       }}
     >
       {children}
@@ -52,4 +67,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 };
 
-export const useApp = () => useContext(AppContext);
+export const useApp = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error('useApp must be used within an AppProvider');
+  }
+  return context;
+};

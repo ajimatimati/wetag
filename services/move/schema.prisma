@@ -1,0 +1,252 @@
+// services/move/schema.prisma
+// Canonical Mobility schema for the weTag MOVE product
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+// ─────────────────────────────────────────────
+// THE DRIVER'S JOURNEY (Supply Side)
+// ─────────────────────────────────────────────
+
+/// A DriverJourney represents ONE real-world trip a driver is making.
+/// Multiple riders can book seats on the same journey.
+/// This is the core architectural difference from Uber: we don't dispatch
+/// drivers to riders. We match riders to journeys that already exist.
+model DriverJourney {
+  id                  String          @id @default(uuid())
+  driverAccountId     String          // References Identity.Account
+  vehicleId           String          // References Identity.Vehicle
+
+  // ── Route ──
+  originLat           Float
+  originLng           Float
+  originAddress       String          // Human readable: "Akobo, near MFM"
+  originLandmark      String?         // "Opposite MFM Prayer City"
+  destinationLat      Float
+  destinationLng      Float
+  destinationAddress  String          // "Dugbe, Cocoa House junction"
+  destinationLandmark String?
+  routePolyline       String?         // Encoded polyline from Mapbox/OSRM
+
+  // ── Capacity ──
+  totalSeats          Int             // Total seats offered (e.g. 3)
+  availableSeats      Int             // Remaining seats
+  maxDetourMinutes    Int             @default(10)
+
+  // ── Timing ──
+  departureWindow     DateTime        // Earliest departure
+  departureWindowEnd  DateTime?       // Latest departure (e.g. 7:00–7:30)
+  estimatedArrival    DateTime?
+
+  // ── Economics ──
+  suggestedContribution Int?          // Platform-suggested per-seat price in kobo
+  tripMode            TripMode
+
+  // ── State ──
+  status              JourneyStatus   @default(OPEN)
+
+  // ── Relations ──
+  seatReservations    SeatReservation[]
+  events              JourneyEvent[]
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@index([status, departureWindow])
+  @@index([originLat, originLng])
+  @@index([destinationLat, destinationLng])
+}
+
+enum TripMode {
+  SHARED        // Driver is already going this way. Cost-sharing.
+  SCHEDULED     // Driver intentionally making the trip for passengers.
+  INSTANT       // Traditional on-demand (future).
+}
+
+enum JourneyStatus {
+  OPEN              // Accepting reservations
+  FULL              // All seats booked
+  DEPARTED          // Journey started
+  IN_PROGRESS       // At least one rider picked up
+  COMPLETED         // All riders dropped off
+  CANCELLED         // Driver cancelled before departure
+  EXPIRED           // Departure window passed without starting
+}
+
+// ─────────────────────────────────────────────
+// THE RIDER'S BOOKING (Demand Side)
+// ─────────────────────────────────────────────
+
+/// A SeatReservation is ONE rider's booking on a DriverJourney.
+/// Multiple reservations can exist per journey (the core of shared rides).
+model SeatReservation {
+  id                  String            @id @default(uuid())
+  journeyId           String
+  journey             DriverJourney     @relation(fields: [journeyId], references: [id])
+  riderAccountId      String            // References Identity.Account
+
+  // ── Pickup & Dropoff ──
+  pickupLat           Float
+  pickupLng           Float
+  pickupAddress       String            // "Bodija Hub" or "Near Total Filling Station"
+  pickupLandmark      String?
+  pickupType          PickupType        @default(HUB)
+  dropoffLat          Float
+  dropoffLng          Float
+  dropoffAddress      String
+  dropoffLandmark     String?
+
+  // ── Detour Impact ──
+  estimatedDetourMins Int               @default(0)
+  seatsBooked         Int               @default(1)
+
+  // ── Verification ──
+  tripPin             String?           // 4-digit PIN, mandatory at pickup
+
+  // ── Economics ──
+  contribution        Int?              // Amount this rider pays (in kobo)
+  platformFee         Int?              // Platform's cut (in kobo)
+  safetyReserve       Int?              // Per-trip safety fund (e.g. ₦50)
+  paymentStatus       PaymentStatus     @default(PENDING)
+  paymentMethod       String?           // "card", "wallet", "bank_transfer"
+
+  // ── State ──
+  status              ReservationStatus @default(REQUESTED)
+
+  // ── Relations ──
+  events              ReservationEvent[]
+
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@index([journeyId])
+  @@index([riderAccountId])
+}
+
+enum PickupType {
+  HUB           // Smart Pickup Hub (Bodija Hub, UI Hub, etc.)
+  DOOR          // Door-to-door (premium pricing)
+  CUSTOM        // Driver and rider agreed point
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED    // Payment held, not yet captured
+  CAPTURED      // Payment settled after trip completion
+  REFUNDED
+  FAILED
+  DISPUTED
+}
+
+enum ReservationStatus {
+  REQUESTED           // Rider requested a seat
+  MATCHED             // Driver accepted the rider
+  DRIVER_EN_ROUTE     // Driver heading to pickup
+  DRIVER_ARRIVED      // Driver at pickup point
+  RIDER_VERIFIED      // PIN confirmed — trip officially starts for this rider
+  IN_PROGRESS         // Rider in vehicle, en route to dropoff
+  COMPLETED           // Rider dropped off
+  CANCELLED_BY_RIDER
+  CANCELLED_BY_DRIVER
+  NO_SHOW             // Rider didn't show at pickup
+  SAFETY_HOLD         // Trip frozen due to safety concern
+  DISPUTED
+}
+
+// ─────────────────────────────────────────────
+// RECURRING ROUTES ("My Routes")
+// ─────────────────────────────────────────────
+
+/// A saved recurring commute pattern.
+/// Both drivers and riders can have RouteSubscriptions.
+/// The matching engine uses these to proactively find compatible journeys.
+model RouteSubscription {
+  id                  String      @id @default(uuid())
+  accountId           String      // References Identity.Account
+  role                RouteRole   // Is this person offering seats or seeking seats?
+
+  // ── The Route ──
+  originAddress       String
+  originLat           Float
+  originLng           Float
+  destinationAddress  String
+  destinationLat      Float
+  destinationLng      Float
+
+  // ── Schedule ──
+  daysOfWeek          Int[]       // 0=Sun, 1=Mon ... 6=Sat
+  departureTime       String      // "07:15" (HH:MM local time)
+  departureWindowMins Int         @default(15) // ±15 mins flexibility
+
+  // ── Capacity (drivers only) ──
+  seatsOffered        Int?
+
+  isActive            Boolean     @default(true)
+
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  @@index([accountId])
+  @@index([isActive, daysOfWeek])
+}
+
+enum RouteRole {
+  RIDER     // "I need a ride this way every day"
+  DRIVER    // "I drive this way every day and have seats"
+}
+
+// ─────────────────────────────────────────────
+// RATINGS & REVIEWS
+// ─────────────────────────────────────────────
+
+model Rating {
+  id                String   @id @default(uuid())
+  reservationId     String   @unique  // One rating per seat reservation
+  reviewerAccountId String   // Who left the review
+  revieweeAccountId String   // Who is being reviewed
+
+  score             Int      // 1–5
+  comment           String?
+  tags              String[] // e.g. ["clean_vehicle", "on_time", "friendly"]
+
+  createdAt         DateTime @default(now())
+
+  @@index([revieweeAccountId])
+}
+
+// ─────────────────────────────────────────────
+// AUDIT TRAILS
+// ─────────────────────────────────────────────
+
+/// Every state change on a DriverJourney is recorded for evidence preservation.
+model JourneyEvent {
+  id            String        @id @default(uuid())
+  journeyId     String
+  journey       DriverJourney @relation(fields: [journeyId], references: [id])
+
+  eventType     String        // "status_change", "location_update", "seat_filled"
+  payload       Json?
+  createdAt     DateTime      @default(now())
+
+  @@index([journeyId, createdAt])
+}
+
+/// Every state change on a SeatReservation is recorded.
+model ReservationEvent {
+  id              String          @id @default(uuid())
+  reservationId   String
+  reservation     SeatReservation @relation(fields: [reservationId], references: [id])
+
+  eventType       String          // "status_change", "pin_verified", "safety_flag"
+  payload         Json?
+  createdAt       DateTime        @default(now())
+
+  @@index([reservationId, createdAt])
+}

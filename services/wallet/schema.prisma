@@ -1,0 +1,211 @@
+// services/wallet/schema.prisma
+// Canonical Financial Ledger for the weTag platform (MOVE + STAY)
+// Every naira has a reason. Every allocation is auditable.
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ─────────────────────────────────────────────
+// WALLET
+// ─────────────────────────────────────────────
+
+/// Every account has ONE wallet. The wallet routes money to
+/// either MOVE or STAY contexts but never mixes them in the UI.
+model Wallet {
+  id              String    @id @default(uuid())
+  accountId       String    @unique  // References Identity.Account
+  
+  // Balance in kobo (₦1 = 100 kobo)
+  availableBalance Int      @default(0)
+  pendingBalance   Int      @default(0) // Authorized but not yet settled
+  
+  currency        String    @default("NGN")
+
+  entries         LedgerEntry[]
+  payouts         PayoutRequest[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// ─────────────────────────────────────────────
+// DOUBLE-ENTRY LEDGER
+// ─────────────────────────────────────────────
+
+/// Immutable financial event. Never mutate wallet.balance directly.
+/// Instead, create a LedgerEntry and let the system recompute balance.
+model LedgerEntry {
+  id              String        @id @default(uuid())
+  walletId        String
+  wallet          Wallet        @relation(fields: [walletId], references: [id])
+
+  // ── What happened ──
+  type            LedgerType
+  direction       LedgerDirection
+  amount          Int           // Always positive; direction determines +/-
+  currency        String        @default("NGN")
+
+  // ── Context ──
+  domain          Domain        // MOVE or STAY
+  description     String        // Human-readable: "Shared ride · Akobo → Dugbe"
+  
+  // ── Cross-references ──
+  referenceType   String?       // "seat_reservation", "shared_expense", "rent_payment"
+  referenceId     String?       // UUID of the related domain object
+
+  // ── Provider tracking ──
+  providerName    String?       // "paystack", "flutterwave"
+  providerRef     String?       // External transaction reference
+
+  // ── State ──
+  status          LedgerStatus  @default(PENDING)
+  settledAt       DateTime?
+
+  createdAt       DateTime      @default(now())
+
+  @@index([walletId, createdAt])
+  @@index([referenceType, referenceId])
+  @@index([domain])
+}
+
+enum Domain {
+  MOVE
+  STAY
+  PLATFORM    // Internal platform operations (refunds, adjustments)
+}
+
+enum LedgerType {
+  // ── Inflows ──
+  TOPUP               // User added money to wallet
+  RIDE_PAYMENT         // Rider paid for a seat
+  DRIVER_EARNING       // Driver received ride payment
+  RENT_PAYMENT         // Tenant paid rent
+  EXPENSE_CONTRIBUTION // Household member paid shared expense
+  DEPOSIT_RECEIVED     // Caution deposit received
+  REFUND               // Money returned to user
+
+  // ── Outflows ──
+  RIDE_CHARGE          // Rider was charged for a seat
+  PLATFORM_FEE         // Platform commission deducted
+  SAFETY_RESERVE       // Safety fund contribution
+  RENT_CHARGE          // Rent deducted
+  EXPENSE_CHARGE       // Shared expense deducted
+  DEPOSIT_HELD         // Caution deposit held
+  DEPOSIT_RETURNED     // Caution deposit returned
+  PAYOUT               // Withdrawal to bank account
+  ADJUSTMENT           // Manual correction by admin
+
+  // ── Housing-specific ──
+  AGENCY_FEE           // Agent commission
+  LEGAL_FEE            // Legal/agreement fee
+  SERVICE_CHARGE       // Annual service charge
+}
+
+enum LedgerDirection {
+  CREDIT    // Money IN to wallet
+  DEBIT     // Money OUT of wallet
+}
+
+enum LedgerStatus {
+  PENDING       // Initiated
+  AUTHORIZED    // Payment provider has confirmed authorization
+  SETTLED       // Money has actually moved
+  FAILED        // Transaction failed
+  REVERSED      // Reversed after settlement (refund)
+  DISPUTED      // Under investigation
+}
+
+// ─────────────────────────────────────────────
+// PAYOUTS (Withdrawals to Bank)
+// ─────────────────────────────────────────────
+
+model PayoutRequest {
+  id              String        @id @default(uuid())
+  walletId        String
+  wallet          Wallet        @relation(fields: [walletId], references: [id])
+
+  amount          Int           // In kobo
+  bankName        String
+  accountNumber   String
+  accountName     String
+  
+  // ── Provider ──
+  providerName    String?       // "paystack"
+  providerRef     String?       // Transfer reference
+  
+  status          PayoutStatus  @default(PENDING)
+  processedAt     DateTime?
+  failureReason   String?
+
+  createdAt       DateTime      @default(now())
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REVERSED
+}
+
+// ─────────────────────────────────────────────
+// DISPUTE RESOLUTION
+// ─────────────────────────────────────────────
+
+model Dispute {
+  id              String        @id @default(uuid())
+  
+  // Who raised it
+  raisedByAccountId String
+  againstAccountId  String?
+
+  domain          Domain
+  category        DisputeCategory
+  description     String
+  evidence        String[]      // URLs to screenshots, receipts, etc.
+
+  // ── Cross-reference ──
+  referenceType   String?       // "seat_reservation", "listing", "shared_expense"
+  referenceId     String?
+
+  status          DisputeStatus @default(OPEN)
+  resolution      String?
+  resolvedAt      DateTime?
+  resolvedBy      String?       // Admin Account ID
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+enum DisputeCategory {
+  // MOVE
+  FARE_DISPUTE
+  CANCELLATION
+  SAFETY_INCIDENT
+  DRIVER_BEHAVIOUR
+  RIDER_BEHAVIOUR
+
+  // STAY
+  DEPOSIT_DISPUTE
+  FEE_DISPUTE
+  PROPERTY_MISMATCH    // "Property didn't match listing"
+  MAINTENANCE
+  ROOMMATE_CONFLICT
+  FRAUD_ALLEGATION
+  UNAUTHORIZED_CHARGE
+}
+
+enum DisputeStatus {
+  OPEN
+  INVESTIGATING
+  AWAITING_EVIDENCE
+  RESOLVED
+  ESCALATED
+  CLOSED
+}

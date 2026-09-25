@@ -1,0 +1,347 @@
+// services/identity/schema.prisma
+// Canonical Identity & Trust schema for the weTag platform (MOVE + STAY)
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ─────────────────────────────────────────────
+// UNIFIED ACCOUNT
+// ─────────────────────────────────────────────
+
+model Account {
+  id                String        @id @default(uuid())
+  phoneNumber       String        @unique   // E.164 format: +2348012345678
+  phoneVerifiedAt   DateTime?
+
+  firstName         String?
+  lastName          String?
+  email             String?       @unique
+  profilePhotoUrl   String?
+  dateOfBirth       DateTime?
+
+  status            AccountStatus @default(ACTIVE)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  riderProfile      RiderProfile?
+  driverProfile     DriverProfile?
+  tenantProfile     TenantProfile?
+  landlordProfile   LandlordProfile?
+  agentProfile      AgentProfile?
+
+  vehicles          Vehicle[]
+  verifications     VerificationRecord[]
+  paymentMethods    PaymentMethod[]
+  payoutAccounts    PayoutAccount[]
+  trustedContacts   TrustedContact[]
+  consents          ConsentRecord[]
+
+  @@index([phoneNumber])
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+  DELETED
+}
+
+// ─────────────────────────────────────────────
+// MOVE ROLES
+// ─────────────────────────────────────────────
+
+model RiderProfile {
+  id             String   @id @default(uuid())
+  accountId      String   @unique
+  account        Account  @relation(fields: [accountId], references: [id])
+
+  rating         Float    @default(5.0)
+  totalTrips     Int      @default(0)
+  cancelledTrips Int      @default(0)
+
+  quietRide      Boolean  @default(false)
+  acRequired     Boolean  @default(false)
+
+  createdAt      DateTime @default(now())
+}
+
+model DriverProfile {
+  id                    String      @id @default(uuid())
+  accountId             String      @unique
+  account               Account     @relation(fields: [accountId], references: [id])
+
+  driverType            DriverType  @default(SHARED_PRIVATE)
+  isApproved            Boolean     @default(false)
+  approvedAt            DateTime?
+
+  rating                Float       @default(5.0)
+  totalJourneysShared   Int         @default(0)
+  cancelledJourneys     Int         @default(0)
+  reliabilityScore      Float       @default(1.0)
+
+  licenseNumber         String?
+  licenseVerifiedAt     DateTime?
+  licenseExpiresAt      DateTime?
+  backgroundCheckedAt   DateTime?
+
+  maxDetourMinutes      Int         @default(10)
+  maxPassengers         Int         @default(3)
+  noSmoking             Boolean     @default(true)
+  conversationOk        Boolean     @default(true)
+  petsAllowed           Boolean     @default(false)
+
+  createdAt             DateTime    @default(now())
+}
+
+enum DriverType {
+  SHARED_PRIVATE
+  SCHEDULED_SHARED
+  COMMERCIAL_EARNER
+  FLEET_PARTNER
+  CORPORATE_DRIVER
+}
+
+// ─────────────────────────────────────────────
+// STAY ROLES
+// ─────────────────────────────────────────────
+
+model TenantProfile {
+  id                String            @id @default(uuid())
+  accountId         String            @unique
+  account           Account           @relation(fields: [accountId], references: [id])
+
+  totalTenancies    Int               @default(0)
+  activeTenancies   Int               @default(0)
+  disputeCount      Int               @default(0)
+
+  sleepSchedule     SleepSchedule?
+  cleanlinessLevel  Int?
+  smokingPreference SmokingPreference?
+  petPreference     PetPreference?
+  guestPreference   GuestPreference?
+  noisePreference   NoisePreference?
+
+  createdAt         DateTime          @default(now())
+}
+
+enum SleepSchedule {
+  EARLY_BIRD
+  NIGHT_OWL
+  FLEXIBLE
+}
+
+enum SmokingPreference {
+  NO_SMOKING
+  OUTDOOR_ONLY
+  SMOKING_OK
+}
+
+enum PetPreference {
+  NO_PETS
+  PETS_OK
+}
+
+enum GuestPreference {
+  NO_OVERNIGHT
+  PRIOR_NOTICE
+  GUESTS_WELCOME
+}
+
+enum NoisePreference {
+  QUIET
+  MODERATE
+  LIVELY
+}
+
+model LandlordProfile {
+  id                String   @id @default(uuid())
+  accountId         String   @unique
+  account           Account  @relation(fields: [accountId], references: [id])
+
+  totalProperties   Int      @default(0)
+  activeListings    Int      @default(0)
+  successfulRentals Int      @default(0)
+  responseRate      Float?
+
+  createdAt         DateTime @default(now())
+}
+
+model AgentProfile {
+  id                  String   @id @default(uuid())
+  accountId           String   @unique
+  account             Account  @relation(fields: [accountId], references: [id])
+
+  agencyName          String?
+  isVerified          Boolean  @default(false)
+  verifiedAt          DateTime?
+
+  totalListings       Int      @default(0)
+  successfulRentals   Int      @default(0)
+  responseRate        Float?
+  complaintCount      Int      @default(0)
+
+  createdAt           DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────
+// VEHICLES
+// ─────────────────────────────────────────────
+
+model Vehicle {
+  id                    String        @id @default(uuid())
+  accountId             String
+  account               Account       @relation(fields: [accountId], references: [id])
+
+  make                  String
+  model                 String
+  year                  Int
+  color                 String
+  plateNumber           String        @unique
+  vehicleClass          VehicleClass  @default(SEDAN)
+  seatCapacity          Int           @default(4)
+  hasAC                 Boolean       @default(false)
+
+  isApproved            Boolean       @default(false)
+  approvedAt            DateTime?
+  inspectionDate        DateTime?
+  inspectionExpiresAt   DateTime?
+  insuranceExpiresAt    DateTime?
+  registrationExpiresAt DateTime?
+
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+}
+
+enum VehicleClass {
+  SEDAN
+  SUV
+  MINIVAN
+  HATCHBACK
+  PICKUP
+  BUS
+}
+
+// ─────────────────────────────────────────────
+// VERIFICATION & KYC
+// ─────────────────────────────────────────────
+
+model VerificationRecord {
+  id              String             @id @default(uuid())
+  accountId       String
+  account         Account            @relation(fields: [accountId], references: [id])
+
+  type            VerificationType
+  status          VerificationStatus @default(PENDING)
+
+  providerRef     String?
+  providerName    String?
+
+  verifiedAt      DateTime?
+  expiresAt       DateTime?
+  rejectionReason String?
+  documentRef     String?
+
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+}
+
+enum VerificationType {
+  PHONE_OTP
+  NIN
+  DRIVERS_LICENSE
+  SELFIE_LIVENESS
+  VEHICLE_INSPECTION
+  INSURANCE
+  BACKGROUND_CHECK
+  ADDRESS_VERIFICATION
+}
+
+enum VerificationStatus {
+  PENDING
+  IN_REVIEW
+  PASSED
+  FAILED
+  EXPIRED
+}
+
+// ─────────────────────────────────────────────
+// PAYMENTS
+// ─────────────────────────────────────────────
+
+model PaymentMethod {
+  id            String        @id @default(uuid())
+  accountId     String
+  account       Account       @relation(fields: [accountId], references: [id])
+
+  type          PayMethodType
+  provider      String
+  tokenRef      String?
+  last4         String?
+  bankName      String?
+  isDefault     Boolean       @default(false)
+
+  createdAt     DateTime      @default(now())
+}
+
+enum PayMethodType {
+  CARD
+  BANK_TRANSFER
+  USSD
+  WALLET
+}
+
+model PayoutAccount {
+  id            String   @id @default(uuid())
+  accountId     String
+  account       Account  @relation(fields: [accountId], references: [id])
+
+  bankName      String
+  bankCode      String
+  accountNumber String
+  accountName   String
+  provider      String
+  recipientCode String?
+  isDefault     Boolean  @default(false)
+  isVerified    Boolean  @default(false)
+
+  createdAt     DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────
+// SAFETY & TRUST
+// ─────────────────────────────────────────────
+
+model TrustedContact {
+  id                String   @id @default(uuid())
+  accountId         String
+  account           Account  @relation(fields: [accountId], references: [id])
+
+  name              String
+  phoneNumber       String
+  relationship      String?
+
+  autoShareTrips    Boolean  @default(false)
+  autoShareViewings Boolean  @default(false)
+
+  createdAt         DateTime @default(now())
+}
+
+model ConsentRecord {
+  id            String    @id @default(uuid())
+  accountId     String
+  account       Account   @relation(fields: [accountId], references: [id])
+
+  consentType   String
+  granted       Boolean
+  grantedAt     DateTime  @default(now())
+  revokedAt     DateTime?
+  ipAddress     String?
+
+  @@index([accountId, consentType])
+}

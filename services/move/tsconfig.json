@@ -17,6 +17,8 @@
     "src/red_team_simulation.ts",
     "src/e2e_integration.ts",
     "src/webhook_simulator.ts",
-    "src/live_smoke_test.ts"
+    "src/live_smoke_test.ts",
+    "src/master_test_runner.ts",
+    "src/geofence_runner.ts"
   ]
 }

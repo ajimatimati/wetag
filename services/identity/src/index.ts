@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
+import crypto from 'crypto';
 import { PrismaClient } from '@prisma/client';
 
 import { requireAuth, generateAccessToken, generateRefreshToken, AuthenticatedRequest } from './auth';
@@ -41,6 +42,13 @@ const authLimiter = rateLimit({
   message: { error: 'Too many OTP requests. Try again later.', code: 'RATE_LIMITED' },
 });
 
+const verifyOtpLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 10,                   // 10 attempts per IP/phone
+  keyGenerator: (req) => req.body?.phoneNumber || req.ip || 'unknown',
+  message: { error: 'Too many failed verification attempts. Please try again later.', code: 'RATE_LIMITED' },
+});
+
 // ─────────────────────────────────────────────
 // Health Check
 // ─────────────────────────────────────────────
@@ -60,30 +68,57 @@ app.get('/health', async (_req, res) => {
 
 // In production, this would use Termii/AfricasTalking.
 // For now, OTP is stored in-memory (replace with Redis in WS-12).
-const otpStore = new Map<string, { code: string; expiresAt: number }>();
+const otpStore = new Map<string, { code: string; expiresAt: number; attempts: number }>();
 
 function generateOtp(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  // Cryptographically secure pseudorandom number generator for 6-digit OTP
+  return crypto.randomInt(100000, 1000000).toString();
 }
 
 app.post('/api/auth/request-otp', authLimiter, validate(RequestOtpSchema), async (req, res) => {
   const { phoneNumber } = req.body;
 
   const code = generateOtp();
-  otpStore.set(phoneNumber, { code, expiresAt: Date.now() + 5 * 60 * 1000 }); // 5 min TTL
+  otpStore.set(phoneNumber, { code, expiresAt: Date.now() + 5 * 60 * 1000, attempts: 0 }); // 5 min TTL
 
-  // TODO: Replace with actual SMS provider (Termii / AfricasTalking)
-  console.log(`[OTP] ${phoneNumber}: ${code}`);
+  // Safe logging: Never leak plain OTP in production logs
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[OTP Dev Sandbox] ${phoneNumber}: ${code}`);
+  } else {
+    console.log(`[OTP] Verification SMS dispatched to ${phoneNumber.slice(0, 4)}***${phoneNumber.slice(-2)}`);
+  }
 
   res.json({ message: 'OTP sent', expiresInSeconds: 300 });
 });
 
-app.post('/api/auth/verify-otp', validate(VerifyOtpSchema), async (req, res) => {
+app.post('/api/auth/verify-otp', verifyOtpLimiter, validate(VerifyOtpSchema), async (req, res) => {
   const { phoneNumber, code } = req.body;
 
   const stored = otpStore.get(phoneNumber);
-  if (!stored || stored.code !== code || Date.now() > stored.expiresAt) {
+  if (!stored || Date.now() > stored.expiresAt) {
+    if (stored) otpStore.delete(phoneNumber);
     res.status(401).json({ error: 'Invalid or expired OTP', code: 'OTP_INVALID' });
+    return;
+  }
+
+  if (stored.attempts >= 5) {
+    otpStore.delete(phoneNumber);
+    res.status(429).json({ error: 'Too many failed attempts. This OTP has expired. Please request a new one.', code: 'OTP_LOCKED' });
+    return;
+  }
+
+  if (stored.code !== code) {
+    stored.attempts += 1;
+    if (stored.attempts >= 5) {
+      otpStore.delete(phoneNumber);
+      res.status(429).json({ error: 'Too many failed attempts. This OTP has expired. Please request a new one.', code: 'OTP_LOCKED' });
+      return;
+    }
+    res.status(401).json({
+      error: 'Invalid OTP code',
+      code: 'OTP_INVALID',
+      attemptsRemaining: 5 - stored.attempts,
+    });
     return;
   }
 
@@ -317,6 +352,17 @@ app.post('/api/verification/initiate', requireAuth, async (req: AuthenticatedReq
 
 app.post('/api/webhooks/kyc', async (req, res) => {
   try {
+    const webhookSecret = process.env.SMILE_ID_WEBHOOK_SECRET || 'smile_id_secure_hook_secret_2026';
+    const authHeader = req.headers['authorization'] || req.headers['x-smile-signature'];
+    const expectedAuth = `Bearer ${webhookSecret}`;
+
+    if (process.env.NODE_ENV === 'production' || authHeader) {
+      if (!authHeader || (authHeader !== expectedAuth && authHeader !== webhookSecret)) {
+        res.status(401).json({ error: 'Unauthorized webhook signature or token', code: 'UNAUTHORIZED' });
+        return;
+      }
+    }
+
     const { providerRef, status, rejectionReason } = req.body;
 
     const record = await prisma.verificationRecord.findFirst({

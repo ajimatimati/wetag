@@ -1,0 +1,59 @@
+name: weTag CI Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-and-test:
+    name: Typecheck, Validate Schemas & Run Lifecycle Suites
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install Microservice Dependencies
+        run: |
+          npm ci --prefix services/identity
+          npm ci --prefix services/move
+          npm ci --prefix services/stay
+          npm ci --prefix services/wallet
+          npm ci --prefix apps/admin
+
+      - name: Validate Prisma Schemas
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/wetag_test"
+        run: |
+          npx --prefix services/identity prisma validate --schema=services/identity/schema.prisma
+          npx --prefix services/move prisma validate --schema=services/move/schema.prisma
+          npx --prefix services/stay prisma validate --schema=services/stay/schema.prisma
+          npx --prefix services/wallet prisma validate --schema=services/wallet/schema.prisma
+
+      - name: Compile Backend Microservices & Admin (TypeScript)
+        run: |
+          npx --prefix services/identity tsc --noEmit
+          npx --prefix services/move tsc --noEmit
+          npx --prefix services/stay tsc --noEmit
+          npx --prefix services/wallet tsc --noEmit
+          npx --prefix apps/admin tsc --noEmit
+
+      - name: Generate SEO/GEO Distribution Assets
+        run: |
+          npx --prefix services/move ts-node scripts/inject-seo-geo.ts
+
+      - name: Run Master 7-Tier Quality & Security Audit Suite
+        run: |
+          npx --prefix services/move ts-node services/move/src/master_test_runner.ts

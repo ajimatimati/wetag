@@ -249,7 +249,6 @@ Host: https://wetag.ng
   console.log(`✅ Generated: robots.txt`);
 }
 
-if (require.main === module) {
-  const targetDist = path.resolve(__dirname, '../apps/mobile/dist');
-  injectSeoGeo(targetDist);
-}
+const targetDist = path.resolve(process.cwd(), 'apps/mobile/dist');
+injectSeoGeo(targetDist);
+

@@ -54,11 +54,17 @@ export class PaystackAdapter {
   }
 
   /**
-   * Validates Paystack webhook HMAC signature.
+   * Validates Paystack webhook HMAC signature using constant-time comparison to mitigate timing attacks.
    */
-  verifyWebhookSignature(rawBody: string, signatureHeader: string): boolean {
+  verifyWebhookSignature(rawBody: string, signatureHeader?: string): boolean {
+    if (!signatureHeader || !rawBody) return false;
     const hash = crypto.createHmac('sha512', this.secretKey).update(rawBody).digest('hex');
-    return hash === signatureHeader;
+    const hashBuf = Buffer.from(hash, 'utf8');
+    const sigBuf = Buffer.from(signatureHeader, 'utf8');
+    if (hashBuf.length !== sigBuf.length) {
+      return false;
+    }
+    return crypto.timingSafeEqual(hashBuf, sigBuf);
   }
 
   /**

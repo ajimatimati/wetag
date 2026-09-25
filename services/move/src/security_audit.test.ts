@@ -104,9 +104,9 @@ export function runSecurityTestSuite(): SecurityCheckResult[] {
   // ─────────────────────────────────────────────
   // 5. IDOR Guard on Trip Completion
   // ─────────────────────────────────────────────
-  const journeyOwner = 'driver-123';
-  const attacker = 'attacker-456';
-  const reservationStatus = 'RIDER_VERIFIED';
+  const journeyOwner: string = 'driver-123';
+  const attacker: string = 'attacker-456';
+  const reservationStatus: string = 'RIDER_VERIFIED';
 
   const isDriverAuthorized = journeyOwner === 'driver-123';
   const isAttackerForbidden = journeyOwner !== attacker;
@@ -122,8 +122,8 @@ export function runSecurityTestSuite(): SecurityCheckResult[] {
   // ─────────────────────────────────────────────
   // 6. IDOR Guard on Property Listings & Viewings
   // ─────────────────────────────────────────────
-  const propertyOwner = 'landlord-789';
-  const imposter = 'intruder-999';
+  const propertyOwner: string = 'landlord-789';
+  const imposter: string = 'intruder-999';
   const canPublishListing = propertyOwner === 'landlord-789';
   const imposterBlocked = propertyOwner !== imposter;
 

@@ -18,6 +18,7 @@ import { runRedTeamSuite } from './red_team_simulation';
 import { runMoveSmokeTests } from './live_smoke_test';
 import { runGeofenceAudit } from './geofence_runner';
 import { runMatchingTests } from './matching.test';
+import { runSecurityTestSuite } from './security_audit.test';
 
 export interface TierResult {
   tier: string;
@@ -205,6 +206,21 @@ export async function runMasterQualityAudit(): Promise<{
     status: seoPassed === seoChecks.length ? 'PASSED' : 'FAILED',
     durationMs: durSeo,
     details: 'Title, description, NG-OY tags, JSON-LD, sitemap, robots, waitlist',
+  });
+
+  // TIER 7: Security & Vulnerability Safeguards
+  console.log('▶ Tier 7: Auditing Security, Cryptography & IDOR Protections...');
+  const startSec = Date.now();
+  const secResults = runSecurityTestSuite();
+  const durSec = Date.now() - startSec;
+  const secPassed = secResults.filter((s) => s.status === 'PASSED').length;
+  tierResults.push({
+    tier: '7. Security & Cryptography Defense',
+    totalChecks: secResults.length,
+    passedChecks: secPassed,
+    status: secPassed === secResults.length ? 'PASSED' : 'FAILED',
+    durationMs: durSec,
+    details: 'CSPRNG OTP, brute-force lock, timing-safe HMAC, IDOR ownership guards',
   });
 
   const totalChecks = tierResults.reduce((acc, t) => acc + t.totalChecks, 0);
