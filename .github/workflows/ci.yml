@@ -32,14 +32,14 @@ jobs:
           npm ci --prefix services/wallet
           npm ci --prefix apps/admin
 
-      - name: Validate Prisma Schemas
+      - name: Validate & Generate Prisma Clients
         env:
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/wetag_test"
         run: |
-          npx --prefix services/identity prisma validate --schema=services/identity/schema.prisma
-          npx --prefix services/move prisma validate --schema=services/move/schema.prisma
-          npx --prefix services/stay prisma validate --schema=services/stay/schema.prisma
-          npx --prefix services/wallet prisma validate --schema=services/wallet/schema.prisma
+          cd services/identity && npx prisma validate && npx prisma generate
+          cd ../move && npx prisma validate && npx prisma generate
+          cd ../stay && npx prisma validate && npx prisma generate
+          cd ../wallet && npx prisma validate && npx prisma generate
 
       - name: Compile Backend Microservices & Admin (TypeScript)
         run: |

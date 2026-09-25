@@ -35,8 +35,8 @@ export function validate(schema: ZodSchema, source: 'body' | 'params' | 'query' 
 // Prisma Error Handler
 // ─────────────────────────────────────────────
 
-export function handlePrismaError(err: unknown, res: Response): void {
-  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+export function handlePrismaError(err: any, res: Response): void {
+  if (err && err.code) {
     switch (err.code) {
       case 'P2002': {
         const target = (err.meta?.target as string[])?.join(', ') || 'field';

@@ -468,7 +468,7 @@ app.get('/api/account/:id/trust-summary', requireAuth, async (req: Authenticated
         firstName: account.firstName,
         profilePhotoUrl: account.profilePhotoUrl,
         memberSince: account.createdAt,
-        verifiedBadges: account.verifications.map((v) => v.type),
+        verifiedBadges: (account.verifications || []).map((v: any) => v.type),
         rider: account.riderProfile,
         driver: account.driverProfile,
         tenant: account.tenantProfile,
