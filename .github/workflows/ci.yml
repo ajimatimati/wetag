@@ -43,16 +43,16 @@ jobs:
 
       - name: Compile Backend Microservices & Admin (TypeScript)
         run: |
-          npx --prefix services/identity tsc --noEmit
-          npx --prefix services/move tsc --noEmit
-          npx --prefix services/stay tsc --noEmit
-          npx --prefix services/wallet tsc --noEmit
-          npx --prefix apps/admin tsc --noEmit
+          cd services/identity && npx tsc --noEmit
+          cd ../move && npx tsc --noEmit
+          cd ../stay && npx tsc --noEmit
+          cd ../wallet && npx tsc --noEmit
+          cd ../../apps/admin && npx tsc --noEmit
 
       - name: Generate SEO/GEO Distribution Assets
         run: |
-          npx --prefix services/move ts-node scripts/inject-seo-geo.ts
+          cd services/move && npx ts-node ../../scripts/inject-seo-geo.ts
 
       - name: Run Master 7-Tier Quality & Security Audit Suite
         run: |
-          npx --prefix services/move ts-node services/move/src/master_test_runner.ts
+          cd services/move && npx ts-node src/master_test_runner.ts
