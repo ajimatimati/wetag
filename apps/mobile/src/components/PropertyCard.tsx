@@ -18,6 +18,9 @@ export interface PropertyItem {
   hasParking?: boolean;
   isVerified?: boolean;
   freshnessText?: string;
+  commuteMinutesSecretariat?: number;
+  commuteMinutesUi?: number;
+  flatmateMonthlyNaira?: number;
 }
 
 interface PropertyCardProps {
@@ -38,20 +41,35 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onSelect }
           {property.isVerified && (
             <View style={styles.verifiedBadge}>
               <ShieldCheck size={12} color="#FFFFFF" />
-              <Text style={styles.verifiedText}>Verified Landlord</Text>
+              <Text style={styles.verifiedText}>Civic Verified Landlord</Text>
             </View>
           )}
           <View style={styles.zeroFeeBadge}>
-            <Text style={styles.zeroFeeText}>Zero surprise fee</Text>
+            <Text style={styles.zeroFeeText}>Zero Surprise Fees</Text>
           </View>
         </View>
-        <Text style={styles.imagePlaceholderText}>
-          {property.bedrooms} Bed · {property.propertyType}
-        </Text>
+        <View style={styles.thumbBottomRow}>
+          <Text style={styles.imagePlaceholderText}>
+            {property.bedrooms} Bed · {property.propertyType}
+          </Text>
+          <View style={styles.pHashBadge}>
+            <Text style={styles.pHashText}>🛡️ pHash Scam-Free</Text>
+          </View>
+        </View>
       </View>
 
       <View style={styles.body}>
-        <Text style={styles.neighborhood}>{property.neighborhood}, Ibadan</Text>
+        <View style={styles.neighborhoodRow}>
+          <Text style={styles.neighborhood}>{property.neighborhood}, Ibadan</Text>
+          {property.commuteMinutesSecretariat !== undefined && (
+            <View style={styles.commutePill}>
+              <Text style={styles.commuteText}>
+                🚗 {property.commuteMinutesSecretariat}m to Secretariat
+              </Text>
+            </View>
+          )}
+        </View>
+
         <Text style={styles.title} numberOfLines={1}>
           {property.title}
         </Text>
@@ -59,7 +77,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onSelect }
         {/* Real Move-In Cost Box */}
         <View style={styles.priceContainer}>
           <View>
-            <Text style={styles.moveInLabel}>REAL MOVE-IN TOTAL</Text>
+            <Text style={styles.moveInLabel}>REAL MOVE-IN TOTAL (UPFRONT)</Text>
             <Text style={styles.moveInPrice}>
               ₦{property.moveInTotalNaira.toLocaleString()}
             </Text>
@@ -74,7 +92,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onSelect }
 
         {/* Itemized Guarantee Hint */}
         <Text style={styles.guaranteeSubtext} numberOfLines={1}>
-          Includes rent + standard capped 10% agency + legal + caution
+          Guaranteed upfront: Rent + Capped 10% Agency + Legal + Refundable Caution
         </Text>
 
         {/* Utility Badges */}
@@ -82,19 +100,19 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onSelect }
           {property.hasBorehole && (
             <View style={styles.amenityChip}>
               <Droplets size={11} color={colors.primaryDeep} />
-              <Text style={styles.amenityText}>Borehole 24/7</Text>
+              <Text style={styles.amenityText}>24/7 Borehole</Text>
             </View>
           )}
           {property.hasPrepaidMeter && (
             <View style={styles.amenityChip}>
               <Zap size={11} color="#D97706" />
-              <Text style={styles.amenityText}>Prepaid Meter</Text>
+              <Text style={styles.amenityText}>Prepaid Band B</Text>
             </View>
           )}
           {property.hasSecurity && (
             <View style={styles.amenityChip}>
               <Shield size={11} color={colors.stay.accentDeep} />
-              <Text style={styles.amenityText}>Gated Security</Text>
+              <Text style={styles.amenityText}>Gated Estate</Text>
             </View>
           )}
           {property.hasParking && (
@@ -103,6 +121,16 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onSelect }
               <Text style={styles.amenityText}>Parking</Text>
             </View>
           )}
+        </View>
+
+        {/* Flatmate Co-Living Option */}
+        <View style={styles.cardFooter}>
+          <Text style={styles.flatmateText} numberOfLines={1}>
+            Co-living split: <Text style={styles.flatmateBold}>~₦{(property.flatmateMonthlyNaira || Math.round(property.rentAnnualNaira / 12 / (property.bedrooms || 2))).toLocaleString()}/mo</Text> per flatmate
+          </Text>
+          <View style={styles.viewActionPill}>
+            <Text style={styles.viewActionText}>View Details ➔</Text>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -236,9 +264,67 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     gap: 4,
   },
-  amenityText: {
+  thumbBottomRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  pHashBadge: {
+    backgroundColor: 'rgba(18, 60, 58, 0.75)',
+    paddingVertical: 3,
+    paddingHorizontal: 7,
+    borderRadius: 6,
+  },
+  pHashText: {
+    color: '#A7F3D0',
+    fontSize: 9,
+    fontWeight: '700',
+  },
+  neighborhoodRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  commutePill: {
+    backgroundColor: '#EFF6FF',
+    paddingVertical: 2,
+    paddingHorizontal: 7,
+    borderRadius: 6,
+  },
+  commuteText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: colors.move.transitBlue,
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 14,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: colors.borderSubtle,
+  },
+  flatmateText: {
     fontSize: 11,
     color: colors.textSecondary,
-    fontWeight: '600',
+    flex: 1,
+    marginRight: 8,
+  },
+  flatmateBold: {
+    fontWeight: '800',
+    color: colors.stay.warmClay,
+  },
+  viewActionPill: {
+    backgroundColor: colors.primaryDeep,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 9999,
+  },
+  viewActionText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
 });

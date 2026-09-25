@@ -84,6 +84,7 @@ declare module 'lucide-react-native' {
   export const CheckCircle2: any;
   export const AlertTriangle: any;
   export const Navigation: any;
+  export const Copy: any;
 }
 
 declare module 'expo-status-bar' {

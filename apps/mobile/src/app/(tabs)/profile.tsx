@@ -78,6 +78,18 @@ export default function ProfileScreen() {
         <Text style={styles.balanceLabel}>Available for Carpools & Living Bills</Text>
         <Text style={styles.balanceAmount}>₦{walletBalance.toLocaleString()}</Text>
 
+        {/* Dedicated Nigerian NUBAN Virtual Account */}
+        <View style={styles.nubanBox}>
+          <View>
+            <Text style={styles.nubanLabel}>DEDICATED NUBAN TRANSFER ACCOUNT</Text>
+            <Text style={styles.nubanNumber}>Wema Bank · 9912048821</Text>
+            <Text style={styles.nubanName}>weTag / Tolu Olaniyi</Text>
+          </View>
+          <View style={styles.instantBadge}>
+            <Text style={styles.instantBadgeText}>Instant &lt;10s</Text>
+          </View>
+        </View>
+
         <View style={styles.walletActions}>
           <TouchableOpacity
             style={[styles.walletBtn, styles.topupBtn]}
@@ -85,7 +97,7 @@ export default function ProfileScreen() {
             activeOpacity={0.8}
           >
             <PlusCircle size={15} color="#FFFFFF" />
-            <Text style={styles.topupBtnText}>Top Up (Transfer/OPay)</Text>
+            <Text style={styles.topupBtnText}>Top Up (OPay/Transfer)</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.walletBtn, styles.withdrawBtn]}
@@ -295,8 +307,47 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '800',
     marginTop: 4,
-    marginBottom: 16,
+    marginBottom: 12,
     letterSpacing: -0.5,
+  },
+  nubanBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.12)',
+  },
+  nubanLabel: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: colors.primary,
+    letterSpacing: 0.8,
+  },
+  nubanNumber: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    marginTop: 2,
+  },
+  nubanName: {
+    fontSize: 11,
+    color: '#D1DDD9',
+    marginTop: 1,
+  },
+  instantBadge: {
+    backgroundColor: 'rgba(24, 184, 138, 0.25)',
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+  },
+  instantBadgeText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#A7F3D0',
   },
   walletActions: {
     flexDirection: 'row',

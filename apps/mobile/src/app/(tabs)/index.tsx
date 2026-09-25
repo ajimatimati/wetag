@@ -27,6 +27,13 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.headerControls}>
+          <TouchableOpacity
+            style={styles.walletPill}
+            onPress={() => router.push('/profile')}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.walletPillText}>₦14,500</Text>
+          </TouchableOpacity>
           <View style={styles.cityPill}>
             <Text style={styles.cityPillText}>Ibadan</Text>
           </View>
@@ -46,14 +53,39 @@ export default function HomeScreen() {
           <Text style={styles.greeting}>Good morning, Tolu 👋</Text>
           <View style={styles.statusRow}>
             <View style={styles.greenPulse} />
-            <Text style={styles.statusSub}>Ibadan North · Route Ready</Text>
+            <Text style={styles.statusSub}>Ibadan North · 4 Active Corridors</Text>
           </View>
         </View>
         <View style={styles.trustPill}>
           <ShieldCheck size={14} color={colors.primary} />
-          <Text style={styles.trustText}>Verified</Text>
+          <Text style={styles.trustText}>Tier 2 NIN</Text>
         </View>
       </View>
+
+      {/* Quick Corridor Selection Bar */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.corridorBar}
+      >
+        {[
+          { label: 'Akobo ➔ Dugbe', fare: '₦800' },
+          { label: 'UI ➔ Secretariat', fare: '₦300' },
+          { label: 'Bodija ➔ Ring Road', fare: '₦500' },
+          { label: 'Challenge ➔ Dugbe', fare: '₦400' },
+          { label: 'Iwo Road ➔ Monatan', fare: '₦350' },
+        ].map((corr, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={styles.corridorPill}
+            onPress={() => router.push('/move')}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.corridorPillRoute}>{corr.label}</Text>
+            <Text style={styles.corridorPillFare}>{corr.fare}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
 
       {/* Primary Morning Routine Card */}
       <RoutineCard
@@ -80,7 +112,7 @@ export default function HomeScreen() {
         <View style={styles.returnContent}>
           <Text style={styles.returnTag}>UPCOMING RETURN · 5:30 PM TODAY</Text>
           <Text style={styles.returnTitle} numberOfLines={1}>
-            Dugbe ➔ Akobo (Confirmed with Babatunde)
+            Dugbe ➔ Akobo (Confirmed with Babatunde A.)
           </Text>
         </View>
         <ArrowRight size={16} color={colors.textMuted} />
@@ -98,7 +130,10 @@ export default function HomeScreen() {
             <Compass size={22} color={colors.move.transitBlue} />
           </View>
           <Text style={styles.pillarTitle}>Daily Commute</Text>
-          <Text style={styles.pillarSub}>Share rides from ₦300 across Akobo, UI, Dugbe.</Text>
+          <Text style={styles.pillarSub}>Share verified rides from ₦300 across Akobo, UI, Dugbe.</Text>
+          <View style={styles.pillarBadgeRow}>
+            <Text style={styles.pillarBadgeText}>32 drivers active</Text>
+          </View>
           <View style={styles.pillarAction}>
             <Text style={[styles.actionText, { color: colors.move.transitBlue }]}>Find ride</Text>
             <ArrowRight size={13} color={colors.move.transitBlue} />
@@ -115,7 +150,10 @@ export default function HomeScreen() {
             <Building size={22} color={colors.stay.warmClay} />
           </View>
           <Text style={styles.pillarTitle}>Verified Homes</Text>
-          <Text style={styles.pillarSub}>Real move-in totals. Zero surprise agent markups.</Text>
+          <Text style={styles.pillarSub}>Real move-in totals upfront. Zero surprise agent markups.</Text>
+          <View style={styles.pillarBadgeRow}>
+            <Text style={[styles.pillarBadgeText, { color: '#B45309' }]}>48 verified homes</Text>
+          </View>
           <View style={styles.pillarAction}>
             <Text style={[styles.actionText, { color: colors.stay.warmClay }]}>Browse</Text>
             <ArrowRight size={13} color={colors.stay.warmClay} />
@@ -126,10 +164,10 @@ export default function HomeScreen() {
       {/* Driver Empty Seat Offset Promo */}
       <View style={styles.driverPromoCard}>
         <View style={styles.promoTextCol}>
-          <Text style={styles.promoTag}>EMPTY SEAT OFFSET</Text>
-          <Text style={styles.promoTitle}>Driving to work today?</Text>
+          <Text style={styles.promoTag}>COMMUTER DRIVER PROGRAM</Text>
+          <Text style={styles.promoTitle}>Offset up to ₦18,000/week</Text>
           <Text style={styles.promoBody}>
-            Offset fuel costs by sharing spare seats along your route.
+            Fill your empty seats on your daily Ibadan commute. Zero commercial taxi hassle.
           </Text>
         </View>
         <TouchableOpacity
@@ -209,6 +247,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
+  walletPill: {
+    backgroundColor: '#ECFDF5',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 9999,
+    borderWidth: 1,
+    borderColor: '#A7F3D0',
+  },
+  walletPillText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.primaryDeep,
+  },
   cityPill: {
     backgroundColor: colors.surfaceContainerLow,
     paddingVertical: 5,
@@ -219,6 +270,46 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
     color: colors.primaryDeep,
+  },
+  corridorBar: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 16,
+    paddingVertical: 2,
+  },
+  corridorPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    borderRadius: 9999,
+    borderWidth: 1,
+    borderColor: colors.borderSubtle,
+  },
+  corridorPillRoute: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  corridorPillFare: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: colors.move.transitBlue,
+  },
+  pillarBadgeRow: {
+    alignSelf: 'flex-start',
+    backgroundColor: colors.surfaceContainerLow,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 6,
+    marginBottom: 10,
+  },
+  pillarBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: colors.move.transitBlue,
   },
   avatarBtn: {
     width: 34,

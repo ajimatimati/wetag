@@ -28,6 +28,12 @@ export const RoutineCard: React.FC<RoutineCardProps> = ({
   onPress,
 }) => {
   const router = useRouter();
+  const [isReversed, setIsReversed] = React.useState(false);
+
+  const displayOrigin = isReversed ? destination : origin;
+  const displayOriginSub = isReversed ? destinationSub : originSub;
+  const displayDest = isReversed ? origin : destination;
+  const displayDestSub = isReversed ? originSub : destinationSub;
 
   const handlePress = () => {
     if (onPress) {
@@ -39,18 +45,28 @@ export const RoutineCard: React.FC<RoutineCardProps> = ({
 
   return (
     <View style={styles.card}>
-      {/* Top Header Row */}
+      {/* Top Header Row with Live Pill */}
       <View style={styles.headerRow}>
         <View style={styles.routineBadge}>
-          <Clock size={14} color={colors.primary} />
-          <Text style={styles.routineTitle}>YOUR MORNING ROUTINE</Text>
+          <Clock size={13} color={colors.primary} />
+          <Text style={styles.routineTitle}>CORRIDOR COMMUTE</Text>
         </View>
-        <View style={styles.timePill}>
-          <Text style={styles.timePillText}>{timeTarget}</Text>
+        <View style={styles.headerRightRow}>
+          <View style={styles.countdownPill}>
+            <View style={styles.pulseDot} />
+            <Text style={styles.countdownText}>Departs in 18m</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.reverseBtn}
+            onPress={() => setIsReversed((prev) => !prev)}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.reverseBtnText}>⇄ Flip</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
-      {/* Transit Line Visual */}
+      {/* Transit Line Visual with Quick Nodes */}
       <View style={styles.transitBox}>
         <View style={styles.timelineCol}>
           <View style={styles.dotOrigin} />
@@ -60,19 +76,31 @@ export const RoutineCard: React.FC<RoutineCardProps> = ({
 
         <View style={styles.nodesCol}>
           <View style={styles.nodeItem}>
-            <Text style={styles.nodePrimary} numberOfLines={1}>{origin}</Text>
-            <Text style={styles.nodeSecondary} numberOfLines={1}>{originSub}</Text>
+            <Text style={styles.nodePrimary} numberOfLines={1}>{displayOrigin}</Text>
+            <Text style={styles.nodeSecondary} numberOfLines={1}>{displayOriginSub}</Text>
           </View>
-          <View style={[styles.nodeItem, { marginTop: 12 }]}>
-            <Text style={styles.nodePrimary} numberOfLines={1}>{destination}</Text>
-            <Text style={styles.nodeSecondary} numberOfLines={1}>{destinationSub}</Text>
+          <View style={[styles.nodeItem, { marginTop: 10 }]}>
+            <Text style={styles.nodePrimary} numberOfLines={1}>{displayDest}</Text>
+            <Text style={styles.nodeSecondary} numberOfLines={1}>{displayDestSub}</Text>
           </View>
         </View>
 
         <View style={styles.metricsCol}>
-          <Text style={styles.metricLabel}>Est. transit</Text>
+          <Text style={styles.metricLabel}>Transit</Text>
           <Text style={styles.metricValue}>{duration}</Text>
           <Text style={styles.fareTag}>{fare}</Text>
+        </View>
+      </View>
+
+      {/* Corridor Driver & Verification Pill */}
+      <View style={styles.trustPillRow}>
+        <View style={styles.driverSnippet}>
+          <Text style={styles.driverSnippetText}>
+            Driver: <Text style={styles.driverBold}>Dr. Kunle A.</Text> ★ 4.9 · Smile ID Verified
+          </Text>
+        </View>
+        <View style={styles.seatsPill}>
+          <Text style={styles.seatsPillText}>2 seats open</Text>
         </View>
       </View>
 
@@ -86,7 +114,7 @@ export const RoutineCard: React.FC<RoutineCardProps> = ({
             <Text style={[styles.avatarText, { color: colors.move.transitBlue }]}>SO</Text>
           </View>
           <Text style={styles.matchText} numberOfLines={1}>
-            {matchCount} matching rides
+            {matchCount} verified drivers on route
           </Text>
         </View>
 
@@ -95,8 +123,8 @@ export const RoutineCard: React.FC<RoutineCardProps> = ({
           onPress={handlePress}
           activeOpacity={0.88}
         >
-          <Text style={styles.actionBtnText}>Find my ride</Text>
-          <ArrowRight size={15} color="#FFFFFF" />
+          <Text style={styles.actionBtnText}>Book Seat · {fare}</Text>
+          <ArrowRight size={14} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
     </View>
@@ -123,6 +151,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 14,
   },
+  headerRightRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  countdownPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    backgroundColor: '#ECFDF5',
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 9999,
+  },
+  pulseDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.primary,
+  },
+  countdownText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.primaryDeep,
+  },
+  reverseBtn: {
+    backgroundColor: colors.surfaceContainerLow,
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 9999,
+  },
+  reverseBtnText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.primaryDeep,
+  },
   routineBadge: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -130,20 +194,44 @@ const styles = StyleSheet.create({
   },
   routineTitle: {
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: '800',
     color: colors.textSecondary,
     letterSpacing: 0.8,
   },
-  timePill: {
-    backgroundColor: colors.surfaceContainerLow,
-    paddingVertical: 3,
+  trustPillRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 14,
+    backgroundColor: '#FAFDFB',
+    paddingVertical: 6,
     paddingHorizontal: 10,
-    borderRadius: 9999,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E6ECE8',
   },
-  timePillText: {
+  driverSnippet: {
+    flex: 1,
+    marginRight: 6,
+  },
+  driverSnippetText: {
     fontSize: 11,
+    color: colors.textSecondary,
+  },
+  driverBold: {
     fontWeight: '700',
-    color: colors.primaryDeep,
+    color: colors.textPrimary,
+  },
+  seatsPill: {
+    backgroundColor: '#EFF6FF',
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 6,
+  },
+  seatsPillText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.move.transitBlue,
   },
   transitBox: {
     flexDirection: 'row',

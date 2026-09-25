@@ -14,6 +14,11 @@ export interface JourneyItem {
   perSeatNaira: number;
   estimatedDetourMins?: number;
   isVerified?: boolean;
+  vehicleModel?: string;
+  vehiclePlate?: string;
+  hasLuggageSpace?: boolean;
+  hasAc?: boolean;
+  tripCount?: number;
 }
 
 interface JourneyCardProps {
@@ -38,13 +43,20 @@ export const JourneyCard: React.FC<JourneyCardProps> = ({ journey, onSelect }) =
               <Text style={styles.driverName}>{journey.driverName}</Text>
               {journey.isVerified && <ShieldCheck size={14} color={colors.primary} />}
             </View>
-            <Text style={styles.ratingText}>★ {journey.driverRating.toFixed(1)} · Verified</Text>
+            <Text style={styles.ratingText}>
+              ★ {journey.driverRating.toFixed(1)} {journey.tripCount ? `(${journey.tripCount} rides)` : '· Verified'} · Smile ID NIN
+            </Text>
+            {journey.vehicleModel && (
+              <Text style={styles.vehicleText}>
+                {journey.vehicleModel} {journey.vehiclePlate ? `· ${journey.vehiclePlate}` : ''}
+              </Text>
+            )}
           </View>
         </View>
 
         <View style={styles.priceContainer}>
           <Text style={styles.priceNaira}>₦{journey.perSeatNaira.toLocaleString()}</Text>
-          <Text style={styles.priceSub}>per seat</Text>
+          <Text style={styles.priceSub}>per seat · flat</Text>
         </View>
       </View>
 
@@ -70,9 +82,19 @@ export const JourneyCard: React.FC<JourneyCardProps> = ({ journey, onSelect }) =
             <Clock size={12} color={colors.textSecondary} />
             <Text style={styles.badgeText}>{journey.departureTime}</Text>
           </View>
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>{journey.availableSeats} seats open</Text>
+          <View style={[styles.badge, styles.seatBadge]}>
+            <Text style={styles.seatBadgeText}>🪑 {journey.availableSeats} open</Text>
           </View>
+          {journey.hasAc !== false && (
+            <View style={[styles.badge, styles.comfortBadge]}>
+              <Text style={styles.comfortBadgeText}>❄️ AC</Text>
+            </View>
+          )}
+          {journey.hasLuggageSpace !== false && (
+            <View style={[styles.badge, styles.comfortBadge]}>
+              <Text style={styles.comfortBadgeText}>🧳 Bags OK</Text>
+            </View>
+          )}
           {journey.estimatedDetourMins !== undefined && (
             <View style={[styles.badge, styles.detourBadge]}>
               <Navigation size={11} color={colors.move.transitBlue} />
@@ -82,7 +104,7 @@ export const JourneyCard: React.FC<JourneyCardProps> = ({ journey, onSelect }) =
         </View>
 
         <View style={styles.bookActionPill}>
-          <Text style={styles.bookActionText}>Book</Text>
+          <Text style={styles.bookActionText}>Join ➔</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -227,9 +249,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.move.transitBlue,
   },
+  vehicleText: {
+    fontSize: 11,
+    color: colors.textSecondary,
+    fontWeight: '500',
+    marginTop: 2,
+  },
   bookActionPill: {
     backgroundColor: colors.primaryDeep,
-    paddingVertical: 6,
+    paddingVertical: 7,
     paddingHorizontal: 14,
     borderRadius: 9999,
   },
@@ -237,5 +265,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
     color: '#FFFFFF',
+  },
+  seatBadge: {
+    backgroundColor: '#EFF6FF',
+  },
+  seatBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: colors.move.transitBlue,
+  },
+  comfortBadge: {
+    backgroundColor: '#F3F4F6',
+  },
+  comfortBadgeText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: colors.textPrimary,
   },
 });
