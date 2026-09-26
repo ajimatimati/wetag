@@ -6,9 +6,20 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Search, SlidersHorizontal, ShieldCheck } from 'lucide-react-native';
+import {
+  Search,
+  SlidersHorizontal,
+  ShieldCheck,
+  Building,
+  GraduationCap,
+  Key,
+  Home,
+  Star,
+  MapPin,
+} from 'lucide-react-native';
 import { colors } from '../../theme/colors';
 import { PropertyCard, PropertyItem } from '../../components/PropertyCard';
 
@@ -20,8 +31,13 @@ const SAMPLE_PROPERTIES: PropertyItem[] = [
     propertyType: 'Apartment',
     bedrooms: 2,
     bathrooms: 2,
+    squareFeet: 1450,
+    starRating: 4.9,
+    reviewCount: 42,
     rentAnnualNaira: 700000,
     moveInTotalNaira: 890000,
+    imageUrl:
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
     hasBorehole: true,
     hasPrepaidMeter: true,
     hasSecurity: true,
@@ -39,8 +55,13 @@ const SAMPLE_PROPERTIES: PropertyItem[] = [
     propertyType: 'Self Contain',
     bedrooms: 1,
     bathrooms: 1,
+    squareFeet: 550,
+    starRating: 4.8,
+    reviewCount: 29,
     rentAnnualNaira: 350000,
     moveInTotalNaira: 460000,
+    imageUrl:
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
     hasBorehole: true,
     hasPrepaidMeter: true,
     hasSecurity: true,
@@ -58,8 +79,13 @@ const SAMPLE_PROPERTIES: PropertyItem[] = [
     propertyType: 'Shared Flat',
     bedrooms: 3,
     bathrooms: 3,
+    squareFeet: 2100,
+    starRating: 4.9,
+    reviewCount: 56,
     rentAnnualNaira: 1200000,
     moveInTotalNaira: 1450000,
+    imageUrl:
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
     hasBorehole: true,
     hasPrepaidMeter: true,
     hasSecurity: true,
@@ -77,8 +103,13 @@ const SAMPLE_PROPERTIES: PropertyItem[] = [
     propertyType: 'Apartment',
     bedrooms: 2,
     bathrooms: 2,
+    squareFeet: 1350,
+    starRating: 4.7,
+    reviewCount: 31,
     rentAnnualNaira: 650000,
     moveInTotalNaira: 820000,
+    imageUrl:
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
     hasBorehole: true,
     hasPrepaidMeter: true,
     hasSecurity: true,
@@ -91,13 +122,48 @@ const SAMPLE_PROPERTIES: PropertyItem[] = [
   },
 ];
 
+const POPULAR_LOCATIONS = [
+  {
+    id: '1',
+    name: 'Old Bodija',
+    sub: 'Civil Servants & Executives',
+    image:
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    id: '2',
+    name: 'UI Agbowo',
+    sub: 'Campus & Postgrads',
+    image:
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    id: '3',
+    name: 'Akobo Gas',
+    sub: 'Emerging Modern Hub',
+    image:
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    id: '4',
+    name: 'Ring Road',
+    sub: 'Commercial & High Court',
+    image:
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80',
+  },
+];
+
 export default function StayScreen() {
   const router = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState<'ALL' | 'STUDENT' | 'SERVICED' | 'DIRECT'>('ALL');
   const [activeFilter, setActiveFilter] = useState<'ALL' | 'BODIJA' | 'UI' | 'AKOBO' | 'NYSC'>('ALL');
   const [commuteFilter, setCommuteFilter] = useState<'ANY' | 'SECRETARIAT' | 'UI'>('ANY');
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredProperties = SAMPLE_PROPERTIES.filter((p) => {
+    if (selectedCategory === 'STUDENT' && !p.neighborhood.includes('UI') && !p.neighborhood.includes('Agbowo') && p.propertyType !== 'Self Contain') return false;
+    if (selectedCategory === 'SERVICED' && p.propertyType !== 'Apartment' && p.propertyType !== 'Shared Flat') return false;
+
     if (activeFilter === 'BODIJA' && !p.neighborhood.includes('Bodija')) return false;
     if (activeFilter === 'UI' && !p.neighborhood.includes('UI') && !p.neighborhood.includes('Agbowo')) return false;
     if (activeFilter === 'AKOBO' && !p.neighborhood.includes('Akobo')) return false;
@@ -116,50 +182,83 @@ export default function StayScreen() {
 
   return (
     <View style={styles.screen}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Top Header */}
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        {/* Homeluxe-Grade Top Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>STAY</Text>
-          <Text style={styles.subtitle}>Verified Homes & Co-Living in Ibadan</Text>
+          <View>
+            <Text style={styles.greetingText}>Hi, Ibadan Resident! 👋</Text>
+            <Text style={styles.title}>Find Your Perfect Place</Text>
+          </View>
+          <View style={styles.headerBadge}>
+            <Text style={styles.headerBadgeText}>Scam-Proof</Text>
+          </View>
         </View>
 
-        {/* Search Bar */}
+        {/* Search Bar Pill */}
         <View style={styles.searchBar}>
-          <Search size={18} color={colors.stay.warmClay} />
+          <Search size={18} color="#64748B" />
           <TextInput
             style={styles.searchInput}
-            placeholder="Search neighborhood (Bodija, UI, Akobo...)"
-            placeholderTextColor={colors.textSecondary}
+            placeholder="Search Bodija, UI Agbowo, Akobo..."
+            placeholderTextColor="#94A3B8"
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
           <TouchableOpacity style={styles.filterBtn} activeOpacity={0.8}>
-            <SlidersHorizontal size={16} color={colors.primaryDeep} />
+            <SlidersHorizontal size={16} color="#0A0D16" />
           </TouchableOpacity>
         </View>
 
-        {/* District Filter Pills */}
+        {/* Homeluxe 4-Category Grid Tiles */}
+        <View style={styles.categoryGrid}>
+          {[
+            { id: 'ALL', label: 'All Homes', icon: Home },
+            { id: 'STUDENT', label: 'Student UI', icon: GraduationCap },
+            { id: 'SERVICED', label: 'Serviced Flats', icon: Building },
+            { id: 'DIRECT', label: 'Direct Landlord', icon: Key },
+          ].map((cat) => {
+            const Icon = cat.icon;
+            const isActive = selectedCategory === cat.id;
+            return (
+              <TouchableOpacity
+                key={cat.id}
+                style={[styles.categoryTile, isActive && styles.categoryTileActive]}
+                onPress={() => setSelectedCategory(cat.id as any)}
+                activeOpacity={0.85}
+              >
+                <View style={[styles.categoryIconCircle, isActive && styles.categoryIconCircleActive]}>
+                  <Icon size={18} color={isActive ? '#FFFFFF' : '#0A0D16'} />
+                </View>
+                <Text style={[styles.categoryLabel, isActive && styles.categoryLabelActive]}>
+                  {cat.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+
+        {/* Popular Locations in Ibadan (Homeluxe Carousel) */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Popular Neighborhoods</Text>
+          <Text style={styles.sectionLink}>Ibadan Axis</Text>
+        </View>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.pillsContainer}
+          contentContainerStyle={styles.locationsScroll}
         >
-          {[
-            { id: 'ALL', label: 'All Listings' },
-            { id: 'BODIJA', label: 'Old Bodija' },
-            { id: 'UI', label: 'UI Agbowo' },
-            { id: 'AKOBO', label: 'Akobo' },
-            { id: 'NYSC', label: 'NYSC Settle-In' },
-          ].map((pill) => (
+          {POPULAR_LOCATIONS.map((loc) => (
             <TouchableOpacity
-              key={pill.id}
-              style={[styles.pill, activeFilter === pill.id && styles.activePill]}
-              onPress={() => setActiveFilter(pill.id as any)}
-              activeOpacity={0.8}
+              key={loc.id}
+              style={styles.locationCard}
+              onPress={() => setSearchQuery(loc.name)}
+              activeOpacity={0.9}
             >
-              <Text style={[styles.pillText, activeFilter === pill.id && styles.activePillText]}>
-                {pill.label}
-              </Text>
+              <Image source={{ uri: loc.image }} style={styles.locationImage} />
+              <View style={styles.locationOverlay}>
+                <Text style={styles.locationName}>{loc.name}</Text>
+                <Text style={styles.locationSub}>{loc.sub}</Text>
+              </View>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -192,13 +291,13 @@ export default function StayScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Radical Transparency Guarantee Banner */}
+        {/* OpenRent Radical Transparency Guarantee Banner */}
         <View style={styles.guaranteeBanner}>
-          <ShieldCheck size={18} color={colors.primary} />
+          <ShieldCheck size={20} color="#00D47E" />
           <View style={styles.guaranteeContent}>
             <Text style={styles.guaranteeTitle}>No Total Package Surprises</Text>
             <Text style={styles.guaranteeBody}>
-              Every home displays the complete move-in cost upfront (Rent + Capped 10% Agency + Legal + Refundable Caution). Zero inspection extortion.
+              Every home displays the complete move-in cost upfront (Rent + Capped 10% Agency + Legal + Refundable Caution). Zero hidden fees.
             </Text>
           </View>
         </View>
@@ -210,20 +309,20 @@ export default function StayScreen() {
           activeOpacity={0.88}
         >
           <View style={styles.listerBannerContent}>
-            <Text style={styles.listerBannerTitle}>Are you a Landlord or Relocating?</Text>
+            <Text style={styles.listerBannerTitle}>Are you a Landlord or Moving Out?</Text>
             <Text style={styles.listerBannerSub}>
               List your property or transfer your lease with verified scam-free escrow protection.
             </Text>
           </View>
           <View style={styles.listerBannerBtn}>
-            <Text style={styles.listerBannerBtnText}>+ List Home</Text>
+            <Text style={styles.listerBannerBtnText}>+ List Home ➔</Text>
           </View>
         </TouchableOpacity>
 
         {/* Verified Homes Feed */}
         <View style={styles.feedHeader}>
-          <Text style={styles.feedTitle}>Verified Ibadan Homes</Text>
-          <Text style={styles.feedCount}>{filteredProperties.length} available</Text>
+          <Text style={styles.feedTitle}>Featured Verified Listings</Text>
+          <Text style={styles.feedCount}>{filteredProperties.length} homes available</Text>
         </View>
 
         {filteredProperties.map((property) => (
@@ -259,14 +358,222 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8FAFC',
   },
-  listerBanner: {
+  scrollContent: {
+    padding: 16,
+    paddingBottom: 40,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+    marginTop: 6,
+  },
+  greetingText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#64748B',
+    marginBottom: 2,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#0A0D16',
+    letterSpacing: -0.4,
+  },
+  headerBadge: {
+    backgroundColor: '#E6FAF2',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 9999,
+    borderWidth: 1,
+    borderColor: '#A7F3D0',
+  },
+  headerBadgeText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#00D47E',
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    marginBottom: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
+  },
+  searchInput: {
+    flex: 1,
+    marginLeft: 10,
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#0A0D16',
+  },
+  filterBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    backgroundColor: '#F1F5F9',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  categoryGrid: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 20,
+  },
+  categoryTile: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    paddingVertical: 12,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  categoryTileActive: {
     backgroundColor: '#0A0D16',
+    borderColor: '#0A0D16',
+  },
+  categoryIconCircle: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: '#F8FAFC',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 6,
+  },
+  categoryIconCircleActive: {
+    backgroundColor: '#1E293B',
+  },
+  categoryLabel: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#334155',
+  },
+  categoryLabelActive: {
+    color: '#FFFFFF',
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#0A0D16',
+  },
+  sectionLink: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#64748B',
+  },
+  locationsScroll: {
+    gap: 12,
+    paddingBottom: 4,
+    marginBottom: 20,
+  },
+  locationCard: {
+    width: 140,
+    height: 110,
+    borderRadius: 16,
+    overflow: 'hidden',
+    position: 'relative',
+    backgroundColor: '#0A0D16',
+  },
+  locationImage: {
+    width: '100%',
+    height: '100%',
+  },
+  locationOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 8,
+    backgroundColor: 'rgba(10, 13, 22, 0.72)',
+  },
+  locationName: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  locationSub: {
+    fontSize: 8,
+    fontWeight: '600',
+    color: '#CBD5E1',
+    marginTop: 1,
+  },
+  commuteFilterRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 16,
+  },
+  commuteBtn: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 8,
+    borderRadius: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  commuteBtnActive: {
+    backgroundColor: '#EFF6FF',
+    borderColor: '#2563EB',
+  },
+  commuteBtnText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#64748B',
+  },
+  commuteBtnTextActive: {
+    color: '#2563EB',
+    fontWeight: '800',
+  },
+  guaranteeBanner: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: '#FFFFFF',
     borderRadius: 16,
     padding: 14,
-    marginBottom: 18,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    gap: 12,
+  },
+  guaranteeContent: {
+    flex: 1,
+  },
+  guaranteeTitle: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#0A0D16',
+    marginBottom: 2,
+  },
+  guaranteeBody: {
+    fontSize: 11,
+    color: '#64748B',
+    lineHeight: 16,
+  },
+  listerBanner: {
+    backgroundColor: '#0A0D16',
+    borderRadius: 18,
+    padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 20,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.08)',
   },
@@ -287,157 +594,30 @@ const styles = StyleSheet.create({
   },
   listerBannerBtn: {
     backgroundColor: '#00D47E',
-    paddingVertical: 7,
-    paddingHorizontal: 10,
-    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
   },
   listerBannerBtnText: {
     fontSize: 11,
     fontWeight: '900',
     color: '#0A0D16',
   },
-  scrollContent: {
-    paddingTop: 52,
-    paddingHorizontal: 20,
-    paddingBottom: 40,
-  },
-  header: {
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '900',
-    color: colors.primaryDeep,
-    letterSpacing: -0.3,
-  },
-  subtitle: {
-    fontSize: 12,
-    color: colors.textSecondary,
-    fontWeight: '600',
-    marginTop: 2,
-  },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    paddingHorizontal: 14,
-    height: 48,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-    marginBottom: 14,
-    shadowColor: '#123C3A',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 13,
-    color: colors.textPrimary,
-    marginLeft: 10,
-  },
-  filterBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    backgroundColor: colors.surfaceContainerLow,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  pillsContainer: {
-    flexDirection: 'row',
-    gap: 8,
-    marginBottom: 18,
-    paddingVertical: 2,
-  },
-  pill: {
-    paddingVertical: 7,
-    paddingHorizontal: 14,
-    borderRadius: 9999,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-  },
-  activePill: {
-    backgroundColor: colors.primaryDeep,
-    borderColor: colors.primaryDeep,
-  },
-  pillText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: colors.textSecondary,
-  },
-  activePillText: {
-    color: '#FFFFFF',
-    fontWeight: '700',
-  },
-  commuteFilterRow: {
-    flexDirection: 'row',
-    gap: 8,
-    marginBottom: 16,
-  },
-  commuteBtn: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-  },
-  commuteBtnActive: {
-    backgroundColor: '#EFF6FF',
-    borderColor: colors.move.transitBlue,
-  },
-  commuteBtnText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: colors.textSecondary,
-  },
-  commuteBtnTextActive: {
-    color: colors.move.transitBlue,
-    fontWeight: '700',
-  },
-  guaranteeBanner: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-    marginBottom: 20,
-  },
-  guaranteeContent: {
-    flex: 1,
-  },
-  guaranteeTitle: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: colors.primaryDeep,
-    marginBottom: 2,
-  },
-  guaranteeBody: {
-    fontSize: 11,
-    color: colors.textSecondary,
-    lineHeight: 15,
-  },
   feedHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 14,
+    marginBottom: 12,
   },
   feedTitle: {
     fontSize: 15,
-    fontWeight: '800',
-    color: colors.textPrimary,
+    fontWeight: '900',
+    color: '#0A0D16',
+    letterSpacing: -0.2,
   },
   feedCount: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: colors.textMuted,
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#64748B',
   },
 });

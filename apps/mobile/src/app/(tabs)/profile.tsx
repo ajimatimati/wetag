@@ -65,49 +65,64 @@ export default function ProfileScreen() {
         </View>
       </View>
 
-      {/* Universal Wallet Card */}
-      <View style={styles.walletCard}>
-        <View style={styles.walletHeader}>
-          <View style={styles.walletTitleRow}>
-            <Wallet size={16} color={colors.primary} />
-            <Text style={styles.walletTitle}>Universal Wallet</Text>
+      {/* Nikky / Trantor Luxury Stacked Paystack Virtual Card */}
+      <View style={styles.walletCardWrapper}>
+        <View style={styles.walletCardBackgroundStack} />
+        <View style={styles.walletCard}>
+          <View style={styles.cardTopRow}>
+            <View style={styles.cardChipBadge}>
+              <View style={styles.emvChip} />
+              <Text style={styles.contactlessSymbol}>)))</Text>
+            </View>
+            <View style={styles.paystackNetworkBadge}>
+              <Text style={styles.paystackNetworkText}>weTag · Paystack</Text>
+            </View>
           </View>
-          <View style={styles.currencyBadge}>
-            <Text style={styles.currencyBadgeText}>NGN (₦)</Text>
+
+          <View style={styles.cardBalanceSection}>
+            <Text style={styles.balanceLabel}>Universal Liquid Balance</Text>
+            <View style={styles.balanceRow}>
+              <Text style={styles.balanceAmount}>₦{walletBalance.toLocaleString()}</Text>
+              <View style={styles.balanceGrowthChip}>
+                <Text style={styles.balanceGrowthText}>+₦2,400 Fuel Return</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.cardDetailsRow}>
+            <View>
+              <Text style={styles.cardNumber}>9912 •••• •••• 8821</Text>
+              <Text style={styles.cardHolder}>TOLU OLANIYI · WEMA NUBAN</Text>
+            </View>
+            <View style={styles.cardExpiryBlock}>
+              <Text style={styles.cardExpiryLabel}>VALID</Text>
+              <Text style={styles.cardExpiry}>12/28</Text>
+            </View>
           </View>
         </View>
 
-        <Text style={styles.balanceLabel}>Available for Carpools & Living Bills</Text>
-        <Text style={styles.balanceAmount}>₦{walletBalance.toLocaleString()}</Text>
-
-        {/* Dedicated Nigerian NUBAN Virtual Account */}
-        <View style={styles.nubanBox}>
-          <View>
-            <Text style={styles.nubanLabel}>DEDICATED NUBAN TRANSFER ACCOUNT</Text>
-            <Text style={styles.nubanNumber}>Wema Bank · 9912048821</Text>
-            <Text style={styles.nubanName}>weTag / Tolu Olaniyi</Text>
-          </View>
-          <View style={styles.instantBadge}>
-            <Text style={styles.instantBadgeText}>Instant &lt;10s</Text>
-          </View>
-        </View>
-
-        <View style={styles.walletActions}>
+        {/* Trantor-Grade Dual Split Pills [Top-Up] + [Withdraw] */}
+        <View style={styles.trantorPillRow}>
           <TouchableOpacity
-            style={[styles.walletBtn, styles.topupBtn]}
+            style={styles.peachTopUpBtn}
             onPress={handleTopUp}
-            activeOpacity={0.8}
+            activeOpacity={0.85}
           >
-            <PlusCircle size={15} color="#FFFFFF" />
-            <Text style={styles.topupBtnText}>Top Up (OPay/Transfer)</Text>
+            <PlusCircle size={15} color="#0A0D16" />
+            <Text style={styles.peachTopUpText}>Instant Top-Up</Text>
           </TouchableOpacity>
+
+          <View style={styles.trantorCenterDisc}>
+            <Text style={styles.trantorCenterDiscText}>⇄</Text>
+          </View>
+
           <TouchableOpacity
-            style={[styles.walletBtn, styles.withdrawBtn]}
+            style={styles.mintWithdrawBtn}
             onPress={handleWithdraw}
-            activeOpacity={0.8}
+            activeOpacity={0.85}
           >
-            <ArrowUpRight size={15} color={colors.primaryDeep} />
-            <Text style={styles.withdrawBtnText}>Withdraw</Text>
+            <ArrowUpRight size={15} color="#0A0D16" />
+            <Text style={styles.mintWithdrawText}>Withdraw</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -310,99 +325,187 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.primaryDeep,
   },
-  walletCard: {
-    backgroundColor: colors.primaryDeep,
-    borderRadius: 20,
-    padding: 20,
+  walletCardWrapper: {
     marginBottom: 24,
-    shadowColor: '#0C2927',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 3,
+    position: 'relative',
   },
-  walletHeader: {
+  walletCardBackgroundStack: {
+    position: 'absolute',
+    top: -6,
+    left: 14,
+    right: 14,
+    height: 190,
+    backgroundColor: '#1E293B',
+    borderRadius: 22,
+    opacity: 0.5,
+  },
+  walletCard: {
+    backgroundColor: '#0A0D16',
+    borderRadius: 22,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.12)',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 18,
+    elevation: 4,
+  },
+  cardTopRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 16,
   },
-  walletTitleRow: {
+  cardChipBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
-  walletTitle: {
-    color: '#FFFFFF',
-    fontSize: 13,
-    fontWeight: '700',
+  emvChip: {
+    width: 32,
+    height: 24,
+    borderRadius: 5,
+    backgroundColor: '#E2E8F0',
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
   },
-  currencyBadge: {
-    backgroundColor: 'rgba(255, 255, 255, 0.12)',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
+  contactlessSymbol: {
+    color: '#94A3B8',
+    fontSize: 14,
+    fontWeight: '800',
+    transform: [{ rotate: '90deg' }],
   },
-  currencyBadgeText: {
-    color: colors.primary,
-    fontSize: 11,
-    fontWeight: '700',
+  paystackNetworkBadge: {
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 9999,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+  },
+  paystackNetworkText: {
+    color: '#00D47E',
+    fontSize: 10,
+    fontWeight: '800',
+  },
+  cardBalanceSection: {
+    marginBottom: 16,
   },
   balanceLabel: {
-    color: '#A0B4B0',
+    color: '#94A3B8',
     fontSize: 11,
-    fontWeight: '500',
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  balanceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 4,
   },
   balanceAmount: {
     color: '#FFFFFF',
     fontSize: 28,
-    fontWeight: '800',
-    marginTop: 4,
-    marginBottom: 12,
+    fontWeight: '900',
     letterSpacing: -0.5,
   },
-  nubanBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.12)',
-  },
-  nubanLabel: {
-    fontSize: 9,
-    fontWeight: '800',
-    color: colors.primary,
-    letterSpacing: 0.8,
-  },
-  nubanNumber: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: '#FFFFFF',
-    marginTop: 2,
-  },
-  nubanName: {
-    fontSize: 11,
-    color: '#D1DDD9',
-    marginTop: 1,
-  },
-  instantBadge: {
-    backgroundColor: 'rgba(24, 184, 138, 0.25)',
-    paddingVertical: 3,
+  balanceGrowthChip: {
+    backgroundColor: 'rgba(0, 212, 126, 0.15)',
     paddingHorizontal: 8,
+    paddingVertical: 3,
     borderRadius: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 212, 126, 0.3)',
   },
-  instantBadgeText: {
+  balanceGrowthText: {
+    color: '#00D47E',
     fontSize: 10,
     fontWeight: '800',
-    color: '#A7F3D0',
   },
-  walletActions: {
+  cardDetailsRow: {
     flexDirection: 'row',
-    gap: 10,
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.08)',
+  },
+  cardNumber: {
+    color: '#E2E8F0',
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 1.5,
+  },
+  cardHolder: {
+    color: '#94A3B8',
+    fontSize: 9,
+    fontWeight: '700',
+    marginTop: 2,
+    letterSpacing: 0.5,
+  },
+  cardExpiryBlock: {
+    alignItems: 'flex-end',
+  },
+  cardExpiryLabel: {
+    color: '#64748B',
+    fontSize: 8,
+    fontWeight: '800',
+  },
+  cardExpiry: {
+    color: '#FFFFFF',
+    fontSize: 11,
+    fontWeight: '800',
+  },
+  trantorPillRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 14,
+    gap: 8,
+  },
+  peachTopUpBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FED7AA',
+    paddingVertical: 12,
+    borderRadius: 16,
+    gap: 6,
+  },
+  peachTopUpText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#0A0D16',
+  },
+  trantorCenterDisc: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#0A0D16',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  trantorCenterDiscText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  mintWithdrawBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#A7F3D0',
+    paddingVertical: 12,
+    borderRadius: 16,
+    gap: 6,
+  },
+  mintWithdrawText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#0A0D16',
   },
   walletBtn: {
     flex: 1,

@@ -95,6 +95,14 @@ declare module 'lucide-react-native' {
   export const FileText: any;
   export const CheckCheck: any;
   export const Radio: any;
+  export const Heart: any;
+  export const Star: any;
+  export const Bath: any;
+  export const Bed: any;
+  export const Maximize2: any;
+  export const Tag: any;
+  export const ChevronDown: any;
+  export const GraduationCap: any;
 }
 
 declare module 'expo-status-bar' {
