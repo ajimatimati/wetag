@@ -138,10 +138,10 @@ export function runSecurityTestSuite(): SecurityCheckResult[] {
 }
 
 if (require.main === module) {
-  console.log('🛡️ weTag Platform Security & Vulnerability Remediation Suite\n');
+  console.log('Verified  weTag Platform Security & Vulnerability Remediation Suite\n');
   const results = runSecurityTestSuite();
   console.table(results);
   const allPassed = results.every((r) => r.status === 'PASSED');
-  console.log(`\n🔒 Security Audit Summary: ${results.length}/${results.length} Vulnerability Safeguards Verified.`);
+  console.log(`\n Security Audit Summary: ${results.length}/${results.length} Vulnerability Safeguards Verified.`);
   process.exit(allPassed ? 0 : 1);
 }

@@ -95,7 +95,7 @@ export function simulateWebhookEvents(): WebhookTestResult[] {
   return results;
 }
 
-console.log('⚡ Running weTag Webhook & Sandbox Integration Simulator...\n');
+console.log('Power  Running weTag Webhook & Sandbox Integration Simulator...\n');
 const results = simulateWebhookEvents();
 console.table(results);
-console.log(`\n✅ All ${results.length}/${results.length} Sandbox Webhook Scenarios Validated Successfully.`);
+console.log(`\n All ${results.length}/${results.length} Sandbox Webhook Scenarios Validated Successfully.`);

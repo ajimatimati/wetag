@@ -24,7 +24,7 @@ export class AlertDispatcher {
     };
 
     // Output formatted alert for log forwarder / Datadog
-    console.error(`🚨 [CRITICAL ALERT] [${fullAlert.severity}] ${fullAlert.type}: ${fullAlert.summary}`, fullAlert);
+    console.error(` [CRITICAL ALERT] [${fullAlert.severity}] ${fullAlert.type}: ${fullAlert.summary}`, fullAlert);
 
     return fullAlert;
   }

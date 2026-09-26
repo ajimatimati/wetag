@@ -110,8 +110,8 @@ export function runRedTeamSuite(): SimulationResult[] {
 }
 
 if (require.main === module) {
-  console.log('🛡️ Running weTag 16-Scenario Red Team Safety & Fraud Suite...\n');
+  console.log('Verified  Running weTag 16-Scenario Red Team Safety & Fraud Suite...\n');
   const results = runRedTeamSuite();
   console.table(results);
-  console.log(`\n✅ Summary: ${results.length}/${results.length} Scenarios Passed.`);
+  console.log(`\n Summary: ${results.length}/${results.length} Scenarios Passed.`);
 }

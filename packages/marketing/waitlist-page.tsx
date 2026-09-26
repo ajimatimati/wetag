@@ -14,9 +14,9 @@ export const WeTagLandingPage: React.FC = () => {
 
   // MOVE Fuel Offset Calculation
   const corridorRates: Record<string, { name: string; fare: number; km: number }> = {
-    akobo_dugbe: { name: 'Akobo (General Gas) ➔ Dugbe (Cocoa House)', fare: 400, km: 14.2 },
-    ui_secretariat: { name: 'UI Post Office ➔ Oyo Secretariat', fare: 300, km: 7.8 },
-    bodija_ringroad: { name: 'Old Bodija ➔ Ring Road (High Court)', fare: 500, km: 11.5 },
+    akobo_dugbe: { name: 'Akobo (General Gas)  Dugbe (Cocoa House)', fare: 400, km: 14.2 },
+    ui_secretariat: { name: 'UI Post Office  Oyo Secretariat', fare: 300, km: 7.8 },
+    bodija_ringroad: { name: 'Old Bodija  Ring Road (High Court)', fare: 500, km: 11.5 },
   };
 
   const currentCorridor = corridorRates[selectedCorridor];
@@ -49,7 +49,7 @@ export const WeTagLandingPage: React.FC = () => {
           <span style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', letterSpacing: '-0.5px' }}>weTag</span>
         </div>
         <div style={{ fontSize: '13px', fontWeight: '600', color: '#A7F3D0', backgroundColor: 'rgba(24, 184, 138, 0.2)', padding: '6px 12px', borderRadius: '20px' }}>
-          Launching in Ibadan 📍
+          Launching in Ibadan Hub: 
         </div>
       </header>
 
@@ -78,7 +78,7 @@ export const WeTagLandingPage: React.FC = () => {
               transition: 'all 0.2s',
             }}
           >
-            🚗 weTag MOVE (Carpooling)
+             weTag MOVE (Carpooling)
           </button>
           <button
             onClick={() => setActiveTab('STAY')}
@@ -94,7 +94,7 @@ export const WeTagLandingPage: React.FC = () => {
               transition: 'all 0.2s',
             }}
           >
-            🏠 weTag STAY (Housing)
+             weTag STAY (Housing)
           </button>
         </div>
 
@@ -110,9 +110,9 @@ export const WeTagLandingPage: React.FC = () => {
               onChange={(e) => setSelectedCorridor(e.target.value)}
               style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #D1D5DB', fontSize: '14px', marginBottom: '16px' }}
             >
-              <option value="akobo_dugbe">Akobo (General Gas) ➔ Dugbe (Cocoa House)</option>
-              <option value="ui_secretariat">UI Post Office ➔ Oyo Secretariat (Agodi)</option>
-              <option value="bodija_ringroad">Old Bodija ➔ Ring Road (High Court)</option>
+              <option value="akobo_dugbe">Akobo (General Gas)  Dugbe (Cocoa House)</option>
+              <option value="ui_secretariat">UI Post Office  Oyo Secretariat (Agodi)</option>
+              <option value="bodija_ringroad">Old Bodija  Ring Road (High Court)</option>
             </select>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
@@ -182,7 +182,7 @@ export const WeTagLandingPage: React.FC = () => {
 
           {submitted ? (
             <div style={{ backgroundColor: 'rgba(24, 184, 138, 0.2)', padding: '24px', borderRadius: '16px', border: '1px solid #18B88A' }}>
-              <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#18B88A', margin: '0 0 8px' }}>You're on the list! 🎉</h3>
+              <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#18B88A', margin: '0 0 8px' }}>You're on the list! </h3>
               <p style={{ fontSize: '14px', color: '#F3F4F6', margin: 0 }}>We will send an SMS invitation when your corridor goes live.</p>
             </div>
           ) : (

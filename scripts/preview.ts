@@ -11,7 +11,7 @@ export function startLocalStaticPreview(port: number = 5000) {
   const distDir = path.resolve(__dirname, '../apps/mobile/dist');
   
   if (!fs.existsSync(distDir)) {
-    console.error(`❌ Mobile dist directory not found at ${distDir}. Run 'npx expo export --platform web' first.`);
+    console.error(` Mobile dist directory not found at ${distDir}. Run 'npx expo export --platform web' first.`);
     return;
   }
 
@@ -52,9 +52,9 @@ export function startLocalStaticPreview(port: number = 5000) {
   });
 
   server.listen(port, () => {
-    console.log(`\n🚀 weTag Mobile Client Preview is live at: http://localhost:${port}`);
-    console.log(`📱 Previewing 15 static routes & modals (Home, Move, Stay, Messages, Profile, Booking, Listing Details)`);
-    console.log(`🛡️ Admin Console can be launched with: cd apps/admin && npm start (Port 3000)\n`);
+    console.log(`\n weTag Mobile Client Preview is live at: http://localhost:${port}`);
+    console.log(` Previewing 15 static routes & modals (Home, Move, Stay, Messages, Profile, Booking, Listing Details)`);
+    console.log(`Verified  Admin Console can be launched with: cd apps/admin && npm start (Port 3000)\n`);
   });
 }
 

@@ -97,7 +97,7 @@ export default function HomeScreen() {
             <Text style={styles.launcherPillText}>Apartment</Text>
           </View>
           <View style={styles.launcherCta}>
-            <Text style={styles.launcherCtaText}>Start ➔</Text>
+            <Text style={styles.launcherCtaText}>Start </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -116,11 +116,11 @@ export default function HomeScreen() {
         contentContainerStyle={styles.corridorBar}
       >
         {[
-          { label: 'Akobo ➔ Dugbe', fare: '₦800' },
-          { label: 'UI ➔ Secretariat', fare: '₦300' },
-          { label: 'Bodija ➔ Ring Road', fare: '₦500' },
-          { label: 'Challenge ➔ Dugbe', fare: '₦400' },
-          { label: 'Iwo Road ➔ Monatan', fare: '₦350' },
+          { label: 'Akobo  Dugbe', fare: '₦800' },
+          { label: 'UI  Secretariat', fare: '₦300' },
+          { label: 'Bodija  Ring Road', fare: '₦500' },
+          { label: 'Challenge  Dugbe', fare: '₦400' },
+          { label: 'Iwo Road  Monatan', fare: '₦350' },
         ].map((corr, idx) => (
           <TouchableOpacity
             key={idx}

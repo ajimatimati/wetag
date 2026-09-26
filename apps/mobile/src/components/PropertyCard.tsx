@@ -171,12 +171,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onSelect }
           {property.commuteMinutesSecretariat !== undefined && (
             <View style={styles.commutePill}>
               <Text style={styles.commuteText}>
-                🚗 {property.commuteMinutesSecretariat}m to Secretariat
+                 {property.commuteMinutesSecretariat}m to Secretariat
               </Text>
             </View>
           )}
           <View style={styles.pHashBadge}>
-            <Text style={styles.pHashText}>🛡️ pHash Scam-Free</Text>
+            <Text style={styles.pHashText}>Verified  pHash Scam-Free</Text>
           </View>
         </View>
 
@@ -189,7 +189,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onSelect }
             </Text>
           </Text>
           <View style={styles.ctaButton}>
-            <Text style={styles.ctaButtonText}>Book a Visit ➔</Text>
+            <Text style={styles.ctaButtonText}>Book a Visit </Text>
           </View>
         </View>
       </View>

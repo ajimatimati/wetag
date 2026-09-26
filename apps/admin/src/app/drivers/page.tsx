@@ -47,7 +47,7 @@ export default function DriverKYCPage() {
                 <p className="text-xs text-slate-400">+234 803 ••• ••12 · UI Lecturer</p>
               </td>
               <td className="p-4 text-xs font-semibold">
-                Akobo ➔ Secretariat (Mon–Fri 7:15 AM)
+                Akobo  Secretariat (Mon–Fri 7:15 AM)
               </td>
               <td className="p-4 text-xs">
                 <span className="font-bold">Toyota Corolla (2014)</span> · Silver<br />

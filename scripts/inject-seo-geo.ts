@@ -131,12 +131,12 @@ const STRUCTURED_JSON_LD = `
 `;
 
 export function injectSeoGeo(distDir: string) {
-  console.log(`🔍 Injecting SEO & GEO metadata into static web pages at ${distDir}...`);
+  console.log(` Injecting SEO & GEO metadata into static web pages at ${distDir}...`);
 
   for (const [filename, meta] of Object.entries(PAGES_CONFIG)) {
     const filePath = path.join(distDir, filename);
     if (!fs.existsSync(filePath)) {
-      console.warn(`⚠️ File not found: ${filePath}`);
+      console.warn(`️ File not found: ${filePath}`);
       continue;
     }
 
@@ -198,7 +198,7 @@ export function injectSeoGeo(distDir: string) {
     }
 
     fs.writeFileSync(filePath, html, 'utf-8');
-    console.log(`✅ Injected SEO/GEO tags into: ${filename}`);
+    console.log(` Injected SEO/GEO tags into: ${filename}`);
   }
 
   // Generate sitemap.xml
@@ -244,7 +244,7 @@ export function injectSeoGeo(distDir: string) {
 </urlset>
 `;
   fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapXml, 'utf-8');
-  console.log(`✅ Generated: sitemap.xml`);
+  console.log(` Generated: sitemap.xml`);
 
   // Generate robots.txt
   const robotsTxt = `User-agent: *
@@ -256,7 +256,7 @@ Sitemap: https://wetag.ng/sitemap.xml
 Host: https://wetag.ng
 `;
   fs.writeFileSync(path.join(distDir, 'robots.txt'), robotsTxt, 'utf-8');
-  console.log(`✅ Generated: robots.txt`);
+  console.log(` Generated: robots.txt`);
 }
 
 let distDir = path.resolve(process.cwd(), 'apps/mobile/dist');

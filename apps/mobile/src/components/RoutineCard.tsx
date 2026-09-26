@@ -96,7 +96,7 @@ export const RoutineCard: React.FC<RoutineCardProps> = ({
       <View style={styles.trustPillRow}>
         <View style={styles.driverSnippet}>
           <Text style={styles.driverSnippetText}>
-            Driver: <Text style={styles.driverBold}>Dr. Kunle A.</Text> ★ 4.9 · Smile ID Verified
+            Driver: <Text style={styles.driverBold}>Dr. Kunle A.</Text> Stars  4.9 · Smile ID Verified
           </Text>
         </View>
         <View style={styles.seatsPill}>

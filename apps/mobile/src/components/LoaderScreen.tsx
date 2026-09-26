@@ -9,9 +9,9 @@ interface LoaderScreenProps {
 
 const TELEMETRY_STEPS = [
   { text: 'Initializing Ibadan Local Life Grid...', status: 'OK' },
-  { text: 'Syncing Akobo ➔ Dugbe & UI ➔ Secretariat Corridors...', status: 'ACTIVE' },
+  { text: 'Syncing Akobo  Dugbe & UI  Secretariat Corridors...', status: 'ACTIVE' },
   { text: 'Connecting Oyo State 615 Civic Emergency Dispatch...', status: 'ONLINE' },
-  { text: 'Audit Complete · 100% Launch Ready 🚀', status: 'READY' },
+  { text: 'Audit Complete · 100% Launch Ready ', status: 'READY' },
 ];
 
 export const LoaderScreen: React.FC<LoaderScreenProps> = ({ onFinish }) => {
@@ -119,7 +119,7 @@ export const LoaderScreen: React.FC<LoaderScreenProps> = ({ onFinish }) => {
         onPress={onFinish}
         activeOpacity={0.8}
       >
-        <Text style={styles.skipBtnText}>Launch Experience ➔</Text>
+        <Text style={styles.skipBtnText}>Launch Experience </Text>
       </TouchableOpacity>
 
       {/* Bottom Trust Lock */}

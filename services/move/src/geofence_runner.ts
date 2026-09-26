@@ -94,7 +94,7 @@ export function runGeofenceAudit(): GeofenceCheck[] {
 }
 
 if (require.main === module) {
-  console.log('📍 weTag Ibadan Phase 1 Geofence & Smart Hub Verification Runner:\n');
+  console.log('Hub:  weTag Ibadan Phase 1 Geofence & Smart Hub Verification Runner:\n');
   const results = runGeofenceAudit();
   console.table(
     results.map((r) => ({
@@ -106,6 +106,6 @@ if (require.main === module) {
     }))
   );
   const passedCount = results.filter((r) => r.passed).length;
-  console.log(`\n🏁 Summary: ${passedCount}/${results.length} Geofence & Hub Validations Passed.`);
+  console.log(`\n Summary: ${passedCount}/${results.length} Geofence & Hub Validations Passed.`);
   process.exit(passedCount === results.length ? 0 : 1);
 }

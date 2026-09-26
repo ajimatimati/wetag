@@ -152,7 +152,7 @@ export default function ProfileScreen() {
           </View>
           <View>
             <Text style={styles.roleName}>Verified Commuter</Text>
-            <Text style={styles.roleSub}>★ 4.95 Rating · 14 Trips (Akobo ➔ Dugbe)</Text>
+            <Text style={styles.roleSub}>Stars  4.95 Rating · 14 Trips (Akobo  Dugbe)</Text>
           </View>
         </View>
         <ChevronRight size={16} color={colors.textSecondary} />
@@ -222,7 +222,7 @@ export default function ProfileScreen() {
           </Text>
         </View>
         <View style={styles.onboardingBannerBtn}>
-          <Text style={styles.onboardingBannerBtnText}>Manage ➔</Text>
+          <Text style={styles.onboardingBannerBtnText}>Manage </Text>
         </View>
       </TouchableOpacity>
 

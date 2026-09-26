@@ -112,7 +112,7 @@ export async function runMasterQualityAudit(): Promise<{
   totalPassed: number;
 }> {
   console.log('\n================================================================');
-  console.log('🚀 weTag (iTag) Master Platform Test Suite & Production Audit');
+  console.log(' weTag (iTag) Master Platform Test Suite & Production Audit');
   console.log('================================================================\n');
 
   const tierResults: TierResult[] = [];
@@ -234,7 +234,7 @@ if (require.main === module) {
   runMasterQualityAudit()
     .then(({ tierResults, allPassed, totalChecks, totalPassed }) => {
       console.log('\n================================================================');
-      console.log('🏁 weTag (iTag) Master Platform Audit Scorecard');
+      console.log(' weTag (iTag) Master Platform Audit Scorecard');
       console.log('================================================================\n');
 
       console.table(
@@ -248,15 +248,15 @@ if (require.main === module) {
       );
 
       console.log(
-        `\n🎯 Overall Result: ${totalPassed}/${totalChecks} Total Quality Checks Passed (${Math.round((totalPassed / totalChecks) * 100)}%).`
+        `\n Overall Result: ${totalPassed}/${totalChecks} Total Quality Checks Passed (${Math.round((totalPassed / totalChecks) * 100)}%).`
       );
 
       if (allPassed) {
-        console.log('\n✅ 100% SUCCESS: weTag (iTag) is 100% functional, fully verified,');
+        console.log('\n 100% SUCCESS: weTag (iTag) is 100% functional, fully verified,');
         console.log('   with SEO and GEO blazingly intact and ready for mass adoption & production scale!');
         process.exit(0);
       } else {
-        console.error('\n❌ Quality audit detected failures.');
+        console.error('\n Quality audit detected failures.');
         process.exit(1);
       }
     })

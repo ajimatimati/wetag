@@ -74,7 +74,7 @@ export default function FinanceDashboardPage() {
                 <span className="text-emerald-700 font-semibold">Name Match Verified</span>
               </td>
               <td className="p-4 font-black text-[#123C3A]">₦12,400</td>
-              <td className="p-4 text-xs text-slate-500">4 Shared Journeys (Akobo ➔ Dugbe)</td>
+              <td className="p-4 text-xs text-slate-500">4 Shared Journeys (Akobo  Dugbe)</td>
               <td className="p-4">
                 <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 flex items-center gap-1 w-fit">
                   <Clock className="w-3.5 h-3.5" /> Ready for Transfer

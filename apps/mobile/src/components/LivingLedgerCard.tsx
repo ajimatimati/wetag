@@ -50,11 +50,11 @@ export const LivingLedgerCard: React.FC<LivingLedgerCardProps> = ({
       {/* Real-time Ibadan Utility Telemetry Bar */}
       <View style={styles.telemetryRow}>
         <View style={styles.telemetryChip}>
-          <Text style={styles.telemetryLabel}>⚡ IBEDC Units:</Text>
+          <Text style={styles.telemetryLabel}>Power  IBEDC Units:</Text>
           <Text style={styles.telemetryValue}>{ibedcUnitsKwh} kWh (~9 days)</Text>
         </View>
         <View style={styles.telemetryChip}>
-          <Text style={styles.telemetryLabel}>⛽ Gen Tank:</Text>
+          <Text style={styles.telemetryLabel}> Gen Tank:</Text>
           <Text style={styles.telemetryValue}>{dieselPercent}% Full</Text>
         </View>
       </View>

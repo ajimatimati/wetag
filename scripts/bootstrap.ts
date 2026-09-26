@@ -19,7 +19,7 @@ export const MONITORED_SERVICES: ServiceHealth[] = [
 ];
 
 export async function bootstrapPlatform() {
-  console.log('⚡ Initializing weTag Master Platform Bootstrapper...\n');
+  console.log('Power  Initializing weTag Master Platform Bootstrapper...\n');
 
   console.log('1. Checking Docker & Database Containers:');
   console.log('   - PostgreSQL 16 + PostGIS: Port 5432 (Ready)');
@@ -34,7 +34,7 @@ export async function bootstrapPlatform() {
   console.log('   - Master Ibadan Launch Corridors & Accounts: Ready');
   console.log('   - Double-Entry Ledger Balances: Audited');
 
-  console.log('\n✅ weTag Local Life Network is 100% Ready for Execution.');
+  console.log('\n weTag Local Life Network is 100% Ready for Execution.');
 }
 
 if (require.main === module) {

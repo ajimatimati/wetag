@@ -119,11 +119,11 @@ if (typeof describe !== 'undefined') {
     });
   });
 } else if (require.main === module) {
-  console.log('⚡ Running weTag Matching & Spatial Algorithm Tests...\n');
+  console.log('Power  Running weTag Matching & Spatial Algorithm Tests...\n');
   const results = runMatchingTests();
   console.table(results);
   const passed = results.filter((r) => r.passed).length;
-  console.log(`\n🏁 Summary: ${passed}/${results.length} Algorithm Tests Passed.`);
+  console.log(`\n Summary: ${passed}/${results.length} Algorithm Tests Passed.`);
   process.exit(passed === results.length ? 0 : 1);
 }
 

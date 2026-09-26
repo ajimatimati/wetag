@@ -103,7 +103,7 @@ export default function MoveScreen() {
   });
 
   const handlePublishRide = () => {
-    alert(`Seats Published! Your route from ${originInput} ➔ ${destInput} (${offerSeats} seats at ₦${offerPrice}/seat) is now live for commuters.`);
+    alert(`Seats Published! Your route from ${originInput}  ${destInput} (${offerSeats} seats at ₦${offerPrice}/seat) is now live for commuters.`);
     setActiveMode('find');
   };
 
@@ -186,10 +186,10 @@ export default function MoveScreen() {
             >
               {[
                 { id: 'ALL', label: 'All Corridors' },
-                { id: 'AKOBO', label: 'Akobo ➔ Dugbe' },
-                { id: 'UI', label: 'UI ➔ Secretariat' },
-                { id: 'BODIJA', label: 'Bodija ➔ Ring Rd' },
-                { id: 'CHALLENGE', label: 'Challenge ➔ Dugbe' },
+                { id: 'AKOBO', label: 'Akobo  Dugbe' },
+                { id: 'UI', label: 'UI  Secretariat' },
+                { id: 'BODIJA', label: 'Bodija  Ring Rd' },
+                { id: 'CHALLENGE', label: 'Challenge  Dugbe' },
               ].map((pill) => (
                 <TouchableOpacity
                   key={pill.id}
@@ -219,7 +219,7 @@ export default function MoveScreen() {
                     <Clock size={16} color={colors.primaryDeep} />
                   </View>
                   <View>
-                    <Text style={styles.routineRoute}>Akobo ➔ Dugbe</Text>
+                    <Text style={styles.routineRoute}>Akobo  Dugbe</Text>
                     <Text style={styles.routineMeta}>Mon–Fri · 7:15 AM departure</Text>
                   </View>
                 </View>
@@ -309,7 +309,7 @@ export default function MoveScreen() {
               activeOpacity={0.8}
             >
               <Text style={styles.onboardingLinkText}>
-                Need full vehicle registration & bank payouts? Use Onboarding Portal ➔
+                Need full vehicle registration & bank payouts? Use Onboarding Portal 
               </Text>
             </TouchableOpacity>
 

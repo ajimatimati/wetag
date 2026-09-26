@@ -126,7 +126,7 @@ export async function runMoveSmokeTests(): Promise<SmokeTestResult[]> {
 }
 
 if (require.main === module) {
-  console.log('⚡ Executing weTag Live HTTP Contract & Smoke Test Runner...\n');
+  console.log('Power  Executing weTag Live HTTP Contract & Smoke Test Runner...\n');
   runMoveSmokeTests().then((results) => {
     console.table(
       results.map((r) => ({
@@ -139,7 +139,7 @@ if (require.main === module) {
       }))
     );
     const passed = results.filter((r) => r.passed).length;
-    console.log(`\n🏁 Summary: ${passed}/${results.length} HTTP Route Contracts Verified.`);
+    console.log(`\n Summary: ${passed}/${results.length} HTTP Route Contracts Verified.`);
     process.exit(passed === results.length ? 0 : 1);
   }).catch((err) => {
     console.error('Smoke test execution error:', err);

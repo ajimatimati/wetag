@@ -128,7 +128,7 @@ export function runRedTeamSuite(): SimulationResult[] {
   return results;
 }
 
-console.log('🛡️ Running weTag 16-Scenario Red Team Safety & Fraud Suite...\n');
+console.log('Verified  Running weTag 16-Scenario Red Team Safety & Fraud Suite...\n');
 const results = runRedTeamSuite();
 console.table(results.map(r => ({
   ID: r.scenarioId,
@@ -137,4 +137,4 @@ console.table(results.map(r => ({
   Mitigation: r.expectedMitigation,
   Status: r.actualStatus,
 })));
-console.log(`\n✅ Summary: ${results.length}/${results.length} Scenarios Verified and Passed.`);
+console.log(`\n Summary: ${results.length}/${results.length} Scenarios Verified and Passed.`);

@@ -14,12 +14,12 @@ const stayDb = new StayPrisma();
 const walletDb = new WalletPrisma();
 
 async function main() {
-  console.log('🌱 Seeding weTag Ibadan Platform...');
+  console.log(' Seeding weTag Ibadan Platform...');
 
   // ─────────────────────────────────────────────
   // 1. IDENTITY & ACCOUNTS
   // ─────────────────────────────────────────────
-  console.log('👤 Creating Accounts & Profiles...');
+  console.log(' Creating Accounts & Profiles...');
 
   // User 1: Dr. Kunle Alabi (Driver + Commuter)
   const kunle = await identityDb.account.upsert({
@@ -121,7 +121,7 @@ async function main() {
   // ─────────────────────────────────────────────
   // 2. WALLET INITIALIZATION
   // ─────────────────────────────────────────────
-  console.log('💳 Creating Universal Wallets & Seed Ledgers...');
+  console.log(' Creating Universal Wallets & Seed Ledgers...');
 
   const toluWallet = await walletDb.wallet.upsert({
     where: { accountId: tolu.id },
@@ -145,7 +145,7 @@ async function main() {
             direction: 'DEBIT',
             amount: 40000, // ₦400 Akobo ride
             domain: 'MOVE',
-            description: 'Shared commute: Akobo ➔ Dugbe',
+            description: 'Shared commute: Akobo  Dugbe',
             status: 'SETTLED',
             settledAt: new Date(),
           },
@@ -166,7 +166,7 @@ async function main() {
   // ─────────────────────────────────────────────
   // 3. MOVE: CORRIDOR JOURNEYS
   // ─────────────────────────────────────────────
-  console.log('🚗 Creating Active Corridor Journeys in Ibadan...');
+  console.log(' Creating Active Corridor Journeys in Ibadan...');
 
   const kunleVehicle = kunle.vehicles[0];
 
@@ -213,7 +213,7 @@ async function main() {
   // ─────────────────────────────────────────────
   // 4. STAY: VERIFIED PROPERTIES & HOUSEHOLDS
   // ─────────────────────────────────────────────
-  console.log('🏠 Creating Verified Properties & Move-In Ledgers...');
+  console.log(' Creating Verified Properties & Move-In Ledgers...');
 
   const bodijaProp = await stayDb.property.create({
     data: {
@@ -291,12 +291,12 @@ async function main() {
     },
   });
 
-  console.log('✅ Master seed completed successfully!');
+  console.log(' Master seed completed successfully!');
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Seeding failed:', e);
+    console.error(' Seeding failed:', e);
     process.exit(1);
   })
   .finally(async () => {

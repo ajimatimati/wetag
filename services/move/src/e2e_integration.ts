@@ -83,14 +83,14 @@ export async function runFullE2ETestSuite(): Promise<E2ETestStep[]> {
   });
 
   // ─────────────────────────────────────────────
-  // 5. Driver Posts Carpool Journey (Akobo ➔ Dugbe)
+  // 5. Driver Posts Carpool Journey (Akobo  Dugbe)
   // ─────────────────────────────────────────────
   const fareResult = calculateSuggestedContributionKobo(14.2, 3); // 14.2 km corridor, 3 passengers
   const fareKobo = fareResult.perSeatKobo;
   steps.push({
     step: 5,
     domain: 'MOVE',
-    action: 'Publish Akobo ➔ Dugbe Corridor Journey with suggested fare formula',
+    action: 'Publish Akobo  Dugbe Corridor Journey with suggested fare formula',
     expectedResult: 'Per-seat fare calculated above minimum ₦250 threshold',
     status: fareKobo >= 25000 ? 'PASSED' : 'FAILED',
     details: `Calculated per-seat contribution: ₦${fareKobo / 100} (Kobo: ${fareKobo})`,
@@ -217,7 +217,7 @@ export async function runFullE2ETestSuite(): Promise<E2ETestStep[]> {
 
 // Execute CLI runner
 runFullE2ETestSuite().then((results) => {
-  console.log('🚀 weTag Master End-to-End Cross-Service Lifecycle Test Suite Results:\n');
+  console.log(' weTag Master End-to-End Cross-Service Lifecycle Test Suite Results:\n');
   console.table(
     results.map((r) => ({
       Step: r.step,
@@ -228,5 +228,5 @@ runFullE2ETestSuite().then((results) => {
     }))
   );
   const passed = results.filter((r) => r.status === 'PASSED').length;
-  console.log(`\n🏁 Summary: ${passed}/${results.length} Lifecycle Steps Succeeded (100%).`);
+  console.log(`\n Summary: ${passed}/${results.length} Lifecycle Steps Succeeded (100%).`);
 });

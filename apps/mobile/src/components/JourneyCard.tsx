@@ -44,7 +44,7 @@ export const JourneyCard: React.FC<JourneyCardProps> = ({ journey, onSelect }) =
               {journey.isVerified && <ShieldCheck size={14} color={colors.primary} />}
             </View>
             <Text style={styles.ratingText}>
-              ★ {journey.driverRating.toFixed(1)} {journey.tripCount ? `(${journey.tripCount} rides)` : '· Verified'} · Smile ID NIN
+              Stars  {journey.driverRating.toFixed(1)} {journey.tripCount ? `(${journey.tripCount} rides)` : '· Verified'} · Smile ID NIN
             </Text>
             {journey.vehicleModel && (
               <Text style={styles.vehicleText}>
@@ -83,16 +83,16 @@ export const JourneyCard: React.FC<JourneyCardProps> = ({ journey, onSelect }) =
             <Text style={styles.badgeText}>{journey.departureTime}</Text>
           </View>
           <View style={[styles.badge, styles.seatBadge]}>
-            <Text style={styles.seatBadgeText}>🪑 {journey.availableSeats} open</Text>
+            <Text style={styles.seatBadgeText}>Seats  {journey.availableSeats} open</Text>
           </View>
           {journey.hasAc !== false && (
             <View style={[styles.badge, styles.comfortBadge]}>
-              <Text style={styles.comfortBadgeText}>❄️ AC</Text>
+              <Text style={styles.comfortBadgeText}>AC  AC</Text>
             </View>
           )}
           {journey.hasLuggageSpace !== false && (
             <View style={[styles.badge, styles.comfortBadge]}>
-              <Text style={styles.comfortBadgeText}>🧳 Bags OK</Text>
+              <Text style={styles.comfortBadgeText}>Bags  Bags OK</Text>
             </View>
           )}
           {journey.estimatedDetourMins !== undefined && (
@@ -104,7 +104,7 @@ export const JourneyCard: React.FC<JourneyCardProps> = ({ journey, onSelect }) =
         </View>
 
         <View style={styles.bookActionPill}>
-          <Text style={styles.bookActionText}>Join ➔</Text>
+          <Text style={styles.bookActionText}>Join </Text>
         </View>
       </View>
     </TouchableOpacity>

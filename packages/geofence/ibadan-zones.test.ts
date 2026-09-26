@@ -54,11 +54,11 @@ if (typeof describe !== 'undefined') {
     });
   });
 } else if (require.main === module) {
-  console.log('📍 Running Ibadan Geofencing & Smart Hub Validation Suite...\n');
+  console.log('Hub:  Running Ibadan Geofencing & Smart Hub Validation Suite...\n');
   const results = runGeofenceTests();
   console.table(results);
   const passed = results.filter((r) => r.passed).length;
-  console.log(`\n🏁 Summary: ${passed}/${results.length} Geofence Checks Passed.`);
+  console.log(`\n Summary: ${passed}/${results.length} Geofence Checks Passed.`);
   process.exit(passed === results.length ? 0 : 1);
 }
 

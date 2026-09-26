@@ -56,7 +56,7 @@ export const ActiveTripCard: React.FC<ActiveTripCardProps> = ({
       return;
     }
     Alert.alert(
-      '🚨 Connect to Oyo 615 Emergency Response?',
+      ' Connect to Oyo 615 Emergency Response?',
       `You are on an active trip from ${origin} to ${destination} in vehicle ${vehiclePlate}.\n\nThis will immediately connect you to Oyo State Citizens Emergency Hotline (615) and transmit your encrypted GPS telemetry.`,
       [
         { text: 'Cancel', style: 'cancel' },
@@ -77,7 +77,7 @@ export const ActiveTripCard: React.FC<ActiveTripCardProps> = ({
   const handleShareTrajectory = async () => {
     try {
       await Share.share({
-        message: `🛡️ I am riding with weTag on the ${origin} ➔ ${destination} corridor.\nVehicle: ${vehicleModel} (${vehiclePlate})\nDriver: ${driverName} (Smile ID NIN Verified)\nLive corridor trajectory: https://wetag.ng/move?tracking=active-${vehiclePlate.replace(/\s+/g, '')}`,
+        message: `Verified  I am riding with weTag on the ${origin}  ${destination} corridor.\nVehicle: ${vehicleModel} (${vehiclePlate})\nDriver: ${driverName} (Smile ID NIN Verified)\nLive corridor trajectory: https://wetag.ng/move?tracking=active-${vehiclePlate.replace(/\s+/g, '')}`,
         title: 'weTag SafeCorridor™ Live Ride Tracking',
       });
     } catch {
@@ -158,7 +158,7 @@ export const ActiveTripCard: React.FC<ActiveTripCardProps> = ({
             </View>
             <Text style={styles.vehicleText}>{vehicleModel} · {vehiclePlate}</Text>
             <View style={styles.driverMetaRow}>
-              <Text style={styles.ratingText}>★ {driverRating}</Text>
+              <Text style={styles.ratingText}>Stars  {driverRating}</Text>
               <Text style={styles.metaDivider}>•</Text>
               {hasAC && (
                 <View style={styles.comfortTag}>

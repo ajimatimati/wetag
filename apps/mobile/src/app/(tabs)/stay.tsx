@@ -186,7 +186,7 @@ export default function StayScreen() {
         {/* Homeluxe-Grade Top Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.greetingText}>Hi, Ibadan Resident! 👋</Text>
+            <Text style={styles.greetingText}>Hi, Ibadan Resident! </Text>
             <Text style={styles.title}>Find Your Perfect Place</Text>
           </View>
           <View style={styles.headerBadge}>
@@ -278,7 +278,7 @@ export default function StayScreen() {
             onPress={() => setCommuteFilter('SECRETARIAT')}
           >
             <Text style={[styles.commuteBtnText, commuteFilter === 'SECRETARIAT' && styles.commuteBtnTextActive]}>
-              🚗 &lt;15m Secretariat
+               &lt;15m Secretariat
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -286,7 +286,7 @@ export default function StayScreen() {
             onPress={() => setCommuteFilter('UI')}
           >
             <Text style={[styles.commuteBtnText, commuteFilter === 'UI' && styles.commuteBtnTextActive]}>
-              🎓 &lt;10m UI Gate
+              Campus  &lt;10m UI Gate
             </Text>
           </TouchableOpacity>
         </View>
@@ -315,7 +315,7 @@ export default function StayScreen() {
             </Text>
           </View>
           <View style={styles.listerBannerBtn}>
-            <Text style={styles.listerBannerBtnText}>+ List Home ➔</Text>
+            <Text style={styles.listerBannerBtnText}>+ List Home </Text>
           </View>
         </TouchableOpacity>
 

@@ -21,7 +21,7 @@ const CHAT_ITEMS: ChatItem[] = [
   {
     id: '1',
     name: 'Dr. Kunle Alabi',
-    context: 'Akobo ➔ Dugbe · 7:15 AM Carpool',
+    context: 'Akobo  Dugbe · 7:15 AM Carpool',
     lastMessage: 'Approaching General Gas roundabout now. 3 mins away.',
     time: '7:28 AM',
     unreadCount: 1,
@@ -54,7 +54,7 @@ const CHAT_ITEMS: ChatItem[] = [
   {
     id: '4',
     name: 'Bose Adewale',
-    context: 'UI Agbowo ➔ Secretariat',
+    context: 'UI Agbowo  Secretariat',
     lastMessage: 'Thanks for the ride! Dropped off at Gate 2 safely.',
     time: 'Sep 19',
     unreadCount: 0,
@@ -79,7 +79,7 @@ export default function MessagesScreen() {
 
   const handleOpenChat = (chat: ChatItem) => {
     Alert.alert(
-      `🔒 ${chat.name}`,
+      ` ${chat.name}`,
       `Corridor / Property Context:\n${chat.context}\n\nLast update: "${chat.lastMessage}"\n\nPrivacy Guard: All communications are encrypted and masked (${chat.phoneMasked}). No phone numbers are shared.`,
       [
         { text: 'Close', style: 'cancel' },

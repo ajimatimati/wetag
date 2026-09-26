@@ -104,12 +104,12 @@
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
     body {
-      background-color: #F8FAFC;
+      background-color: #F8F9FA;
       color: #0A0D16;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
     .dark-sidebar {
-      background-color: #0A0D16;
+      background-color: #111622;
     }
     .glass-card {
       background: #FFFFFF;
@@ -122,8 +122,8 @@
       box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.06);
     }
     .virtual-card {
-      background: linear-gradient(135deg, #0A0D16 0%, #171E2E 100%);
-      box-shadow: 0 16px 36px -8px rgba(10, 13, 22, 0.28);
+      background: linear-gradient(135deg, #111622 0%, #1E293B 100%);
+      box-shadow: 0 16px 36px -8px rgba(17, 22, 34, 0.35);
     }
     .spline-line {
       stroke-dasharray: 1000;
@@ -147,9 +147,9 @@
   <!-- ========================================== -->
   <aside class="hidden lg:flex flex-col w-64 dark-sidebar text-white shrink-0 border-r border-white/5 h-screen sticky top-0 p-5 justify-between z-40">
     <div class="space-y-6">
-      <!-- Geometric Brand Logo (Nikky Geometric Reference: Square, Circle, Triangle) -->
+      <!-- Geometric Brand Logo (Nikky Reference: Square, Circle, Triangle) -->
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-[#111622] border border-emerald-500/40 flex items-center justify-center font-black text-xl text-emerald-400 shadow-[0_0_15px_rgba(0,212,126,0.25)]">
+        <div class="w-10 h-10 rounded-xl bg-slate-900 border border-emerald-500/40 flex items-center justify-center font-black text-xl text-emerald-400 shadow-[0_0_15px_rgba(0,212,126,0.25)]">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#00D47E"/>
             <circle cx="17.5" cy="6.5" r="3.5" fill="#FFFFFF"/>
@@ -165,8 +165,18 @@
         </div>
       </div>
 
+      <!-- Mode Switcher Pill (User vs Admin) -->
+      <div class="bg-slate-900/90 p-1 rounded-xl flex border border-white/10 text-xs font-bold">
+        <button id="mode-user-btn" onclick="switchDashboardMode('user')" class="flex-1 py-1.5 rounded-lg bg-emerald-400 text-slate-950 font-black shadow transition-all">
+          User View
+        </button>
+        <button id="mode-admin-btn" onclick="switchDashboardMode('admin')" class="flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all font-semibold">
+          Admin Hub
+        </button>
+      </div>
+
       <!-- Navigation Menu Items -->
-      <nav class="space-y-1.5 pt-2 text-xs font-bold">
+      <nav class="space-y-1.5 pt-1 text-xs font-bold">
         <a href="#dashboard" class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-white/10 text-white font-black shadow-sm">
           <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/>
@@ -174,7 +184,7 @@
             <rect x="14" y="14" width="7" height="7" rx="1" stroke-width="2"/>
             <rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/>
           </svg>
-          <span>Command Center</span>
+          <span id="nav-item-primary">Dashboard</span>
         </a>
 
         <a href="#corridors" class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
@@ -207,22 +217,22 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
           </svg>
           <span>Universal Wallet</span>
-          <span class="ml-auto text-[10px] text-white font-black">₦14,500</span>
+          <span class="ml-auto text-[10px] text-white font-black">NGN 14,500</span>
         </a>
       </nav>
     </div>
 
     <!-- Bottom Promotional Card (Nikky Rocket Reference) -->
-    <div class="bg-[#111622] rounded-2xl p-4 border border-white/10 relative overflow-hidden">
-      <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-xl mb-3">
-        🚀
+    <div class="bg-slate-900 rounded-2xl p-4 border border-white/10 relative overflow-hidden">
+      <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-sm font-black text-emerald-400 mb-3">
+        OFFSET
       </div>
-      <div class="text-xs font-black text-white">Offset up to ₦24,000/wk!</div>
+      <div class="text-xs font-black text-white">Save Up to NGN 24,000/wk</div>
       <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">
         Share empty car seats on Akobo or UI daily commutes. Zero commercial taxi hassle.
       </p>
-      <a href="#onboarding" class="mt-3 block text-center py-2.5 rounded-xl bg-white hover:bg-slate-100 text-[#0A0D16] text-[11px] font-black transition-all">
-        List Car Now ➔
+      <a href="#onboarding" class="mt-3 block text-center py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 text-[11px] font-black transition-all">
+        List Car Now ->
       </a>
     </div>
   </aside>
@@ -230,26 +240,26 @@
   <!-- ========================================== -->
   <!-- 2. MAIN APP CONTAINER (RESPONSIVE PC & MOBILE) -->
   <!-- ========================================== -->
-  <div class="flex-1 flex flex-col min-w-0 bg-[#F8FAFC]">
+  <div class="flex-1 flex flex-col min-w-0 bg-[#F8F9FA]">
     
     <!-- Top Utility Header Bar (Nikky Benchmark) -->
-    <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
+    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-xl border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
       <!-- Mobile Logo & Welcome -->
       <div class="flex items-center gap-3">
-        <div class="lg:hidden w-9 h-9 rounded-xl bg-[#0A0D16] flex items-center justify-center font-black text-emerald-400 text-lg shadow-sm">
+        <div class="lg:hidden w-9 h-9 rounded-xl bg-slate-950 flex items-center justify-center font-black text-emerald-400 text-lg shadow-sm">
           W
         </div>
         <div>
-          <h1 class="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-tight">
-            Hello, Tolu! 👋
+          <h1 class="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-tight" id="header-greeting">
+            Hello, Nikky
           </h1>
           <p class="text-[11px] font-semibold text-slate-500 hidden sm:block">
-            Ibadan Metropolitan Network · 4 Active Corridors
+            Welcome back to your weTag local life network
           </p>
         </div>
       </div>
 
-      <!-- Quick Search Input Pill -->
+      <!-- Quick Search Input Pill (Nikky Benchmark) -->
       <div class="flex-1 max-w-md hidden md:block">
         <div class="relative">
           <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -257,19 +267,26 @@
           </svg>
           <input 
             type="text" 
-            placeholder="Search Akobo, Bodija, UI, Secretariat or Listings..." 
-            class="w-full bg-slate-100/80 border border-slate-200 rounded-full pl-10 pr-12 py-2 text-xs font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:bg-white transition-all"
+            placeholder="Search corridors, properties, or participants..." 
+            class="w-full bg-slate-100 border border-slate-200 rounded-full pl-10 pr-12 py-2 text-xs font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:bg-white transition-all"
           />
-          <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 bg-slate-200/70 px-1.5 py-0.5 rounded">⌘K</span>
+          <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 bg-slate-200/70 px-1.5 py-0.5 rounded">Ctrl+K</span>
         </div>
       </div>
 
       <!-- Right Header Actions (Hotline SOS, Notification, Avatar) -->
       <div class="flex items-center gap-2.5">
         <!-- Oyo 615 Emergency Hotline Trigger Pill -->
-        <button onclick="alert('Oyo State 615 Civic Shield Activated! Emergency dispatch connected with encrypted corridor GPS telemetry.')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-black hover:bg-red-100 transition-all">
+        <button onclick="alert('Oyo State 615 Civic Shield Connected! Real-time GPS telemetry dispatched to emergency responders.')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-black hover:bg-red-100 transition-all">
           <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
           <span>Oyo 615 SOS</span>
+        </button>
+
+        <!-- Message Icon -->
+        <button class="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-200 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
         </button>
 
         <!-- Notification Bell -->
@@ -282,12 +299,12 @@
 
         <!-- User Verified Avatar -->
         <div class="flex items-center gap-2 pl-1 border-l border-slate-200">
-          <div class="w-9 h-9 rounded-full bg-[#0A0D16] text-white flex items-center justify-center font-black text-xs">
-            TO
+          <div class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs">
+            NK
           </div>
           <div class="hidden sm:block text-left">
-            <div class="text-xs font-black text-slate-900 leading-none">Tolu Olaniyi</div>
-            <div class="text-[9px] font-bold text-emerald-600 mt-0.5">Tier 2 NIN Verified</div>
+            <div class="text-xs font-black text-slate-900 leading-none">Nikky weTag</div>
+            <div class="text-[9px] font-bold text-emerald-600 mt-0.5">Tier 2 Verified</div>
           </div>
         </div>
       </div>
@@ -296,666 +313,602 @@
     <!-- Main Scrollable Dashboard Content -->
     <main class="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto space-y-8">
       
-      <!-- Top Grid: Hero Banner + Stacked Virtual Card (Nikky Transfer Reference) -->
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        
-        <!-- Left: Hero Corridor Transfer Widget (Nikky Transfer to Bank Reference) -->
-        <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-slate-100">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-extrabold border border-emerald-200">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                Live Corridor Matching Active
-              </span>
-              <span class="text-xs font-bold text-slate-400">Phase 1 Ibadan Geofence</span>
-            </div>
-
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
-              Transfer Fuel Costs & Share Daily Commutes
-            </h2>
-            <p class="text-xs sm:text-sm text-slate-500 mt-2 max-w-lg leading-relaxed">
-              Match verified drivers and riders along Ibadan’s arterial routes. Guaranteed offline 4-digit PIN escrow security.
-            </p>
-
-            <!-- Interactive Route Selector Chips -->
-            <div class="mt-6 flex flex-wrap gap-2">
-              <button onclick="setCorridorHero('Akobo', 'Dugbe', '₦800', '18 mins')" id="chip-akobo" class="px-3.5 py-2 rounded-xl bg-slate-900 text-white text-xs font-black shadow-sm transition-all">
-                Akobo ➔ Dugbe (₦800)
-              </button>
-              <button onclick="setCorridorHero('UI Agbowo', 'Secretariat', '₦300', '12 mins')" id="chip-ui" class="px-3.5 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 text-xs font-bold hover:bg-slate-50 transition-all">
-                UI ➔ Secretariat (₦300)
-              </button>
-              <button onclick="setCorridorHero('Bodija', 'Ring Road', '₦500', '22 mins')" id="chip-bodija" class="px-3.5 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 text-xs font-bold hover:bg-slate-50 transition-all">
-                Bodija ➔ Ring Rd (₦500)
-              </button>
-            </div>
-          </div>
-
-          <!-- Corridor Live HUD Card -->
-          <div class="mt-6 bg-[#0A0D16] text-white rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/10">
-            <div>
-              <div class="flex items-center gap-2 text-[10px] font-black text-emerald-400 uppercase tracking-wider">
-                <span id="hero-countdown">Departs 7:15 AM · in 18 mins</span>
-                <span>•</span>
-                <span class="text-slate-400">Dr. Kunle A. (★ 4.9)</span>
-              </div>
-              <div class="text-lg font-black text-white mt-1" id="hero-corridor-title">
-                Akobo General Gas ➔ Dugbe Cocoa House
-              </div>
-              <div class="text-xs text-slate-400 mt-0.5" id="hero-corridor-meta">
-                Toyota Corolla · OYO-742-BDJ · ❄️ AC · 🪑 2 Seats Open
-              </div>
-            </div>
-            <div class="flex items-center gap-3 shrink-0">
-              <div class="text-right">
-                <div class="text-xs text-slate-400 font-semibold">Fair Share</div>
-                <div class="text-xl font-black text-emerald-400" id="hero-corridor-fare">₦800</div>
-              </div>
-              <button onclick="alert('Seat reserved! Your 4-digit PIN has been generated: 7356')" class="px-5 py-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-black transition-all shadow-md active:scale-95">
-                Book Seat ➔
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Nikky Stacked Virtual Cards & Universal Wallet -->
-        <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
-          <!-- Stacked Physical Debit Card Visual (Nikky Reference) -->
-          <div class="relative pt-2">
-            <!-- Background Stacked Shadow Card -->
-            <div class="absolute inset-x-3 -top-1 h-36 bg-slate-800 rounded-3xl opacity-40 transform scale-95 pointer-events-none"></div>
-
-            <!-- Foreground Master Virtual Card -->
-            <div class="virtual-card text-white rounded-3xl p-6 relative overflow-hidden border border-white/15">
-              <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-7 rounded bg-amber-400/90 border border-amber-300 flex items-center justify-center">
-                    <div class="w-5 h-4 border border-amber-700/60 rounded-sm"></div>
-                  </div>
-                  <span class="text-slate-400 text-xs font-black tracking-widest">)))</span>
-                </div>
-                <span class="text-xs font-black px-2.5 py-1 rounded-full bg-white/10 text-emerald-400 border border-white/10">
-                  weTag · Paystack NUBAN
-                </span>
-              </div>
-
-              <div class="mb-4">
-                <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Universal Liquid Balance</div>
-                <div class="text-3xl font-black text-white tracking-tight mt-0.5">₦14,500.00</div>
-              </div>
-
-              <div class="flex items-end justify-between pt-3 border-t border-white/10">
-                <div>
-                  <div class="text-xs font-black text-slate-300 tracking-wider">9912 •••• •••• 8821</div>
-                  <div class="text-[10px] text-slate-400 font-bold uppercase mt-0.5">Tolu Olaniyi · Wema Virtual</div>
-                </div>
-                <div class="text-right">
-                  <div class="text-[9px] text-slate-400 uppercase font-bold">Valid Thru</div>
-                  <div class="text-xs font-bold text-white">12/28</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Trantor-Grade Dual Action Split Pills [Top-Up] + [Withdraw] -->
-          <div class="grid grid-cols-2 gap-3 bg-white p-2 rounded-2xl border border-slate-200">
-            <button onclick="alert('Top-Up Modal Opened: Bank Transfer to Wema Bank 9912048821 (weTag / Tolu Olaniyi)')" class="flex items-center justify-center gap-2 py-3 rounded-xl bg-orange-100 hover:bg-orange-200 text-orange-950 text-xs font-black transition-all">
-              <span>⚡ Instant Top-Up</span>
-            </button>
-            <button onclick="alert('Withdrawal Initiated: Funds routed to GTBank •••• 4120 via NUBAN Transfer')" class="flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-950 text-xs font-black transition-all">
-              <span>Withdraw to Bank ➔</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
       <!-- ========================================== -->
-      <!-- 3. MID SECTION: ACTIVITIES & HOMELUXE PROPERTIES -->
+      <!-- USER MODE VIEW: EXACT NIKKY BENCHMARK -->
       <!-- ========================================== -->
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
-        <!-- Left: Nikky-Style Top Activities Breakdown -->
-        <div class="lg:col-span-4 glass-card rounded-3xl p-6">
-          <div class="flex items-center justify-between mb-5">
-            <h3 class="text-base font-black text-slate-900">Living Grid Breakdown</h3>
-            <span class="text-xs font-bold text-slate-400">September 2026</span>
-          </div>
+      <div id="view-user-mode" class="space-y-8">
 
-          <div class="space-y-4">
-            <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
-              <div>
-                <div class="text-xs font-black text-slate-900">Akobo ➔ Dugbe Commutes</div>
-                <div class="text-[10px] text-slate-400 font-semibold">14 Carpools · ₦800 each</div>
-              </div>
-              <span class="w-10 h-10 rounded-full bg-[#0A0D16] text-emerald-400 text-xs font-black flex items-center justify-center">
-                50%
-              </span>
-            </div>
-
-            <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
-              <div>
-                <div class="text-xs font-black text-slate-900">Bodija Flatmate Ledger</div>
-                <div class="text-[10px] text-slate-400 font-semibold">Rent Escrow Split</div>
-              </div>
-              <span class="w-10 h-10 rounded-full bg-[#0A0D16] text-blue-400 text-xs font-black flex items-center justify-center">
-                25%
-              </span>
-            </div>
-
-            <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
-              <div>
-                <div class="text-xs font-black text-slate-900">IBEDC Prepaid Power</div>
-                <div class="text-[10px] text-slate-400 font-semibold">142 kWh Band B Recharge</div>
-              </div>
-              <span class="w-10 h-10 rounded-full bg-[#0A0D16] text-amber-400 text-xs font-black flex items-center justify-center">
-                15%
-              </span>
-            </div>
-
-            <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
-              <div>
-                <div class="text-xs font-black text-slate-900">Estate Borehole Pump</div>
-                <div class="text-[10px] text-slate-400 font-semibold">Clean Water Maintenance</div>
-              </div>
-              <span class="w-10 h-10 rounded-full bg-[#0A0D16] text-purple-400 text-xs font-black flex items-center justify-center">
-                10%
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Nikky-Style Analytics Rail (Reports Spline Chart & Donut Gauge) -->
-        <div class="lg:col-span-8 glass-card rounded-3xl p-6">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
-            <div>
-              <h3 class="text-base font-black text-slate-900">Weekly Commute & Ledger Reports</h3>
-              <p class="text-xs text-slate-500 font-normal">Tracking fuel offsets against household utility overhead</p>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 border border-slate-200">
-                Month: September 2026 ▼
-              </span>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-            <!-- Smooth Bezier Spline Chart (Nikky Reference) -->
-            <div class="md:col-span-8">
-              <div class="flex items-center justify-between text-xs font-bold text-slate-400 mb-2">
-                <span>Trajectory Trend</span>
-                <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-black">+₦24,000 Offset</span>
-              </div>
-              <div class="h-44 w-full relative">
-                <!-- SVG Spline Curve Chart -->
-                <svg viewBox="0 0 500 160" class="w-full h-full overflow-visible">
-                  <!-- Grid lines -->
-                  <line x1="0" y1="40" x2="500" y2="40" stroke="#F1F5F9" stroke-width="1.5" />
-                  <line x1="0" y1="80" x2="500" y2="80" stroke="#F1F5F9" stroke-width="1.5" />
-                  <line x1="0" y1="120" x2="500" y2="120" stroke="#F1F5F9" stroke-width="1.5" />
-                  
-                  <!-- Smooth Bezier Curve -->
-                  <path d="M 0,110 C 80,140 140,20 220,50 C 300,80 340,130 400,30 C 450,-10 480,120 500,10" 
-                        fill="none" 
-                        stroke="#0A0D16" 
-                        stroke-width="3.5" 
-                        stroke-linecap="round"
-                        class="spline-line" />
-
-                  <!-- Active Highlight Dot with Tooltip -->
-                  <circle cx="400" cy="30" r="5" fill="#00D47E" stroke="#0A0D16" stroke-width="2.5" />
-                  <!-- Tooltip Box -->
-                  <rect x="330" y="-8" width="140" height="26" rx="6" fill="#0A0D16" />
-                  <text x="400" y="9" font-size="10" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
-                    Expense: ₦6,133.00
-                  </text>
-                </svg>
-              </div>
-              <div class="flex justify-between text-[11px] font-bold text-slate-400 mt-2">
-                <span>Mon</span>
-                <span>Tue</span>
-                <span>Wed</span>
-                <span class="text-slate-900 font-black">Thu (Peak)</span>
-                <span>Fri</span>
-                <span>Sat</span>
-                <span>Sun</span>
-              </div>
-            </div>
-
-            <!-- Donut Gauge (Nikky 85% Donut Reference) -->
-            <div class="md:col-span-4 flex flex-col items-center justify-center p-4 bg-slate-50 rounded-2xl border border-slate-100 text-center">
-              <div class="relative w-28 h-28 flex items-center justify-center">
-                <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
-                  <circle cx="50" cy="50" r="40" stroke="#E2E8F0" stroke-width="10" fill="none" />
-                  <circle cx="50" cy="50" r="40" stroke="#0A0D16" stroke-width="10" stroke-dasharray="251.2" stroke-dashoffset="25.12" stroke-linecap="round" fill="none" />
-                </svg>
-                <div class="absolute inset-0 flex flex-col items-center justify-center">
-                  <span class="text-xl font-black text-slate-900">94%</span>
-                  <span class="text-[9px] font-bold text-slate-400 uppercase">Trust Rate</span>
-                </div>
-              </div>
-              <div class="mt-3 text-xs font-bold text-slate-800">Verified Safety Score</div>
-              <div class="text-[10px] text-slate-400 mt-0.5">Zero Incidents Across 128 Trips</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========================================== -->
-      <!-- 4. HOMELUXE-GRADE SCAM-PROOF HOUSING GRID -->
-      <!-- ========================================== -->
-      <section id="housing" class="space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-          <div>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-black uppercase tracking-wider mb-2">
-              Homeluxe Architectural Standard
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Verified Ibadan Living · Zero Hidden Fees
-            </h2>
-            <p class="text-xs sm:text-sm text-slate-500 mt-1">
-              Every home displays the complete move-in cost upfront. Verified against duplicate deed scams via pHash.
-            </p>
-          </div>
-          <a href="#onboarding" class="inline-flex items-center text-xs font-black px-4 py-2.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition-all">
-            + List Your Property ➔
-          </a>
-        </div>
-
-        <!-- Homeluxe Category Filter Tiles -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div class="p-3.5 rounded-2xl bg-slate-900 text-white font-black text-xs flex items-center gap-3 shadow-sm cursor-pointer">
-            <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-sm">🏡</div>
-            <div>
-              <div>All Homes</div>
-              <div class="text-[9px] text-slate-400 font-normal">48 Verified</div>
-            </div>
-          </div>
-          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-800 font-bold text-xs flex items-center gap-3 hover:bg-slate-50 transition-all cursor-pointer">
-            <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-sm">🎓</div>
-            <div>
-              <div>Student UI Agbowo</div>
-              <div class="text-[9px] text-slate-400 font-normal">&lt;10m to Gate</div>
-            </div>
-          </div>
-          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-800 font-bold text-xs flex items-center gap-3 hover:bg-slate-50 transition-all cursor-pointer">
-            <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-sm">🏢</div>
-            <div>
-              <div>Serviced Bodija Flats</div>
-              <div class="text-[9px] text-slate-400 font-normal">24/7 Borehole</div>
-            </div>
-          </div>
-          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-800 font-bold text-xs flex items-center gap-3 hover:bg-slate-50 transition-all cursor-pointer">
-            <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-sm">🔑</div>
-            <div>
-              <div>Direct Landlords</div>
-              <div class="text-[9px] text-emerald-600 font-black">Zero Agency Fee</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3-Column Luxury Property Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Top Grid: Transfer Banner + Virtual Card Stack -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
-          <!-- Listing 1: Bodija Modern Villa -->
-          <div class="glass-card rounded-3xl overflow-hidden glass-card-hover transition-all flex flex-col">
-            <div class="h-48 w-full relative overflow-hidden bg-slate-900">
-              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Bodija Estate Villa" class="w-full h-full object-cover"/>
-              <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center">
-                <span class="text-[10px] font-black px-3 py-1 rounded-full bg-slate-950/80 text-white backdrop-blur border border-white/10">
-                  Featured
+          <!-- Left: Hero Transfer Banner (Nikky Transfer to Bank Reference) -->
+          <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-slate-100">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-extrabold border border-emerald-200">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Active Corridor Matching Grid
                 </span>
-                <span class="w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur flex items-center justify-center text-white text-xs border border-white/10">
-                  ❤️
-                </span>
+                <span class="text-xs font-bold text-slate-400">Phase 1 Ibadan Geofence</span>
               </div>
-              <div class="absolute bottom-3 inset-x-3.5 flex justify-between items-center text-[10px] font-bold text-white">
-                <span class="px-2.5 py-1 rounded-md bg-slate-950/80 backdrop-blur border border-emerald-500/30 text-emerald-400">
-                  Civic Verified Landlord
-                </span>
-                <span class="px-2 py-0.5 rounded bg-slate-950/70 backdrop-blur">
-                  1/18 Photos
-                </span>
+
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                Transfer money to Your Bank
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-2 max-w-lg leading-relaxed">
+                Seamless fuel cost offsets and double-entry settlements along Akobo, UI, Bodija, and Secretariat corridors.
+              </p>
+
+              <!-- Interactive Corridor Picker Chips -->
+              <div class="mt-6 flex flex-wrap gap-2">
+                <button onclick="setCorridorHero('Akobo', 'Dugbe', 'NGN 800', '18 mins')" id="chip-akobo" class="px-3.5 py-2 rounded-xl bg-slate-900 text-white text-xs font-black shadow-sm transition-all">
+                  Akobo -> Dugbe (NGN 800)
+                </button>
+                <button onclick="setCorridorHero('UI Agbowo', 'Secretariat', 'NGN 300', '12 mins')" id="chip-ui" class="px-3.5 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 text-xs font-bold hover:bg-slate-50 transition-all">
+                  UI -> Secretariat (NGN 300)
+                </button>
+                <button onclick="setCorridorHero('Bodija', 'Ring Road', 'NGN 500', '22 mins')" id="chip-bodija" class="px-3.5 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 text-xs font-bold hover:bg-slate-50 transition-all">
+                  Bodija -> Ring Rd (NGN 500)
+                </button>
               </div>
             </div>
 
-            <div class="p-5 flex-1 flex flex-col justify-between">
+            <!-- Corridor Live HUD Card -->
+            <div class="mt-6 bg-[#111622] text-white rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/10">
               <div>
-                <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
-                  <span>OLD BODIJA, IBADAN</span>
-                  <span class="text-slate-900 font-extrabold">4.9 ★ (42)</span>
+                <div class="flex items-center gap-2 text-[10px] font-black text-emerald-400 uppercase tracking-wider">
+                  <span id="hero-countdown">Departs 7:15 AM - in 18 mins</span>
+                  <span>-</span>
+                  <span class="text-slate-400">Dr. Kunle A. (Rating: 4.9)</span>
                 </div>
-                <h4 class="text-base font-black text-slate-900 leading-tight">
-                  Spacious 2-Bedroom Flat in Bodija Estate
-                </h4>
-
-                <!-- Spec Tray (Homeluxe 4-Tile Reference) -->
-                <div class="grid grid-cols-4 gap-1.5 my-3 text-center">
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">2 Beds</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">2 Baths</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">1,450 sqft</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-emerald-700">Borehole</div>
-                  </div>
+                <div class="text-lg font-black text-white mt-1" id="hero-corridor-title">
+                  Akobo General Gas -> Dugbe Cocoa House
                 </div>
-
-                <!-- Upfront Real Move-In Price -->
-                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mb-3 flex items-center justify-between">
-                  <div>
-                    <div class="text-[9px] font-black text-slate-500 uppercase">Real Move-In Total</div>
-                    <div class="text-lg font-black text-slate-900">₦890,000</div>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-[9px] text-slate-400 font-semibold">Base Rent</div>
-                    <div class="text-xs font-bold text-slate-600">₦700k/yr</div>
-                  </div>
+                <div class="text-xs text-slate-400 mt-0.5" id="hero-corridor-meta">
+                  Toyota Corolla - OYO-742-BDJ - AC - 2 Seats Open
                 </div>
               </div>
-
-              <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span class="text-[11px] text-slate-500">Co-living split: <b class="text-slate-900">~₦29,167/mo</b></span>
-                <button onclick="alert('Viewing Modern Bodija Flat details. Direct contact opened with verified landlord.')" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition-all">
-                  View ➔
+              <div class="flex items-center gap-3 shrink-0">
+                <div class="text-right">
+                  <div class="text-xs text-slate-400 font-semibold">Fair Share</div>
+                  <div class="text-xl font-black text-emerald-400" id="hero-corridor-fare">NGN 800</div>
+                </div>
+                <button onclick="alert('Seat reserved! Your 4-digit PIN generated: 7356')" class="px-5 py-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-black transition-all shadow-md active:scale-95">
+                  Book Seat ->
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- Listing 2: UI Agbowo Student Terrace -->
-          <div class="glass-card rounded-3xl overflow-hidden glass-card-hover transition-all flex flex-col">
-            <div class="h-48 w-full relative overflow-hidden bg-slate-900">
-              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="UI Student Flat" class="w-full h-full object-cover"/>
-              <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center">
-                <span class="text-[10px] font-black px-3 py-1 rounded-full bg-slate-950/80 text-white backdrop-blur border border-white/10">
-                  Student Campus
-                </span>
-                <span class="w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur flex items-center justify-center text-white text-xs border border-white/10">
-                  ❤️
-                </span>
-              </div>
-              <div class="absolute bottom-3 inset-x-3.5 flex justify-between items-center text-[10px] font-bold text-white">
-                <span class="px-2.5 py-1 rounded-md bg-slate-950/80 backdrop-blur border border-emerald-500/30 text-emerald-400">
-                  🎓 3m to UI Main Gate
-                </span>
-                <span class="px-2 py-0.5 rounded bg-slate-950/70 backdrop-blur">
-                  1/12 Photos
-                </span>
+          <!-- Right: Stacked Physical Virtual Debit Cards (Nikky Benchmark) -->
+          <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+            <!-- Stacked Physical Debit Card Visual (Nikky Reference) -->
+            <div class="relative pt-2">
+              <!-- Background Stacked Card -->
+              <div class="absolute inset-x-3 -top-1 h-36 bg-slate-800 rounded-3xl opacity-40 transform scale-95 pointer-events-none"></div>
+
+              <!-- Foreground Master Virtual Card -->
+              <div class="virtual-card text-white rounded-3xl p-6 relative overflow-hidden border border-white/15">
+                <div class="flex items-center justify-between mb-6">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-7 rounded bg-amber-400/90 border border-amber-300 flex items-center justify-center">
+                      <div class="w-5 h-4 border border-amber-700/60 rounded-sm"></div>
+                    </div>
+                    <span class="text-slate-400 text-xs font-black tracking-widest">)))</span>
+                  </div>
+                  <span class="text-xs font-black px-2.5 py-1 rounded-full bg-white/10 text-emerald-400 border border-white/10">
+                    weTag - Paystack NUBAN
+                  </span>
+                </div>
+
+                <div class="mb-4">
+                  <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Balance</div>
+                  <div class="text-3xl font-black text-white tracking-tight mt-0.5">$ 8,678.87</div>
+                </div>
+
+                <div class="flex items-end justify-between pt-3 border-t border-white/10">
+                  <div>
+                    <div class="text-xs font-black text-slate-300 tracking-wider">5894 6985 7843 5624</div>
+                    <div class="text-[10px] text-slate-400 font-bold uppercase mt-0.5">Nikky weTag - Verified</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-[9px] text-slate-400 uppercase font-bold">Expires</div>
+                    <div class="text-xs font-bold text-white">08/28</div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
-                  <span>AGBOWO / UI, IBADAN</span>
-                  <span class="text-slate-900 font-extrabold">4.8 ★ (29)</span>
-                </div>
-                <h4 class="text-base font-black text-slate-900 leading-tight">
-                  Serviced Self-Contain close to UI Main Gate
-                </h4>
+            <!-- Trantor-Grade Dual Action Split Pills [Top-Up] + [Withdraw] -->
+            <div class="grid grid-cols-2 gap-3 bg-white p-2 rounded-2xl border border-slate-200">
+              <button onclick="alert('Instant Top-Up Gateway Opened for Wema Account 9912048821')" class="flex items-center justify-center gap-2 py-3 rounded-xl bg-orange-100 hover:bg-orange-200 text-orange-950 text-xs font-black transition-all">
+                <span>Instant Top-Up</span>
+              </button>
+              <button onclick="alert('Withdrawal routed to Nigerian Bank NUBAN')" class="flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-950 text-xs font-black transition-all">
+                <span>Withdraw -></span>
+              </button>
+            </div>
+          </div>
+        </section>
 
-                <!-- Spec Tray -->
-                <div class="grid grid-cols-4 gap-1.5 my-3 text-center">
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">1 Bed</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">1 Bath</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">550 sqft</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-emerald-700">Prepaid</div>
-                  </div>
-                </div>
+        <!-- Mid Row: Top Activities Breakdown + Reports Spline Chart & Donut Gauge -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- Left: Nikky-Style Top activities Card -->
+          <div class="lg:col-span-4 glass-card rounded-3xl p-6">
+            <div class="flex items-center justify-between mb-5">
+              <h3 class="text-base font-black text-slate-900">Top activities</h3>
+              <span class="text-xs font-bold text-slate-400">Monthly</span>
+            </div>
 
-                <!-- Upfront Real Move-In Price -->
-                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mb-3 flex items-center justify-between">
-                  <div>
-                    <div class="text-[9px] font-black text-slate-500 uppercase">Real Move-In Total</div>
-                    <div class="text-lg font-black text-slate-900">₦460,000</div>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-[9px] text-slate-400 font-semibold">Base Rent</div>
-                    <div class="text-xs font-bold text-slate-600">₦350k/yr</div>
-                  </div>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                <div>
+                  <div class="text-xs font-black text-slate-900">Utility</div>
+                  <div class="text-[10px] text-slate-400 font-semibold">01 Apr, 1:30 pm</div>
                 </div>
+                <span class="w-10 h-10 rounded-full bg-[#111622] text-white text-xs font-black flex items-center justify-center">
+                  50%
+                </span>
               </div>
 
-              <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span class="text-[11px] text-slate-500">Student co-share: <b class="text-slate-900">~₦38,333/mo</b></span>
-                <button onclick="alert('Viewing UI Student Flat details.')" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition-all">
-                  View ➔
-                </button>
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                <div>
+                  <div class="text-xs font-black text-slate-900">Transfered</div>
+                  <div class="text-[10px] text-slate-400 font-semibold">10 Apr, 1:30 pm</div>
+                </div>
+                <span class="w-10 h-10 rounded-full bg-[#111622] text-white text-xs font-black flex items-center justify-center">
+                  25%
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                <div>
+                  <div class="text-xs font-black text-slate-900">Food</div>
+                  <div class="text-[10px] text-slate-400 font-semibold">15 Apr, 4:30 pm</div>
+                </div>
+                <span class="w-10 h-10 rounded-full bg-[#111622] text-white text-xs font-black flex items-center justify-center">
+                  15%
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                <div>
+                  <div class="text-xs font-black text-slate-900">Beauty</div>
+                  <div class="text-[10px] text-slate-400 font-semibold">15 Apr, 7:30 pm</div>
+                </div>
+                <span class="w-10 h-10 rounded-full bg-[#111622] text-white text-xs font-black flex items-center justify-center">
+                  10%
+                </span>
               </div>
             </div>
           </div>
 
-          <!-- Listing 3: Samonda Shared Flat -->
-          <div class="glass-card rounded-3xl overflow-hidden glass-card-hover transition-all flex flex-col">
-            <div class="h-48 w-full relative overflow-hidden bg-slate-900">
-              <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="Samonda Flat" class="w-full h-full object-cover"/>
-              <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center">
-                <span class="text-[10px] font-black px-3 py-1 rounded-full bg-slate-950/80 text-white backdrop-blur border border-white/10">
-                  NYSC Settle-In
-                </span>
-                <span class="w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur flex items-center justify-center text-white text-xs border border-white/10">
-                  ❤️
-                </span>
+          <!-- Right: Reports with Smooth Bezier Spline Chart & Donut Gauge (Nikky Benchmark) -->
+          <div class="lg:col-span-8 glass-card rounded-3xl p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+              <div>
+                <h3 class="text-base font-black text-slate-900">Reports</h3>
+                <p class="text-xs text-slate-500 font-normal">Income vs expense analysis across all corridors</p>
               </div>
-              <div class="absolute bottom-3 inset-x-3.5 flex justify-between items-center text-[10px] font-bold text-white">
-                <span class="px-2.5 py-1 rounded-md bg-slate-950/80 backdrop-blur border border-emerald-500/30 text-emerald-400">
-                  🚗 9m to Secretariat
-                </span>
-                <span class="px-2 py-0.5 rounded bg-slate-950/70 backdrop-blur">
-                  1/24 Photos
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 border border-slate-200">
+                  Month: April
                 </span>
               </div>
             </div>
 
-            <div class="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
-                  <span>SAMONDA / SANGO, IBADAN</span>
-                  <span class="text-slate-900 font-extrabold">4.9 ★ (56)</span>
-                </div>
-                <h4 class="text-base font-black text-slate-900 leading-tight">
-                  Modern 3-Bedroom Shared Flat for Corpers
-                </h4>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+              <!-- Smooth Bezier Spline Chart (Nikky Exact Curve Reference) -->
+              <div class="md:col-span-8">
+                <div class="h-44 w-full relative">
+                  <svg viewBox="0 0 500 160" class="w-full h-full overflow-visible">
+                    <line x1="0" y1="40" x2="500" y2="40" stroke="#F1F5F9" stroke-width="1.5" />
+                    <line x1="0" y1="80" x2="500" y2="80" stroke="#F1F5F9" stroke-width="1.5" />
+                    <line x1="0" y1="120" x2="500" y2="120" stroke="#F1F5F9" stroke-width="1.5" />
+                    
+                    <!-- Exact Spline Curve from Image 3 -->
+                    <path d="M 0,110 C 80,140 140,20 220,50 C 300,80 340,130 400,30 C 450,-10 480,120 500,10" 
+                          fill="none" 
+                          stroke="#0A0D16" 
+                          stroke-width="3.5" 
+                          stroke-linecap="round"
+                          class="spline-line" />
 
-                <!-- Spec Tray -->
-                <div class="grid grid-cols-4 gap-1.5 my-3 text-center">
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">3 Beds</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">3 Baths</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-slate-700">2,100 sqft</div>
-                  </div>
-                  <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
-                    <div class="text-[11px] font-bold text-emerald-700">Security</div>
-                  </div>
+                    <!-- Pinpoint Callout Dot and Tooltip -->
+                    <circle cx="400" cy="30" r="5" fill="#00D47E" stroke="#0A0D16" stroke-width="2.5" />
+                    <rect x="330" y="-8" width="140" height="26" rx="6" fill="#0A0D16" />
+                    <text x="400" y="9" font-size="10" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+                      Expense $ 2,254.00
+                    </text>
+                  </svg>
                 </div>
-
-                <!-- Upfront Real Move-In Price -->
-                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mb-3 flex items-center justify-between">
-                  <div>
-                    <div class="text-[9px] font-black text-slate-500 uppercase">Real Move-In Total</div>
-                    <div class="text-lg font-black text-slate-900">₦1,450,000</div>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-[9px] text-slate-400 font-semibold">Base Rent</div>
-                    <div class="text-xs font-bold text-slate-600">₦1.2M/yr</div>
-                  </div>
+                <div class="flex justify-between text-[11px] font-bold text-slate-400 mt-2">
+                  <span>Jan</span>
+                  <span>Feb</span>
+                  <span>Mar</span>
+                  <span class="text-slate-900 font-black">Apr</span>
+                  <span>May</span>
+                  <span>Jun</span>
                 </div>
               </div>
 
-              <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span class="text-[11px] text-slate-500">Corper 3-way split: <b class="text-slate-900">~₦33,333/mo</b></span>
-                <button onclick="alert('Viewing Samonda Flat details.')" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition-all">
-                  View ➔
-                </button>
+              <!-- Donut Gauge (Nikky 85% Donut Reference) -->
+              <div class="md:col-span-4 flex flex-col items-center justify-center p-4 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+                <div class="relative w-28 h-28 flex items-center justify-center">
+                  <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+                    <circle cx="50" cy="50" r="40" stroke="#E2E8F0" stroke-width="10" fill="none" />
+                    <circle cx="50" cy="50" r="40" stroke="#111622" stroke-width="10" stroke-dasharray="251.2" stroke-dashoffset="37.68" stroke-linecap="round" fill="none" />
+                  </svg>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center">
+                    <span class="text-xl font-black text-slate-900">85%</span>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase">Settled</span>
+                  </div>
+                </div>
+                <div class="mt-3 space-y-1 w-full text-[11px] text-left">
+                  <div class="flex justify-between text-slate-600 font-bold">
+                    <span>Utility</span>
+                    <span class="text-slate-900 font-black">$ 847.00</span>
+                  </div>
+                  <div class="flex justify-between text-slate-600 font-bold">
+                    <span>Taxi</span>
+                    <span class="text-slate-900 font-black">$ 586.50</span>
+                  </div>
+                  <div class="flex justify-between text-slate-600 font-bold">
+                    <span>Food</span>
+                    <span class="text-slate-900 font-black">$ 685.50</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <!-- Homeluxe-Grade Real Estate Discovery Grid -->
+        <section id="housing" class="space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-black uppercase tracking-wider mb-2">
+                Homeluxe Architectural Standard
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Verified Ibadan Living - Zero Hidden Fees
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                Upfront Real Move-In Totals. Zero agency extortion on direct landlord properties.
+              </p>
+            </div>
+            <a href="#onboarding" class="inline-flex items-center text-xs font-black px-4 py-2.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition-all">
+              + List Property ->
+            </a>
+          </div>
+
+          <!-- Homeluxe Category Filter Tiles (Image 2 Reference) -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="p-3.5 rounded-2xl bg-slate-900 text-white font-black text-xs flex items-center gap-3 shadow-sm cursor-pointer">
+              <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-xs font-black">ALL</div>
+              <div>
+                <div>All Homes</div>
+                <div class="text-[9px] text-slate-400 font-normal">48 Verified</div>
+              </div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-800 font-bold text-xs flex items-center gap-3 hover:bg-slate-50 transition-all cursor-pointer">
+              <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-xs font-black">UI</div>
+              <div>
+                <div>Student UI Agbowo</div>
+                <div class="text-[9px] text-slate-400 font-normal">Under 10m to Gate</div>
+              </div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-800 font-bold text-xs flex items-center gap-3 hover:bg-slate-50 transition-all cursor-pointer">
+              <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-xs font-black">FLAT</div>
+              <div>
+                <div>Serviced Bodija Flats</div>
+                <div class="text-[9px] text-slate-400 font-normal">24/7 Borehole</div>
+              </div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-800 font-bold text-xs flex items-center gap-3 hover:bg-slate-50 transition-all cursor-pointer">
+              <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-xs font-black">DIR</div>
+              <div>
+                <div>Direct Landlords</div>
+                <div class="text-[9px] text-emerald-600 font-black">Zero Agency Fee</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3-Column Luxury Property Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Listing 1: Bodija Modern Villa (Homeluxe Beverly Hills Replica) -->
+            <div class="glass-card rounded-3xl overflow-hidden glass-card-hover transition-all flex flex-col">
+              <div class="h-48 w-full relative overflow-hidden bg-slate-900">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Bodija Estate Villa" class="w-full h-full object-cover"/>
+                <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center">
+                  <span class="text-[10px] font-black px-3 py-1 rounded-full bg-slate-950/80 text-white backdrop-blur border border-white/10">
+                    Featured
+                  </span>
+                  <span class="w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur flex items-center justify-center text-white text-xs border border-white/10 font-bold">
+                    FAV
+                  </span>
+                </div>
+                <div class="absolute bottom-3 inset-x-3.5 flex justify-between items-center text-[10px] font-bold text-white">
+                  <span class="px-2.5 py-1 rounded-md bg-slate-950/80 backdrop-blur border border-emerald-500/30 text-emerald-400">
+                    Civic Verified Landlord
+                  </span>
+                  <span class="px-2 py-0.5 rounded bg-slate-950/70 backdrop-blur">
+                    1/18 Photos
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
+                    <span>OLD BODIJA, IBADAN</span>
+                    <span class="text-slate-900 font-extrabold">4.9 (42 reviews)</span>
+                  </div>
+                  <h4 class="text-base font-black text-slate-900 leading-tight">
+                    Spacious 2-Bedroom Flat in Bodija Estate
+                  </h4>
+
+                  <!-- Spec Tray (Homeluxe 4-Tile Reference) -->
+                  <div class="grid grid-cols-4 gap-1.5 my-3 text-center">
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">2 Beds</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">2 Baths</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">1,450 sqft</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-emerald-700">Borehole</div>
+                    </div>
+                  </div>
+
+                  <!-- Upfront Real Move-In Price -->
+                  <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mb-3 flex items-center justify-between">
+                    <div>
+                      <div class="text-[9px] font-black text-slate-500 uppercase">Real Move-In Total</div>
+                      <div class="text-lg font-black text-slate-900">NGN 890,000</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="text-[9px] text-slate-400 font-semibold">Base Rent</div>
+                      <div class="text-xs font-bold text-slate-600">NGN 700k/yr</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-500">Co-living split: <b class="text-slate-900">~NGN 29,167/mo</b></span>
+                  <button onclick="alert('Viewing Modern Bodija Flat details. Direct contact opened with verified landlord.')" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition-all">
+                    View ->
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Listing 2: UI Student Flat -->
+            <div class="glass-card rounded-3xl overflow-hidden glass-card-hover transition-all flex flex-col">
+              <div class="h-48 w-full relative overflow-hidden bg-slate-900">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="UI Student Flat" class="w-full h-full object-cover"/>
+                <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center">
+                  <span class="text-[10px] font-black px-3 py-1 rounded-full bg-slate-950/80 text-white backdrop-blur border border-white/10">
+                    Student Campus
+                  </span>
+                  <span class="w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur flex items-center justify-center text-white text-xs border border-white/10 font-bold">
+                    FAV
+                  </span>
+                </div>
+                <div class="absolute bottom-3 inset-x-3.5 flex justify-between items-center text-[10px] font-bold text-white">
+                  <span class="px-2.5 py-1 rounded-md bg-slate-950/80 backdrop-blur border border-emerald-500/30 text-emerald-400">
+                    3m to UI Main Gate
+                  </span>
+                  <span class="px-2 py-0.5 rounded bg-slate-950/70 backdrop-blur">
+                    1/12 Photos
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
+                    <span>AGBOWO / UI, IBADAN</span>
+                    <span class="text-slate-900 font-extrabold">4.8 (29 reviews)</span>
+                  </div>
+                  <h4 class="text-base font-black text-slate-900 leading-tight">
+                    Serviced Self-Contain close to UI Main Gate
+                  </h4>
+
+                  <div class="grid grid-cols-4 gap-1.5 my-3 text-center">
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">1 Bed</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">1 Bath</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">550 sqft</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-emerald-700">Prepaid</div>
+                    </div>
+                  </div>
+
+                  <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mb-3 flex items-center justify-between">
+                    <div>
+                      <div class="text-[9px] font-black text-slate-500 uppercase">Real Move-In Total</div>
+                      <div class="text-lg font-black text-slate-900">NGN 460,000</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="text-[9px] text-slate-400 font-semibold">Base Rent</div>
+                      <div class="text-xs font-bold text-slate-600">NGN 350k/yr</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-500">Student co-share: <b class="text-slate-900">~NGN 38,333/mo</b></span>
+                  <button onclick="alert('Viewing UI Student Flat details.')" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition-all">
+                    View ->
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Listing 3: Samonda Shared Flat -->
+            <div class="glass-card rounded-3xl overflow-hidden glass-card-hover transition-all flex flex-col">
+              <div class="h-48 w-full relative overflow-hidden bg-slate-900">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="Samonda Flat" class="w-full h-full object-cover"/>
+                <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center">
+                  <span class="text-[10px] font-black px-3 py-1 rounded-full bg-slate-950/80 text-white backdrop-blur border border-white/10">
+                    NYSC Settle-In
+                  </span>
+                  <span class="w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur flex items-center justify-center text-white text-xs border border-white/10 font-bold">
+                    FAV
+                  </span>
+                </div>
+                <div class="absolute bottom-3 inset-x-3.5 flex justify-between items-center text-[10px] font-bold text-white">
+                  <span class="px-2.5 py-1 rounded-md bg-slate-950/80 backdrop-blur border border-emerald-500/30 text-emerald-400">
+                    9m to Secretariat
+                  </span>
+                  <span class="px-2 py-0.5 rounded bg-slate-950/70 backdrop-blur">
+                    1/24 Photos
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
+                    <span>SAMONDA / SANGO, IBADAN</span>
+                    <span class="text-slate-900 font-extrabold">4.9 (56 reviews)</span>
+                  </div>
+                  <h4 class="text-base font-black text-slate-900 leading-tight">
+                    Modern 3-Bedroom Shared Flat for Corpers
+                  </h4>
+
+                  <div class="grid grid-cols-4 gap-1.5 my-3 text-center">
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">3 Beds</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">3 Baths</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-slate-700">2,100 sqft</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl py-1.5 px-1">
+                      <div class="text-[11px] font-bold text-emerald-700">Security</div>
+                    </div>
+                  </div>
+
+                  <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mb-3 flex items-center justify-between">
+                    <div>
+                      <div class="text-[9px] font-black text-slate-500 uppercase">Real Move-In Total</div>
+                      <div class="text-lg font-black text-slate-900">NGN 1,450,000</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="text-[9px] text-slate-400 font-semibold">Base Rent</div>
+                      <div class="text-xs font-bold text-slate-600">NGN 1.2M/yr</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-500">Corper 3-way split: <b class="text-slate-900">~NGN 33,333/mo</b></span>
+                  <button onclick="alert('Viewing Samonda Flat details.')" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition-all">
+                    View ->
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
 
       <!-- ========================================== -->
-      <!-- 5. INTERACTIVE MULTI-ROLE ONBOARDING PORTAL -->
+      <!-- ADMIN MODE VIEW: OPERATION & VERIFICATION HUB -->
       <!-- ========================================== -->
-      <section id="onboarding" class="glass-card rounded-3xl p-6 sm:p-8 bg-white border border-slate-200 shadow-xl">
-        <div class="text-center max-w-xl mx-auto mb-8">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-black uppercase tracking-wider mb-2">
-            Specialised Listing & Auth Portal
-          </div>
-          <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            Join as a Driver, Commuter, or Landlord
-          </h3>
-          <p class="text-xs text-slate-500 mt-1">
-            Calculate your weekly fuel offset or verify your property with zero hidden agent fees.
-          </p>
-        </div>
-
-        <!-- Role Switcher Tabs (Trantor Pill Style) -->
-        <div class="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl max-w-lg mx-auto mb-8 border border-slate-200">
-          <button id="tab-btn-driver" onclick="switchPortalTab('driver')" class="py-2.5 rounded-xl text-xs font-black bg-[#0A0D16] text-white shadow transition-all">
-            🚗 Driver (List Car)
-          </button>
-          <button id="tab-btn-rider" onclick="switchPortalTab('rider')" class="py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition-all">
-            🚶 Commuter
-          </button>
-          <button id="tab-btn-property" onclick="switchPortalTab('property')" class="py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition-all">
-            🏡 Property Lister
-          </button>
-        </div>
-
-        <!-- 1. DRIVER INTERACTIVE PANEL -->
-        <div id="panel-driver" class="max-w-2xl mx-auto space-y-5">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">Vehicle Model & Year</label>
-              <input type="text" id="driver-car" value="Toyota Corolla 2018 (Silver)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400" />
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">Oyo License Plate</label>
-              <input type="text" id="driver-plate" value="OYO-742-BDJ" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400" />
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">Daily Corridor Route</label>
-              <select id="driver-corridor" onchange="calcDriverOffset()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400">
-                <option value="800">Akobo General Gas ➔ Dugbe Cocoa House (₦800)</option>
-                <option value="300">UI Agbowo ➔ Oyo Secretariat Agodi (₦300)</option>
-                <option value="500">Bodija Market ➔ Ring Road (₦500)</option>
-                <option value="400">Challenge Hub ➔ Dugbe (₦400)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">Available Seats to Share</label>
-              <div class="flex gap-2">
-                <button type="button" onclick="setDriverSeats(1)" class="seat-btn flex-1 py-2.5 rounded-xl bg-slate-100 text-xs font-bold text-slate-700 border border-slate-200">1 Seat</button>
-                <button type="button" onclick="setDriverSeats(2)" class="seat-btn flex-1 py-2.5 rounded-xl bg-slate-100 text-xs font-bold text-slate-700 border border-slate-200">2 Seats</button>
-                <button type="button" onclick="setDriverSeats(3)" class="seat-btn active flex-1 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-black">3 Seats</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Live Fuel Offset Return Card -->
-          <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-5 rounded-2xl border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <div class="text-[10px] font-black text-emerald-800 uppercase tracking-widest">ESTIMATED WEEKLY FUEL RETURN</div>
-              <div class="text-3xl font-black text-slate-900 mt-0.5" id="fuel-offset-total">
-                ₦24,000 <span class="text-xs text-slate-500 font-normal">/ week</span>
-              </div>
-              <div class="text-xs text-slate-600 mt-1">Based on 3 seats shared 2x daily (Mon–Fri). Payouts auto-settled to your bank NUBAN.</div>
-            </div>
-            <button onclick="alert('Driver profile initialized! Connecting Smile ID NIN and NUBAN bank payout gateway.')" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black transition-all shrink-0 shadow-sm">
-              Publish Route ➔
-            </button>
-          </div>
-        </div>
-
-        <!-- 2. RIDER INTERACTIVE PANEL -->
-        <div id="panel-rider" class="max-w-2xl mx-auto space-y-5 hidden">
+      <div id="view-admin-mode" class="space-y-8 hidden">
+        
+        <div class="flex items-center justify-between">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1.5">Select Your Daily Commute Artery</label>
-            <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400">
-              <option>Akobo (General Gas) ➔ Dugbe (Cocoa House Hub) · 7:15 AM</option>
-              <option>UI Post Office ➔ Oyo State Secretariat · 7:45 AM</option>
-              <option>Bodija Market ➔ Ring Road / High Court · 8:00 AM</option>
-            </select>
+            <h2 class="text-2xl font-black text-slate-900">weTag Central Administration</h2>
+            <p class="text-xs text-slate-500">Real-time corridor telemetry, KYC compliance verification, and emergency dispatch console.</p>
           </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1.5">Emergency Contact for Oyo 615 Trajectory Sharing</label>
-            <input type="tel" value="+234 812 445 9901" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400" />
-            <p class="text-[11px] text-slate-500 mt-1">Automatically receives encrypted live tracking link whenever your carpool commences.</p>
-          </div>
-          <button onclick="alert('Commuter notifications activated for Akobo ➔ Dugbe corridor!')" class="w-full py-3.5 rounded-xl bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition-all">
-            Activate Corridor Seat Alerts ➔
-          </button>
+          <span class="text-xs font-black px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+            Phase 1 Geofence: Active (7 Hubs)
+          </span>
         </div>
 
-        <!-- 3. PROPERTY LISTER INTERACTIVE PANEL -->
-        <div id="panel-property" class="max-w-2xl mx-auto space-y-5 hidden">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">Lister Classification</label>
-              <select id="property-lister-role" onchange="calcPropertyTotal()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400">
-                <option value="owner">Direct Landlord (Zero Agency Fee)</option>
-                <option value="agent">Licensed Estate Agent (Capped 10%)</option>
-                <option value="tenant">Relocating Tenant (Lease Transfer)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">Neighborhood</label>
-              <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400">
-                <option>Old Bodija Estate</option>
-                <option>New Bodija / Housing</option>
-                <option>Akobo / General Gas</option>
-                <option>UI Agbowo (Student Zone)</option>
-                <option>Samonda / Sango</option>
-              </select>
-            </div>
+        <!-- Admin Metrics Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="glass-card p-4 rounded-2xl">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Active Drivers</div>
+            <div class="text-2xl font-black text-slate-900 mt-1">12 Drivers</div>
+            <div class="text-[10px] text-emerald-600 font-bold mt-0.5">100% Smile ID Verified</div>
           </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">Annual Base Rent (₦)</label>
-              <input type="number" id="prop-rent" value="700000" oninput="calcPropertyTotal()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400" />
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">Refundable Caution Deposit (₦)</label>
-              <input type="number" id="prop-caution" value="50000" oninput="calcPropertyTotal()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-slate-400" />
-            </div>
+          <div class="glass-card p-4 rounded-2xl">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Corridor Trips Today</div>
+            <div class="text-2xl font-black text-slate-900 mt-1">48 Carpools</div>
+            <div class="text-[10px] text-blue-600 font-bold mt-0.5">Akobo, UI, Bodija Hubs</div>
           </div>
-
-          <!-- OpenRent Real Move-In Calculation Card -->
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-            <div class="flex justify-between items-center">
-              <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">REAL MOVE-IN TOTAL COMMITMENT</span>
-              <span class="text-[10px] font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Zero Hidden Fees</span>
-            </div>
-            <div class="text-3xl font-black text-slate-900 mt-1" id="prop-movein-total">₦820,000</div>
-            <div class="text-xs text-slate-500 mt-1" id="prop-movein-sub">
-              Rent ₦700,000 + Legal ₦70,000 + Caution ₦50,000. Zero agency fee on direct landlord listings.
-            </div>
+          <div class="glass-card p-4 rounded-2xl">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Escrow Settlement</div>
+            <div class="text-2xl font-black text-slate-900 mt-1">NGN 38,400</div>
+            <div class="text-[10px] text-emerald-600 font-bold mt-0.5">Double-Entry Cleared</div>
           </div>
-
-          <button onclick="alert('Apartment listing initialized! Deed verified against pHash scam registry.')" class="w-full py-3.5 rounded-xl bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition-all">
-            Publish Verified Listing ➔
-          </button>
+          <div class="glass-card p-4 rounded-2xl">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Oyo 615 Safety</div>
+            <div class="text-2xl font-black text-emerald-600 mt-1">0 Incidents</div>
+            <div class="text-[10px] text-slate-500 font-bold mt-0.5">Hotline Armed 24/7</div>
+          </div>
         </div>
-      </section>
+
+        <!-- Verification Queue Table -->
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-base font-black text-slate-900 mb-4">Pending Verification Queue</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="border-b border-slate-200 text-slate-400 font-bold uppercase text-[10px]">
+                  <th class="py-3 px-4">Applicant</th>
+                  <th class="py-3 px-4">Role</th>
+                  <th class="py-3 px-4">Identifier / Asset</th>
+                  <th class="py-3 px-4">Compliance Status</th>
+                  <th class="py-3 px-4 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
+                <tr>
+                  <td class="py-3 px-4 font-bold text-slate-900">Dr. Kunle Alabi</td>
+                  <td class="py-3 px-4">Driver (Akobo Route)</td>
+                  <td class="py-3 px-4">Toyota Corolla - OYO-742-BDJ</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold text-[10px]">NIN Verified (98%)</span></td>
+                  <td class="py-3 px-4 text-right"><button onclick="alert('Driver verified!')" class="px-3 py-1 rounded-lg bg-slate-900 text-white font-bold text-[10px]">Approve</button></td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-bold text-slate-900">Alhaja Folashade B.</td>
+                  <td class="py-3 px-4">Direct Landlord</td>
+                  <td class="py-3 px-4">Old Bodija 2-Bed Villa (Deed #BDJ-842)</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold text-[10px]">pHash Unique (Zero Dupes)</span></td>
+                  <td class="py-3 px-4 text-right"><button onclick="alert('Listing verified!')" class="px-3 py-1 rounded-lg bg-slate-900 text-white font-bold text-[10px]">Approve</button></td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-bold text-slate-900">Seyi Adeleke</td>
+                  <td class="py-3 px-4">NYSC Commuter</td>
+                  <td class="py-3 px-4">Samonda -> Secretariat</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[10px]">Callsign Relay Active</span></td>
+                  <td class="py-3 px-4 text-right"><button onclick="alert('Rider approved!')" class="px-3 py-1 rounded-lg bg-slate-900 text-white font-bold text-[10px]">Approve</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
 
     </main>
 
@@ -964,73 +917,50 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex items-center justify-center gap-2 mb-2 font-bold text-slate-700">
           <span>weTag Technologies</span>
-          <span>•</span>
+          <span>-</span>
           <span>Ibadan, Oyo State, Nigeria</span>
         </div>
         <p class="max-w-md mx-auto text-[11px] leading-relaxed text-slate-400">
           Integrated with Oyo State Emergency (615), Smile ID Identity Verification, and Paystack Double-Entry Settlement.
         </p>
         <div class="mt-4 text-[10px] text-slate-400">
-          © 2026 weTag (iTag). All rights reserved.
+          (C) 2026 weTag (iTag). All rights reserved.
         </div>
       </div>
     </footer>
   </div>
 
-  <!-- Interactive Client-side Script -->
+  <!-- Interactive JavaScript Engine -->
   <script>
-    let driverSeats = 3;
-
-    function setDriverSeats(count) {
-      driverSeats = count;
-      document.querySelectorAll('.seat-btn').forEach((btn, idx) => {
-        if (idx + 1 === count) {
-          btn.className = 'seat-btn active flex-1 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-black';
-        } else {
-          btn.className = 'seat-btn flex-1 py-2.5 rounded-xl bg-slate-100 text-xs font-bold text-slate-700 border border-slate-200';
-        }
-      });
-      calcDriverOffset();
-    }
-
-    function calcDriverOffset() {
-      const fare = parseInt(document.getElementById('driver-corridor').value, 10);
-      const weekly = fare * driverSeats * 2 * 5;
-      document.getElementById('fuel-offset-total').innerHTML = '₦' + weekly.toLocaleString() + ' <span class="text-xs text-slate-500 font-normal">/ week</span>';
-    }
-
-    function calcPropertyTotal() {
-      const rent = parseInt(document.getElementById('prop-rent').value, 10) || 0;
-      const caution = parseInt(document.getElementById('prop-caution').value, 10) || 0;
-      const role = document.getElementById('property-lister-role').value;
-      const legal = Math.round(rent * 0.1);
-      const agency = role === 'owner' ? 0 : Math.round(rent * 0.1);
-      const total = rent + legal + agency + caution;
-
-      document.getElementById('prop-movein-total').innerText = '₦' + total.toLocaleString();
-      let sub = 'Rent ₦' + rent.toLocaleString() + ' + Legal ₦' + legal.toLocaleString();
-      if (agency > 0) sub += ' + Agency ₦' + agency.toLocaleString();
-      sub += ' + Caution ₦' + caution.toLocaleString();
-      if (role === 'owner') sub += '. Zero agency fee on direct landlord listings.';
-      document.getElementById('prop-movein-sub').innerText = sub;
-    }
-
-    function switchPortalTab(tab) {
-      ['driver', 'rider', 'property'].forEach(t => {
-        document.getElementById('panel-' + t).classList.add('hidden');
-        const btn = document.getElementById('tab-btn-' + t);
-        btn.className = 'py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition-all';
-      });
-
-      document.getElementById('panel-' + tab).classList.remove('hidden');
-      const activeBtn = document.getElementById('tab-btn-' + tab);
-      activeBtn.className = 'py-2.5 rounded-xl text-xs font-black bg-[#0A0D16] text-white shadow transition-all';
-    }
-
     function setCorridorHero(origin, dest, fare, duration) {
-      document.getElementById('hero-corridor-title').innerText = origin + ' ➔ ' + dest;
+      document.getElementById('hero-corridor-title').innerText = origin + ' -> ' + dest;
       document.getElementById('hero-corridor-fare').innerText = fare;
       document.getElementById('hero-countdown').innerText = 'Departs in ' + duration;
+    }
+
+    function switchDashboardMode(mode) {
+      const userView = document.getElementById('view-user-mode');
+      const adminView = document.getElementById('view-admin-mode');
+      const userBtn = document.getElementById('mode-user-btn');
+      const adminBtn = document.getElementById('mode-admin-btn');
+      const headerGreeting = document.getElementById('header-greeting');
+      const navPrimary = document.getElementById('nav-item-primary');
+
+      if (mode === 'admin') {
+        userView.classList.add('hidden');
+        adminView.classList.remove('hidden');
+        adminBtn.className = 'flex-1 py-1.5 rounded-lg bg-emerald-400 text-slate-950 font-black shadow transition-all';
+        userBtn.className = 'flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all font-semibold';
+        headerGreeting.innerText = 'Admin Command Hub';
+        navPrimary.innerText = 'Admin Console';
+      } else {
+        adminView.classList.add('hidden');
+        userView.classList.remove('hidden');
+        userBtn.className = 'flex-1 py-1.5 rounded-lg bg-emerald-400 text-slate-950 font-black shadow transition-all';
+        adminBtn.className = 'flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all font-semibold';
+        headerGreeting.innerText = 'Hello, Nikky';
+        navPrimary.innerText = 'Dashboard';
+      }
     }
   </script>
 </body>

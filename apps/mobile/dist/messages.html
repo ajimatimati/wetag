@@ -98,6 +98,9 @@
 
     
 
+
+    
+
     <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>weTag Messages — Secure In-App Communication for Carpools & Rentals</title>
@@ -476,7 +479,7 @@
       <span class="brand-name">weTag <span style="font-size: 14px; opacity: 0.7; font-weight: 600;">(iTag)</span></span>
     </a>
     <div class="badge-geo">
-      📍 Ibadan, Oyo State Corridors
+      Hub:  Ibadan, Oyo State Corridors
     </div>
   </header>
 
@@ -490,10 +493,10 @@
     <!-- Tab Buttons -->
     <div class="tab-container">
       <button id="btn-move" class="tab-btn active" onclick="switchTab('MOVE')">
-        🚗 weTag MOVE (Carpooling)
+         weTag MOVE (Carpooling)
       </button>
       <button id="btn-stay" class="tab-btn" onclick="switchTab('STAY')">
-        🏠 weTag STAY (Housing)
+         weTag STAY (Housing)
       </button>
     </div>
 
@@ -505,10 +508,10 @@
       <div class="field-group">
         <label class="field-label" for="corridor-select">Select Primary Corridor:</label>
         <select id="corridor-select" onchange="calculateMove()">
-          <option value="400">Akobo (General Gas) ➔ Dugbe (Cocoa House) — 14.2 km (₦400/seat)</option>
-          <option value="300">UI Post Office ➔ Oyo State Secretariat — 7.8 km (₦300/seat)</option>
-          <option value="500">Old Bodija ➔ Ring Road (High Court) — 11.5 km (₦500/seat)</option>
-          <option value="350">Challenge Roundabout ➔ Dugbe Commercial — 6.8 km (₦350/seat)</option>
+          <option value="400">Akobo (General Gas)  Dugbe (Cocoa House) — 14.2 km (₦400/seat)</option>
+          <option value="300">UI Post Office  Oyo State Secretariat — 7.8 km (₦300/seat)</option>
+          <option value="500">Old Bodija  Ring Road (High Court) — 11.5 km (₦500/seat)</option>
+          <option value="350">Challenge Roundabout  Dugbe Commercial — 6.8 km (₦350/seat)</option>
         </select>
       </div>
 
@@ -532,7 +535,7 @@
           <div id="move-result" class="result-amount">₦32,000 / mo</div>
         </div>
         <div style="font-size: 13px; color: #065F46; font-weight: 700; text-align: right;">
-          ⚡ Return Trips × 4 Weeks<br/>Instant Paystack Payout
+          Power  Return Trips × 4 Weeks<br/>Instant Paystack Payout
         </div>
       </div>
     </div>
@@ -561,7 +564,7 @@
           <div id="stay-result" class="result-amount">₦890,000</div>
         </div>
         <div style="font-size: 13px; color: #1E293B; font-weight: 700; text-align: right;">
-          🛡️ Zero Hidden Fees<br/>Verified Direct Landlords
+          Verified  Zero Hidden Fees<br/>Verified Direct Landlords
         </div>
       </div>
     </div>
@@ -574,15 +577,15 @@
       <form class="waitlist-form" onsubmit="handleWaitlist(event)">
         <input type="tel" id="waitlist-phone" class="waitlist-input" placeholder="Enter WhatsApp or Phone (e.g. 08031234567)" required />
         <select id="waitlist-role" class="waitlist-input" style="flex: 0.8; min-width: 150px; background: #FFF; color: #111;">
-          <option value="RIDER">🚗 Rider</option>
-          <option value="DRIVER">🚙 Driver</option>
-          <option value="TENANT">🏠 Tenant</option>
-          <option value="LANDLORD">🔑 Landlord</option>
+          <option value="RIDER"> Rider</option>
+          <option value="DRIVER"> Driver</option>
+          <option value="TENANT"> Tenant</option>
+          <option value="LANDLORD">Direct  Landlord</option>
         </select>
-        <button type="submit" class="waitlist-btn">Join Waitlist ➔</button>
+        <button type="submit" class="waitlist-btn">Join Waitlist </button>
       </form>
       <div id="waitlist-success" class="success-alert">
-        🎉 You're on the priority list! We'll send your invite via SMS when your corridor goes live.
+         You're on the priority list! We'll send your invite via SMS when your corridor goes live.
       </div>
     </div>
 
@@ -591,15 +594,15 @@
       <h3>Ibadan Phase 1 Priority Corridor Grid</h3>
       <div class="corridors-grid">
         <div class="corridor-item">
-          <div class="corridor-title">📍 Akobo ➔ Dugbe Central</div>
+          <div class="corridor-title">Hub:  Akobo  Dugbe Central</div>
           <div class="corridor-meta">General Gas, Iwo Road, Agodi Gate, Cocoa House</div>
         </div>
         <div class="corridor-item">
-          <div class="corridor-title">📍 UI Agbowo ➔ Oyo Secretariat</div>
+          <div class="corridor-title">Hub:  UI Agbowo  Oyo Secretariat</div>
           <div class="corridor-meta">UI Main Gate, Sango, Bodija Market, Governor's Office</div>
         </div>
         <div class="corridor-item">
-          <div class="corridor-title">📍 Old Bodija ➔ Ring Road</div>
+          <div class="corridor-title">Hub:  Old Bodija  Ring Road</div>
           <div class="corridor-meta">Awolowo Avenue, Mokola, High Court, Challenge</div>
         </div>
       </div>

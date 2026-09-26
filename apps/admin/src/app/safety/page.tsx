@@ -81,7 +81,7 @@ export default function SafetyConsolePage() {
                 Route Anomaly (+3 min detour)
               </td>
               <td className="p-4">Driver: Dr. Kunle · Rider: Tolu O.</td>
-              <td className="p-4 text-xs">General Gas ➔ Total Filling Station</td>
+              <td className="p-4 text-xs">General Gas  Total Filling Station</td>
               <td className="p-4">
                 <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
                   Rider Confirmed OK

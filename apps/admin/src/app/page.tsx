@@ -89,7 +89,7 @@ export default function OperationsDashboard() {
           </thead>
           <tbody className="divide-y divide-slate-100 font-medium">
             <tr className="hover:bg-slate-50/50">
-              <td className="p-4 font-bold text-[#123C3A]">Akobo (General Gas) ➔ Dugbe / Cocoa House</td>
+              <td className="p-4 font-bold text-[#123C3A]">Akobo (General Gas)  Dugbe / Cocoa House</td>
               <td className="p-4">16 drivers</td>
               <td className="p-4">28 seats</td>
               <td className="p-4 font-bold">₦400</td>
@@ -100,7 +100,7 @@ export default function OperationsDashboard() {
               </td>
             </tr>
             <tr className="hover:bg-slate-50/50">
-              <td className="p-4 font-bold text-[#123C3A]">UI Main Gate ➔ Oyo Secretariat (Agodi)</td>
+              <td className="p-4 font-bold text-[#123C3A]">UI Main Gate  Oyo Secretariat (Agodi)</td>
               <td className="p-4">12 drivers</td>
               <td className="p-4">19 seats</td>
               <td className="p-4 font-bold">₦300</td>
@@ -111,7 +111,7 @@ export default function OperationsDashboard() {
               </td>
             </tr>
             <tr className="hover:bg-slate-50/50">
-              <td className="p-4 font-bold text-[#123C3A]">Bodija Market Hub ➔ Ring Road / High Court</td>
+              <td className="p-4 font-bold text-[#123C3A]">Bodija Market Hub  Ring Road / High Court</td>
               <td className="p-4">9 drivers</td>
               <td className="p-4">11 seats</td>
               <td className="p-4 font-bold">₦500</td>
@@ -122,7 +122,7 @@ export default function OperationsDashboard() {
               </td>
             </tr>
             <tr className="hover:bg-slate-50/50">
-              <td className="p-4 font-bold text-[#123C3A]">Challenge ➔ Dugbe / Iwo Road</td>
+              <td className="p-4 font-bold text-[#123C3A]">Challenge  Dugbe / Iwo Road</td>
               <td className="p-4">5 drivers</td>
               <td className="p-4">7 seats</td>
               <td className="p-4 font-bold">₦350</td>

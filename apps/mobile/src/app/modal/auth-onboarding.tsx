@@ -58,7 +58,7 @@ export default function AuthOnboardingModal() {
   const [nubanNumber, setNubanNumber] = useState('9912048821');
 
   // Rider state
-  const [riderCorridor, setRiderCorridor] = useState('Akobo ➔ Dugbe');
+  const [riderCorridor, setRiderCorridor] = useState('Akobo  Dugbe');
   const [emergencyContact, setEmergencyContact] = useState('+234 812 445 9901');
 
   // Property state
@@ -86,8 +86,8 @@ export default function AuthOnboardingModal() {
   const handleCompleteDriver = () => {
     setActiveRole('DRIVER');
     Alert.alert(
-      '🚗 Car & Recurring Route Published!',
-      `Your ${carMakeModel} (${carPlate}) is now listed on the ${morningOrigin} ➔ ${morningDest} corridor.\n\nEstimated Fuel Offset: ~₦${weeklyFuelOffset.toLocaleString()}/week.\nSmile ID NIN badge applied to your profile.`,
+      ' Car & Recurring Route Published!',
+      `Your ${carMakeModel} (${carPlate}) is now listed on the ${morningOrigin}  ${morningDest} corridor.\n\nEstimated Fuel Offset: ~₦${weeklyFuelOffset.toLocaleString()}/week.\nSmile ID NIN badge applied to your profile.`,
       [{ text: 'Start Driving', onPress: () => router.back() }]
     );
   };
@@ -95,7 +95,7 @@ export default function AuthOnboardingModal() {
   const handleCompleteRider = () => {
     setActiveRole('RIDER');
     Alert.alert(
-      '🚶 Commuter Profile Ready!',
+      ' Commuter Profile Ready!',
       `Corridor alerts enabled for ${riderCorridor}.\nEmergency trusted contact saved. Enjoy safe carpools with offline 4-digit PINs!`,
       [{ text: 'Explore Rides', onPress: () => router.back() }]
     );
@@ -104,7 +104,7 @@ export default function AuthOnboardingModal() {
   const handleCompleteProperty = () => {
     setActiveRole('LANDLORD');
     Alert.alert(
-      '🏡 Scam-Proof Property Published!',
+      ' Scam-Proof Property Published!',
       `"${propertyTitle}" in ${neighborhood} is live with a Real Move-In Total of ₦${totalMoveIn.toLocaleString()}.\n\npHash Anti-Scam Verification: PASSED (Deed & ownership audit green).`,
       [{ text: 'View Listing', onPress: () => router.back() }]
     );
@@ -394,7 +394,7 @@ export default function AuthOnboardingModal() {
                 <Text style={styles.offsetSub}>/ week</Text>
               </Text>
               <Text style={styles.offsetDesc}>
-                Based on {seatsAvailable} seats on daily {morningOrigin} ➔{' '}
+                Based on {seatsAvailable} seats on daily {morningOrigin} {' '}
                 {morningDest} round-trips.
               </Text>
             </View>
@@ -460,7 +460,7 @@ export default function AuthOnboardingModal() {
             activeOpacity={0.88}
           >
             <Text style={styles.primaryBtnText}>
-              Publish Car & Corridor Schedule ➔
+              Publish Car & Corridor Schedule 
             </Text>
           </TouchableOpacity>
         </View>
@@ -480,7 +480,7 @@ export default function AuthOnboardingModal() {
                 style={styles.input}
                 value={riderCorridor}
                 onChangeText={setRiderCorridor}
-                placeholder="e.g. Akobo ➔ Dugbe"
+                placeholder="e.g. Akobo  Dugbe"
                 placeholderTextColor="#94A3B8"
               />
             </View>
@@ -508,7 +508,7 @@ export default function AuthOnboardingModal() {
             activeOpacity={0.88}
           >
             <Text style={styles.primaryBtnText}>
-              Activate Commuter Alerts ➔
+              Activate Commuter Alerts 
             </Text>
           </TouchableOpacity>
         </View>
@@ -755,7 +755,7 @@ export default function AuthOnboardingModal() {
             activeOpacity={0.88}
           >
             <Text style={styles.primaryBtnText}>
-              Publish Scam-Proof Listing ➔
+              Publish Scam-Proof Listing 
             </Text>
           </TouchableOpacity>
         </View>
