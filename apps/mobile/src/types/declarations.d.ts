@@ -90,6 +90,11 @@ declare module 'lucide-react-native' {
   export const X: any;
   export const Snowflake: any;
   export const Luggage: any;
+  export const Upload: any;
+  export const Key: any;
+  export const FileText: any;
+  export const CheckCheck: any;
+  export const Radio: any;
 }
 
 declare module 'expo-status-bar' {

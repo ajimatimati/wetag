@@ -1,134 +1,122 @@
 // packages/ui-kit/colors.ts
-// weTag Design Tokens — Color System
-// Two products, one identity. MOVE = teal energy. STAY = warm sage comfort.
-
-// ─────────────────────────────────────────────
-// LIGHT MODE (Default)
-// ─────────────────────────────────────────────
+// weTag Luxury Design Tokens — Color System
+// High-precision Obsidian Carbon & Crisp Slate architecture.
 
 export const colors = {
   // ── Brand Core ──
-  primary:          '#18B88A',  // Soft Teal — the platform identity
-  primaryDeep:      '#123C3A',  // Deep Blue-Green — authority, trust, text
-  primaryLight:     '#E5F7F0',  // Soft Mint — success states, highlights
+  primary:          '#00D47E',  // Precision Electric Mint
+  primaryDeep:      '#0A0D16',  // Deep Obsidian Carbon
+  primaryLight:     '#E6FAF2',  // Electric Mint Tint
 
   // ── Product Accents ──
   move: {
-    accent:         '#18B88A',  // Teal — energy, movement, routes
-    accentLight:    '#D4F5E9',  // Light teal surface
-    accentDeep:     '#0F8A66',  // Dark teal for pressed states
-    transitBlue:    '#2563EB',  // Electric Transit Blue for routes & icons
-    transitLight:   '#EFF6FF',  // Light transit blue container
+    accent:         '#00D47E',  // Electric Mint
+    accentLight:    '#E6FAF2',
+    accentDeep:     '#0F172A',
+    transitBlue:    '#2563EB',  // Electric Cobalt
+    transitLight:   '#EFF6FF',
   },
   stay: {
-    accent:         '#8FA888',  // Warm Sage — home, comfort, stability
-    accentLight:    '#EDF2EB',  // Light sage surface
-    accentDeep:     '#6B8563',  // Dark sage for pressed states
-    warmClay:       '#C87943',  // Warm Clay / Housing Amber — radical pricing
-    clay:           '#C4A882',  // Soft Clay — warmth, earthiness (secondary)
-    clayLight:      '#F5EDE3',  // Light clay surface
+    accent:         '#0F172A',  // Clean Slate Carbon
+    accentLight:    '#F1F5F9',
+    accentDeep:     '#0A0D16',
+    warmClay:       '#C87943',
+    clay:           '#B45309',
+    clayLight:      '#FEF3C7',
   },
 
   // ── Semantic ──
-  success:          '#18B88A',
-  warning:          '#E8A62B',  // Warm Golden — alerts, CTAs, fare highlights
-  danger:           '#EF4444',  // Coral Red — strictly for emergency SOS / 615 call
-  info:             '#2563EB',  // Transit Blue — informational banners
+  success:          '#00D47E',
+  warning:          '#F59E0B',
+  danger:           '#EF4444',
+  info:             '#2563EB',
 
   // ── Surfaces ──
-  porcelain:        '#F7FAF8',  // Warm off-white canvas
-  background:       '#F7FAF8',  // Off-white with the faintest green warmth
-  surface:          '#FFFFFF',  // Cards, sheets
-  surfaceElevated:  '#FFFFFF',  // Elevated cards (differentiated by shadow)
-  surfaceSubtle:    '#F0F4F1',  // Muted sections, dividers
-  surfaceContainerLow: '#EEF5F2', // Soft tinted container
-  border:           '#E2E8E4',  // Default border
-  borderLight:      '#F0F4F1',  // Subtle separator
-  borderSubtle:     '#E2EBE6',  // Hairline division for cards
+  porcelain:        '#F8FAFC',  // Crisp Neutral Slate-50 Canvas
+  background:       '#F8FAFC',
+  surface:          '#FFFFFF',  // Crisp White Cards
+  surfaceElevated:  '#FFFFFF',
+  surfaceSubtle:    '#F1F5F9',
+  surfaceContainerLow: '#F1F5F9',
+  border:           '#E2E8F0',  // Hairline Slate-200
+  borderLight:      '#F1F5F9',
+  borderSubtle:     'rgba(0, 0, 0, 0.06)',
 
   // ── Text ──
-  textPrimary:      '#161D1B',  // Charcoal — body text, headings
-  textSecondary:    '#5A6B68',  // Muted green-gray — captions, labels
-  textTertiary:     '#8A9B97',  // Placeholder text
-  textMuted:        '#717978',  // Secondary glanceable metadata
-  textInverse:      '#FFFFFF',  // Text on dark/colored backgrounds
-  textDisabled:     '#B8C5C2',  // Disabled controls
+  textPrimary:      '#0F172A',  // Slate-900 Razor-Sharp Pitch
+  textSecondary:    '#64748B',  // Slate-500 Clean Neutral
+  textTertiary:     '#94A3B8',
+  textMuted:        '#64748B',
+  textInverse:      '#FFFFFF',
+  textDisabled:     '#CBD5E1',
 
   // ── Safety ──
   safety: {
     sos:            '#EF4444',  // Emergency 615 hotline
-    coral:          '#EF4444',  // Emergency Coral
-    shield:         '#123C3A',  // Calm neutral safety shield
-    sosBackground:  '#FDF0EF',  // Emergency banner background
-    verified:       '#18B88A',  // Verification badges
-    unverified:     '#E8A62B',  // Needs attention
-    pin:            '#123C3A',  // Trip PIN display — maximum contrast
-    pinBackground:  '#E5F7F0',
+    coral:          '#EF4444',
+    shield:         '#0A0D16',
+    sosBackground:  '#FEF2F2',
+    verified:       '#00D47E',
+    unverified:     '#F59E0B',
+    pin:            '#0A0D16',
+    pinBackground:  '#0A0D16',
   },
 
   // ── Interactive ──
-  disabled:         '#D1D9D6',
-  disabledText:     '#A0ADA9',
-  overlay:          'rgba(18, 60, 58, 0.6)',  // Modal/sheet backdrop
+  disabled:         '#E2E8F0',
+  disabledText:     '#94A3B8',
+  overlay:          'rgba(10, 13, 22, 0.65)',
 } as const;
-
-// ─────────────────────────────────────────────
-// DARK MODE
-// ─────────────────────────────────────────────
 
 export const colorsDark = {
-  primary:          '#2ED9A4',  // Brighter teal for dark backgrounds
-  primaryDeep:      '#E5F7F0',  // Inverted — now used for text
-  primaryLight:     '#1A3D38',  // Dark mint — subtle container
+  primary:          '#00D47E',
+  primaryDeep:      '#FFFFFF',
+  primaryLight:     '#111827',
 
   move: {
-    accent:         '#2ED9A4',
-    accentLight:    '#1A3D38',
-    accentDeep:     '#18B88A',
+    accent:         '#00D47E',
+    accentLight:    '#111827',
+    accentDeep:     '#00D47E',
   },
   stay: {
-    accent:         '#A8C29F',
-    accentLight:    '#1E2D1B',
-    accentDeep:     '#8FA888',
-    clay:           '#D4BC9E',
-    clayLight:      '#2A2318',
+    accent:         '#94A3B8',
+    accentLight:    '#1E293B',
+    accentDeep:     '#CBD5E1',
+    clay:           '#F59E0B',
+    clayLight:      '#332308',
   },
 
-  success:          '#2ED9A4',
-  warning:          '#F0B840',
-  danger:           '#F07570',
-  info:             '#5BA0D9',
+  success:          '#00D47E',
+  warning:          '#F59E0B',
+  danger:           '#EF4444',
+  info:             '#3B82F6',
 
-  background:       '#0F1514',  // Very dark green-black
-  surface:          '#1A2422',  // Card surfaces
-  surfaceElevated:  '#223230',  // Elevated cards
-  surfaceSubtle:    '#162120',
-  border:           '#2A3936',
-  borderLight:      '#1E2B29',
+  background:       '#090C15',
+  surface:          '#0F172A',
+  surfaceElevated:  '#1E293B',
+  surfaceSubtle:    '#1E293B',
+  border:           '#1E293B',
+  borderLight:      '#334155',
 
-  textPrimary:      '#E8F0EE',
-  textSecondary:    '#9AABA7',
-  textTertiary:     '#6B7D79',
-  textInverse:      '#172322',
-  textDisabled:     '#4A5B57',
+  textPrimary:      '#F8FAFC',
+  textSecondary:    '#94A3B8',
+  textTertiary:     '#64748B',
+  textInverse:      '#0F172A',
+  textDisabled:     '#475569',
 
   safety: {
-    sos:            '#F07570',
-    sosBackground:  '#3D1A18',
-    verified:       '#2ED9A4',
-    unverified:     '#F0B840',
-    pin:            '#E5F7F0',
-    pinBackground:  '#1A3D38',
+    sos:            '#EF4444',
+    sosBackground:  '#3D1414',
+    verified:       '#00D47E',
+    unverified:     '#F59E0B',
+    pin:            '#F8FAFC',
+    pinBackground:  '#111622',
   },
 
-  disabled:         '#2A3936',
-  disabledText:     '#4A5B57',
-  overlay:          'rgba(0, 0, 0, 0.7)',
+  disabled:         '#1E293B',
+  disabledText:     '#475569',
+  overlay:          'rgba(0, 0, 0, 0.85)',
 } as const;
-
-// ─────────────────────────────────────────────
-// TYPE EXPORTS
-// ─────────────────────────────────────────────
 
 export type Colors = typeof colors;
 export type ColorsDark = typeof colorsDark;

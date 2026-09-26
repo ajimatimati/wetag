@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
 import {
   ShieldCheck,
   Wallet,
@@ -17,6 +18,7 @@ import { colors } from '../../theme/colors';
 import { LivingLedgerCard } from '../../components/LivingLedgerCard';
 
 export default function ProfileScreen() {
+  const router = useRouter();
   const [walletBalance, setWalletBalance] = useState(14500); // ₦14,500
 
   const handleTopUp = () => {
@@ -192,6 +194,23 @@ export default function ProfileScreen() {
         <ChevronRight size={16} color={colors.textSecondary} />
       </TouchableOpacity>
 
+      {/* Quick Launch Onboarding Portal */}
+      <TouchableOpacity
+        style={styles.onboardingBanner}
+        onPress={() => router.push('/modal/auth-onboarding')}
+        activeOpacity={0.88}
+      >
+        <View style={{ flex: 1, marginRight: 8 }}>
+          <Text style={styles.onboardingBannerTitle}>List Another Car or Property</Text>
+          <Text style={styles.onboardingBannerSub}>
+            Switch between driver, rider, or landlord verified roles in 1 tap.
+          </Text>
+        </View>
+        <View style={styles.onboardingBannerBtn}>
+          <Text style={styles.onboardingBannerBtnText}>Manage ➔</Text>
+        </View>
+      </TouchableOpacity>
+
       {/* Sign Out */}
       <TouchableOpacity style={styles.signOutBtn} activeOpacity={0.7}>
         <LogOut size={16} color="#DC2626" />
@@ -204,7 +223,39 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7FAF8',
+    backgroundColor: '#F8FAFC',
+  },
+  onboardingBanner: {
+    backgroundColor: '#0A0D16',
+    borderRadius: 16,
+    padding: 14,
+    marginBottom: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+  },
+  onboardingBannerTitle: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  onboardingBannerSub: {
+    fontSize: 10,
+    color: '#94A3B8',
+    marginTop: 2,
+  },
+  onboardingBannerBtn: {
+    backgroundColor: '#00D47E',
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+  },
+  onboardingBannerBtnText: {
+    fontSize: 11,
+    fontWeight: '900',
+    color: '#0A0D16',
   },
   content: {
     paddingTop: 54,

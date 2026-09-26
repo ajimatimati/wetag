@@ -257,7 +257,7 @@ export default function MessagesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7FAF8',
+    backgroundColor: '#F8FAFC',
   },
   content: {
     paddingTop: 54,

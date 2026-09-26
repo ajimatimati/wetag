@@ -203,6 +203,23 @@ export default function StayScreen() {
           </View>
         </View>
 
+        {/* List Property Action Banner */}
+        <TouchableOpacity
+          style={styles.listerBanner}
+          onPress={() => router.push('/modal/auth-onboarding')}
+          activeOpacity={0.88}
+        >
+          <View style={styles.listerBannerContent}>
+            <Text style={styles.listerBannerTitle}>Are you a Landlord or Relocating?</Text>
+            <Text style={styles.listerBannerSub}>
+              List your property or transfer your lease with verified scam-free escrow protection.
+            </Text>
+          </View>
+          <View style={styles.listerBannerBtn}>
+            <Text style={styles.listerBannerBtnText}>+ List Home</Text>
+          </View>
+        </TouchableOpacity>
+
         {/* Verified Homes Feed */}
         <View style={styles.feedHeader}>
           <Text style={styles.feedTitle}>Verified Ibadan Homes</Text>
@@ -240,7 +257,44 @@ export default function StayScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F7FAF8',
+    backgroundColor: '#F8FAFC',
+  },
+  listerBanner: {
+    backgroundColor: '#0A0D16',
+    borderRadius: 16,
+    padding: 14,
+    marginBottom: 18,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+  },
+  listerBannerContent: {
+    flex: 1,
+    marginRight: 10,
+  },
+  listerBannerTitle: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  listerBannerSub: {
+    fontSize: 10,
+    color: '#94A3B8',
+    marginTop: 2,
+    lineHeight: 14,
+  },
+  listerBannerBtn: {
+    backgroundColor: '#00D47E',
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+  },
+  listerBannerBtnText: {
+    fontSize: 11,
+    fontWeight: '900',
+    color: '#0A0D16',
   },
   scrollContent: {
     paddingTop: 52,

@@ -180,11 +180,21 @@ export function injectSeoGeo(distDir: string) {
     ${STRUCTURED_JSON_LD}
 `;
 
-    // Inject right after <meta name="viewport" ... />
+    // Clean up any previously injected SEO/GEO tags to avoid duplicates
+    html = html.replace(/<!-- WETAG_METADATA_START -->[\s\S]*?<!-- WETAG_METADATA_END -->/g, '');
+    html = html.replace(/<!-- Primary SEO Meta Tags -->[\s\S]*?<\/script>\s*/g, '');
+
+    const wrappedMetaTags = `
+    <!-- WETAG_METADATA_START -->
+    ${enrichedMetaTags.trim()}
+    <!-- WETAG_METADATA_END -->
+`;
+
+    // Inject right after <head> or viewport
     if (html.includes('shrink-to-fit=no"/>')) {
-      html = html.replace('shrink-to-fit=no"/>', `shrink-to-fit=no"/>${enrichedMetaTags}`);
+      html = html.replace('shrink-to-fit=no"/>', `shrink-to-fit=no"/>\n${wrappedMetaTags}`);
     } else {
-      html = html.replace('<head>', `<head>${enrichedMetaTags}`);
+      html = html.replace('<head>', `<head>\n${wrappedMetaTags}`);
     }
 
     fs.writeFileSync(filePath, html, 'utf-8');

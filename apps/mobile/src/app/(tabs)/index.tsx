@@ -1,7 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Compass, Building, ShieldCheck, Calendar, ArrowRight, PlusCircle } from 'lucide-react-native';
+import {
+  Compass,
+  Building,
+  ShieldCheck,
+  Calendar,
+  ArrowRight,
+  PlusCircle,
+  Sparkles,
+  Car,
+  Home,
+} from 'lucide-react-native';
 import { colors } from '../../theme/colors';
 import { RoutineCard } from '../../components/RoutineCard';
 
@@ -10,7 +20,7 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Minimalist Header */}
+      {/* High-Tech Luxury Header */}
       <View style={styles.header}>
         <View style={styles.brandingRow}>
           <View style={styles.logoBadge}>
@@ -22,7 +32,7 @@ export default function HomeScreen() {
               <Text style={styles.brandDot}>•</Text>
               <Text style={styles.brandCity}>Ibadan</Text>
             </View>
-            <Text style={styles.screenLabel}>Home Launchpad</Text>
+            <Text style={styles.screenLabel}>Local Life Grid</Text>
           </View>
         </View>
 
@@ -32,11 +42,10 @@ export default function HomeScreen() {
             onPress={() => router.push('/profile')}
             activeOpacity={0.8}
           >
+            <Text style={styles.walletPillLabel}>WALLET</Text>
             <Text style={styles.walletPillText}>₦14,500</Text>
           </TouchableOpacity>
-          <View style={styles.cityPill}>
-            <Text style={styles.cityPillText}>Ibadan</Text>
-          </View>
+
           <TouchableOpacity
             style={styles.avatarBtn}
             onPress={() => router.push('/profile')}
@@ -47,22 +56,60 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      {/* Greeting & Trust Row */}
+      {/* Greeting & Grid Status */}
       <View style={styles.greetingRow}>
         <View>
-          <Text style={styles.greeting}>Good morning, Tolu 👋</Text>
+          <Text style={styles.greeting}>Good morning, Tolu</Text>
           <View style={styles.statusRow}>
             <View style={styles.greenPulse} />
-            <Text style={styles.statusSub}>Ibadan North · 4 Active Corridors</Text>
+            <Text style={styles.statusSub}>Ibadan Metropolitan · 4 Active Corridors</Text>
           </View>
         </View>
         <View style={styles.trustPill}>
-          <ShieldCheck size={14} color={colors.primary} />
+          <ShieldCheck size={13} color="#00D47E" />
           <Text style={styles.trustText}>Tier 2 NIN</Text>
         </View>
       </View>
 
+      {/* SPECIALISED ONBOARDING & LISTING CALLOUT (Driver / Landlord / Rider) */}
+      <TouchableOpacity
+        style={styles.listingLauncherCard}
+        onPress={() => router.push('/modal/auth-onboarding')}
+        activeOpacity={0.88}
+      >
+        <View style={styles.launcherHeader}>
+          <View style={styles.sparkleWrap}>
+            <Sparkles size={14} color="#00D47E" />
+          </View>
+          <Text style={styles.launcherTag}>ONBOARDING & LISTING PORTAL</Text>
+        </View>
+        <Text style={styles.launcherTitle}>List Your Car or Property</Text>
+        <Text style={styles.launcherSub}>
+          Register your daily commute route or publish verified apartments with zero hidden agent fees.
+        </Text>
+        <View style={styles.launcherPillRow}>
+          <View style={styles.launcherPill}>
+            <Car size={12} color="#00D47E" />
+            <Text style={styles.launcherPillText}>Car & Route</Text>
+          </View>
+          <View style={styles.launcherPill}>
+            <Home size={12} color="#00D47E" />
+            <Text style={styles.launcherPillText}>Apartment</Text>
+          </View>
+          <View style={styles.launcherCta}>
+            <Text style={styles.launcherCtaText}>Start ➔</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+
       {/* Quick Corridor Selection Bar */}
+      <View style={styles.sectionHeaderRow}>
+        <Text style={styles.sectionTitle}>Ibadan Arterial Corridors</Text>
+        <TouchableOpacity onPress={() => router.push('/move')}>
+          <Text style={styles.seeAllText}>Explore all</Text>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -100,63 +147,51 @@ export default function HomeScreen() {
         onPress={() => router.push('/move')}
       />
 
-      {/* Upcoming Return Commute Indicator */}
-      <TouchableOpacity
-        style={styles.returnCard}
-        onPress={() => router.push('/move')}
-        activeOpacity={0.88}
-      >
-        <View style={styles.returnIconBox}>
-          <Calendar size={16} color={colors.primary} />
-        </View>
-        <View style={styles.returnContent}>
-          <Text style={styles.returnTag}>UPCOMING RETURN · 5:30 PM TODAY</Text>
-          <Text style={styles.returnTitle} numberOfLines={1}>
-            Dugbe ➔ Akobo (Confirmed with Babatunde A.)
-          </Text>
-        </View>
-        <ArrowRight size={16} color={colors.textMuted} />
-      </TouchableOpacity>
-
-      {/* Dual Pillar Action Grid (Generous Whitespace, Lean Copy) */}
-      <View style={styles.dualGrid}>
-        {/* MOVE Card */}
+      {/* Two Core Pillars Grid (MOVE & STAY) */}
+      <View style={styles.pillarsGrid}>
+        {/* MOVE Pillar */}
         <TouchableOpacity
-          style={[styles.pillarCard, styles.moveBorder]}
+          style={styles.pillarCard}
           onPress={() => router.push('/move')}
-          activeOpacity={0.88}
+          activeOpacity={0.85}
         >
-          <View style={[styles.pillarIconBox, { backgroundColor: '#EFF6FF' }]}>
-            <Compass size={22} color={colors.move.transitBlue} />
+          <View style={styles.pillarIconBox}>
+            <Compass size={20} color="#2563EB" />
           </View>
-          <Text style={styles.pillarTitle}>Daily Commute</Text>
-          <Text style={styles.pillarSub}>Share verified rides from ₦300 across Akobo, UI, Dugbe.</Text>
+          <Text style={styles.pillarTitle}>Corridor Rides</Text>
+          <Text style={styles.pillarSub}>
+            Shared commuter routes. Offline 4-digit PIN escrow security.
+          </Text>
           <View style={styles.pillarBadgeRow}>
-            <Text style={styles.pillarBadgeText}>32 drivers active</Text>
+            <Text style={styles.pillarBadgeText}>12 drivers live</Text>
           </View>
           <View style={styles.pillarAction}>
-            <Text style={[styles.actionText, { color: colors.move.transitBlue }]}>Find ride</Text>
-            <ArrowRight size={13} color={colors.move.transitBlue} />
+            <Text style={[styles.actionText, { color: '#2563EB' }]}>Find ride</Text>
+            <ArrowRight size={13} color="#2563EB" />
           </View>
         </TouchableOpacity>
 
-        {/* STAY Card */}
+        {/* STAY Pillar */}
         <TouchableOpacity
-          style={[styles.pillarCard, styles.stayBorder]}
+          style={styles.pillarCard}
           onPress={() => router.push('/stay')}
-          activeOpacity={0.88}
+          activeOpacity={0.85}
         >
-          <View style={[styles.pillarIconBox, { backgroundColor: '#FEF3C7' }]}>
-            <Building size={22} color={colors.stay.warmClay} />
+          <View style={styles.pillarIconBox}>
+            <Building size={20} color="#0F172A" />
           </View>
           <Text style={styles.pillarTitle}>Verified Homes</Text>
-          <Text style={styles.pillarSub}>Real move-in totals upfront. Zero surprise agent markups.</Text>
+          <Text style={styles.pillarSub}>
+            Real move-in totals upfront. Zero surprise agent packages.
+          </Text>
           <View style={styles.pillarBadgeRow}>
-            <Text style={[styles.pillarBadgeText, { color: '#B45309' }]}>48 verified homes</Text>
+            <Text style={[styles.pillarBadgeText, { color: '#0F172A' }]}>
+              48 homes audited
+            </Text>
           </View>
           <View style={styles.pillarAction}>
-            <Text style={[styles.actionText, { color: colors.stay.warmClay }]}>Browse</Text>
-            <ArrowRight size={13} color={colors.stay.warmClay} />
+            <Text style={[styles.actionText, { color: '#0F172A' }]}>Browse</Text>
+            <ArrowRight size={13} color="#0F172A" />
           </View>
         </TouchableOpacity>
       </View>
@@ -167,16 +202,16 @@ export default function HomeScreen() {
           <Text style={styles.promoTag}>COMMUTER DRIVER PROGRAM</Text>
           <Text style={styles.promoTitle}>Offset up to ₦18,000/week</Text>
           <Text style={styles.promoBody}>
-            Fill your empty seats on your daily Ibadan commute. Zero commercial taxi hassle.
+            Share empty seats on your daily Ibadan commute. Zero commercial taxi hassle.
           </Text>
         </View>
         <TouchableOpacity
           style={styles.promoBtn}
-          onPress={() => router.push('/move')}
+          onPress={() => router.push('/modal/auth-onboarding')}
           activeOpacity={0.88}
         >
-          <PlusCircle size={15} color="#FFFFFF" />
-          <Text style={styles.promoBtnText}>Offer seats</Text>
+          <PlusCircle size={14} color="#FFFFFF" />
+          <Text style={styles.promoBtnText}>List Car</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -186,7 +221,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7FAF8',
+    backgroundColor: '#F8FAFC',
   },
   content: {
     paddingTop: 52,
@@ -205,16 +240,18 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   logoBadge: {
-    width: 34,
-    height: 34,
-    borderRadius: 10,
-    backgroundColor: colors.primaryDeep,
+    width: 36,
+    height: 36,
+    borderRadius: 12,
+    backgroundColor: '#0A0D16',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 212, 126, 0.3)',
   },
   logoText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: '#00D47E',
+    fontSize: 20,
     fontWeight: '900',
   },
   brandTitleRow: {
@@ -223,24 +260,24 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   brandName: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: colors.primaryDeep,
-    letterSpacing: 0.5,
+    fontSize: 14,
+    fontWeight: '900',
+    color: '#0F172A',
+    letterSpacing: -0.3,
   },
   brandDot: {
     fontSize: 12,
-    color: colors.textMuted,
+    color: '#94A3B8',
   },
   brandCity: {
     fontSize: 12,
     fontWeight: '700',
-    color: colors.primary,
+    color: '#00D47E',
   },
   screenLabel: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '800',
-    color: colors.textPrimary,
+    color: '#0F172A',
   },
   headerControls: {
     flexDirection: 'row',
@@ -248,28 +285,176 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   walletPill: {
-    backgroundColor: '#ECFDF5',
+    backgroundColor: '#0A0D16',
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderRadius: 9999,
+    borderRadius: 12,
+    alignItems: 'flex-end',
     borderWidth: 1,
-    borderColor: '#A7F3D0',
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+  },
+  walletPillLabel: {
+    fontSize: 8,
+    fontWeight: '800',
+    color: '#94A3B8',
+    letterSpacing: 0.8,
   },
   walletPillText: {
     fontSize: 12,
-    fontWeight: '800',
-    color: colors.primaryDeep,
+    fontWeight: '900',
+    color: '#00D47E',
   },
-  cityPill: {
-    backgroundColor: colors.surfaceContainerLow,
-    paddingVertical: 5,
-    paddingHorizontal: 12,
-    borderRadius: 9999,
+  avatarBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#0A0D16',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 212, 126, 0.3)',
   },
-  cityPillText: {
+  avatarBtnText: {
     fontSize: 12,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  greetingRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  greeting: {
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#0F172A',
+    letterSpacing: -0.4,
+  },
+  statusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 2,
+  },
+  greenPulse: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#00D47E',
+  },
+  statusSub: {
+    fontSize: 11,
+    color: '#64748B',
+    fontWeight: '600',
+  },
+  trustPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#F1F5F9',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  trustText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#0F172A',
+  },
+  listingLauncherCard: {
+    backgroundColor: '#0A0D16',
+    borderRadius: 20,
+    padding: 16,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  launcherHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 6,
+  },
+  sparkleWrap: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: 'rgba(0, 212, 126, 0.15)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  launcherTag: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: '#00D47E',
+    letterSpacing: 1,
+  },
+  launcherTitle: {
+    fontSize: 16,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    letterSpacing: -0.2,
+  },
+  launcherSub: {
+    fontSize: 11,
+    color: '#94A3B8',
+    marginTop: 3,
+    lineHeight: 15,
+  },
+  launcherPillRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 12,
+  },
+  launcherPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  launcherPillText: {
+    fontSize: 10,
     fontWeight: '700',
-    color: colors.primaryDeep,
+    color: '#FFFFFF',
+  },
+  launcherCta: {
+    marginLeft: 'auto',
+    backgroundColor: '#00D47E',
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 8,
+  },
+  launcherCtaText: {
+    fontSize: 11,
+    fontWeight: '900',
+    color: '#0A0D16',
+  },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#0F172A',
+    letterSpacing: -0.2,
+  },
+  seeAllText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#2563EB',
   },
   corridorBar: {
     flexDirection: 'row',
@@ -282,25 +467,71 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
     backgroundColor: '#FFFFFF',
-    paddingVertical: 7,
+    paddingVertical: 8,
     paddingHorizontal: 12,
-    borderRadius: 9999,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.borderSubtle,
+    borderColor: '#E2E8F0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
+    elevation: 1,
   },
   corridorPillRoute: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
-    color: colors.textPrimary,
+    color: '#0F172A',
   },
   corridorPillFare: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '800',
-    color: colors.move.transitBlue,
+    color: '#2563EB',
+  },
+  pillarsGrid: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 20,
+  },
+  pillarCard: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 1,
+  },
+  pillarIconBox: {
+    width: 36,
+    height: 36,
+    borderRadius: 12,
+    backgroundColor: '#F8FAFC',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  pillarTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#0F172A',
+    marginBottom: 4,
+  },
+  pillarSub: {
+    fontSize: 11,
+    color: '#64748B',
+    lineHeight: 15,
+    marginBottom: 10,
   },
   pillarBadgeRow: {
     alignSelf: 'flex-start',
-    backgroundColor: colors.surfaceContainerLow,
+    backgroundColor: '#F1F5F9',
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 6,
@@ -309,200 +540,62 @@ const styles = StyleSheet.create({
   pillarBadgeText: {
     fontSize: 10,
     fontWeight: '700',
-    color: colors.move.transitBlue,
-  },
-  avatarBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    backgroundColor: colors.primaryDeep,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarBtnText: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: '#FFFFFF',
-  },
-  greetingRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 18,
-  },
-  greeting: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: colors.textPrimary,
-    letterSpacing: -0.3,
-  },
-  statusRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    marginTop: 2,
-  },
-  greenPulse: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: colors.primary,
-  },
-  statusSub: {
-    fontSize: 12,
-    color: colors.textSecondary,
-    fontWeight: '600',
-  },
-  trustPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.surfaceContainerLow,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 9999,
-    gap: 4,
-  },
-  trustText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: colors.primaryDeep,
-  },
-  returnCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 14,
-    padding: 12,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-    shadowColor: '#123C3A',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
-  },
-  returnIconBox: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    backgroundColor: colors.surfaceContainerLow,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 10,
-  },
-  returnContent: {
-    flex: 1,
-    marginRight: 8,
-  },
-  returnTag: {
-    fontSize: 9,
-    fontWeight: '800',
-    color: colors.primary,
-    letterSpacing: 0.6,
-  },
-  returnTitle: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: colors.textPrimary,
-    marginTop: 1,
-  },
-  dualGrid: {
-    flexDirection: 'row',
-    gap: 12,
-    marginBottom: 20,
-  },
-  pillarCard: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 14,
-    borderWidth: 1,
-    shadowColor: '#123C3A',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
-    justifyContent: 'space-between',
-  },
-  moveBorder: {
-    borderColor: '#DBEAFE',
-  },
-  stayBorder: {
-    borderColor: '#FEF3C7',
-  },
-  pillarIconBox: {
-    width: 38,
-    height: 38,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  pillarTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: colors.textPrimary,
-    marginBottom: 4,
-  },
-  pillarSub: {
-    fontSize: 11,
-    color: colors.textSecondary,
-    lineHeight: 15,
-    marginBottom: 12,
+    color: '#2563EB',
   },
   pillarAction: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
+    marginTop: 'auto',
   },
   actionText: {
     fontSize: 12,
     fontWeight: '700',
   },
   driverPromoCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+    backgroundColor: '#0A0D16',
+    borderRadius: 20,
     padding: 16,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
   },
   promoTextCol: {
     flex: 1,
-    paddingRight: 12,
+    marginRight: 10,
   },
   promoTag: {
     fontSize: 9,
     fontWeight: '800',
-    color: colors.primary,
+    color: '#00D47E',
     letterSpacing: 0.8,
-    marginBottom: 2,
   },
   promoTitle: {
     fontSize: 14,
-    fontWeight: '700',
-    color: colors.textPrimary,
-    marginBottom: 2,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    marginTop: 2,
   },
   promoBody: {
     fontSize: 11,
-    color: colors.textSecondary,
+    color: '#94A3B8',
+    marginTop: 3,
     lineHeight: 15,
   },
   promoBtn: {
-    backgroundColor: colors.primaryDeep,
+    backgroundColor: '#00D47E',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: 5,
     paddingVertical: 9,
-    paddingHorizontal: 14,
-    borderRadius: 9999,
+    paddingHorizontal: 12,
+    borderRadius: 12,
   },
   promoBtnText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#FFFFFF',
+    fontSize: 11,
+    fontWeight: '900',
+    color: '#0A0D16',
   },
 });

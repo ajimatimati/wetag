@@ -304,6 +304,16 @@ export default function MoveScreen() {
             </View>
 
             <TouchableOpacity
+              style={styles.onboardingLinkBtn}
+              onPress={() => router.push('/modal/auth-onboarding')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.onboardingLinkText}>
+                Need full vehicle registration & bank payouts? Use Onboarding Portal ➔
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
               style={styles.publishBtn}
               onPress={handlePublishRide}
               activeOpacity={0.88}
@@ -320,7 +330,22 @@ export default function MoveScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F7FAF8',
+    backgroundColor: '#F8FAFC',
+  },
+  onboardingLinkBtn: {
+    backgroundColor: '#F1F5F9',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 12,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  onboardingLinkText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#0F172A',
+    textAlign: 'center',
   },
   scrollContent: {
     paddingTop: 52,
